@@ -50,7 +50,12 @@ public class Gr4vyViewController: UIViewController , WKNavigationDelegate {
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         webView.navigationDelegate = nil
-        webView.configuration.userContentController.removeAllScriptMessageHandlers()
+        if #available(iOS 14.0, *) {
+            webView.configuration.userContentController.removeAllScriptMessageHandlers()
+        } else {
+            // Fallback on earlier versions
+            webView.configuration.userContentController.removeScriptMessageHandler(forName: postMessageHandler)
+        }
     }
     
     func sendJavascriptMessage(_ message: String, completionHandler: @escaping ((Any?, Error?) -> Void)) {
