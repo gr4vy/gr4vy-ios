@@ -1,0 +1,710 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		592F9FE8278CCB7A00A8D538 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 592F9FE7278CCB7A00A8D538 /* README.md */; };
+		5978B28A271C7F1300F5CC00 /* gr4vy_iOS.docc in Sources */ = {isa = PBXBuildFile; fileRef = 5978B289271C7F1300F5CC00 /* gr4vy_iOS.docc */; };
+		5978B290271C7F1400F5CC00 /* gr4vy_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5978B285271C7F1300F5CC00 /* gr4vy_iOS.framework */; };
+		5978B295271C7F1400F5CC00 /* gr4vy_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5978B294271C7F1400F5CC00 /* gr4vy_iOSTests.swift */; };
+		5978B296271C7F1400F5CC00 /* gr4vy_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 5978B288271C7F1300F5CC00 /* gr4vy_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5986DBF42785EBD800D0A458 /* Gr4vyUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5986DBF32785EBD800D0A458 /* Gr4vyUtility.swift */; };
+		5988081B274D7FF100099FD5 /* OutcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59880819274D7FF100099FD5 /* OutcomeViewController.swift */; };
+		5988081C274D7FF100099FD5 /* OutcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5988081A274D7FF100099FD5 /* OutcomeViewController.xib */; };
+		598D6A48272F32B600EE5777 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 598D6A47272F32B600EE5777 /* Assets.xcassets */; };
+		598D6A4A272F3AEF00EE5777 /* Gr4vyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598D6A49272F3AEF00EE5777 /* Gr4vyMessage.swift */; };
+		59D09964274654C70086348B /* Gr4vyLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D09963274654C70086348B /* Gr4vyLogger.swift */; };
+		59FE69502722BB7A006C1C08 /* Gr4vy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE694F2722BB7A006C1C08 /* Gr4vy.swift */; };
+		59FE69582722BBB2006C1C08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE69572722BBB2006C1C08 /* AppDelegate.swift */; };
+		59FE695A2722BBB2006C1C08 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE69592722BBB2006C1C08 /* SceneDelegate.swift */; };
+		59FE695F2722BBB2006C1C08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59FE695D2722BBB2006C1C08 /* Main.storyboard */; };
+		59FE69612722BBB3006C1C08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59FE69602722BBB3006C1C08 /* Assets.xcassets */; };
+		59FE69642722BBB3006C1C08 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59FE69622722BBB3006C1C08 /* LaunchScreen.storyboard */; };
+		59FE696A2722BBD7006C1C08 /* Gr4vyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE69692722BBD7006C1C08 /* Gr4vyViewController.swift */; };
+		59FE696C2722BC38006C1C08 /* CheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE696B2722BC38006C1C08 /* CheckoutViewController.swift */; };
+		59FE69722722C131006C1C08 /* gr4vy_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5978B285271C7F1300F5CC00 /* gr4vy_iOS.framework */; };
+		59FE69732722C131006C1C08 /* gr4vy_iOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5978B285271C7F1300F5CC00 /* gr4vy_iOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		59FE6978272C1188006C1C08 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE6977272C1188006C1C08 /* SettingsViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5978B291271C7F1400F5CC00 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5978B27C271C7F1300F5CC00 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5978B284271C7F1300F5CC00;
+			remoteInfo = "gr4vy-iOS";
+		};
+		59FE69742722C132006C1C08 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5978B27C271C7F1300F5CC00 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5978B284271C7F1300F5CC00;
+			remoteInfo = "gr4vy-iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		59FE69762722C132006C1C08 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				59FE69732722C131006C1C08 /* gr4vy_iOS.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		592F9FE7278CCB7A00A8D538 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		5978B285271C7F1300F5CC00 /* gr4vy_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = gr4vy_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5978B288271C7F1300F5CC00 /* gr4vy_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gr4vy_iOS.h; sourceTree = "<group>"; };
+		5978B289271C7F1300F5CC00 /* gr4vy_iOS.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = gr4vy_iOS.docc; sourceTree = "<group>"; };
+		5978B28F271C7F1400F5CC00 /* gr4vy-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "gr4vy-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5978B294271C7F1400F5CC00 /* gr4vy_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gr4vy_iOSTests.swift; sourceTree = "<group>"; };
+		5986DBF32785EBD800D0A458 /* Gr4vyUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vyUtility.swift; sourceTree = "<group>"; };
+		59880819274D7FF100099FD5 /* OutcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomeViewController.swift; sourceTree = "<group>"; };
+		5988081A274D7FF100099FD5 /* OutcomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OutcomeViewController.xib; sourceTree = "<group>"; };
+		598D6A47272F32B600EE5777 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		598D6A49272F3AEF00EE5777 /* Gr4vyMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vyMessage.swift; sourceTree = "<group>"; };
+		59D09963274654C70086348B /* Gr4vyLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vyLogger.swift; sourceTree = "<group>"; };
+		59FE694F2722BB7A006C1C08 /* Gr4vy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gr4vy.swift; sourceTree = "<group>"; };
+		59FE69552722BBB2006C1C08 /* Gr4vy UIKit Sample App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gr4vy UIKit Sample App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		59FE69572722BBB2006C1C08 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		59FE69592722BBB2006C1C08 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		59FE695E2722BBB2006C1C08 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		59FE69602722BBB3006C1C08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		59FE69632722BBB3006C1C08 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		59FE69652722BBB3006C1C08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		59FE69692722BBD7006C1C08 /* Gr4vyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vyViewController.swift; sourceTree = "<group>"; };
+		59FE696B2722BC38006C1C08 /* CheckoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutViewController.swift; sourceTree = "<group>"; };
+		59FE6977272C1188006C1C08 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5978B282271C7F1300F5CC00 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5978B28C271C7F1400F5CC00 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5978B290271C7F1400F5CC00 /* gr4vy_iOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59FE69522722BBB2006C1C08 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59FE69722722C131006C1C08 /* gr4vy_iOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5978B27B271C7F1300F5CC00 = {
+			isa = PBXGroup;
+			children = (
+				592F9FE7278CCB7A00A8D538 /* README.md */,
+				5978B287271C7F1300F5CC00 /* gr4vy-iOS */,
+				5978B293271C7F1400F5CC00 /* gr4vy-iOSTests */,
+				59FE69562722BBB2006C1C08 /* Gr4vy UIKit Sample App */,
+				5978B286271C7F1300F5CC00 /* Products */,
+				59FE69712722C131006C1C08 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		5978B286271C7F1300F5CC00 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5978B285271C7F1300F5CC00 /* gr4vy_iOS.framework */,
+				5978B28F271C7F1400F5CC00 /* gr4vy-iOSTests.xctest */,
+				59FE69552722BBB2006C1C08 /* Gr4vy UIKit Sample App.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5978B287271C7F1300F5CC00 /* gr4vy-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				59FE694F2722BB7A006C1C08 /* Gr4vy.swift */,
+				5978B288271C7F1300F5CC00 /* gr4vy_iOS.h */,
+				5978B289271C7F1300F5CC00 /* gr4vy_iOS.docc */,
+				59FE69692722BBD7006C1C08 /* Gr4vyViewController.swift */,
+				598D6A47272F32B600EE5777 /* Assets.xcassets */,
+				598D6A49272F3AEF00EE5777 /* Gr4vyMessage.swift */,
+				59D09963274654C70086348B /* Gr4vyLogger.swift */,
+				5986DBF32785EBD800D0A458 /* Gr4vyUtility.swift */,
+			);
+			path = "gr4vy-iOS";
+			sourceTree = "<group>";
+		};
+		5978B293271C7F1400F5CC00 /* gr4vy-iOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				5978B294271C7F1400F5CC00 /* gr4vy_iOSTests.swift */,
+			);
+			path = "gr4vy-iOSTests";
+			sourceTree = "<group>";
+		};
+		59FE69562722BBB2006C1C08 /* Gr4vy UIKit Sample App */ = {
+			isa = PBXGroup;
+			children = (
+				59FE69572722BBB2006C1C08 /* AppDelegate.swift */,
+				59FE69592722BBB2006C1C08 /* SceneDelegate.swift */,
+				59FE695D2722BBB2006C1C08 /* Main.storyboard */,
+				59FE69602722BBB3006C1C08 /* Assets.xcassets */,
+				59FE69622722BBB3006C1C08 /* LaunchScreen.storyboard */,
+				59FE69652722BBB3006C1C08 /* Info.plist */,
+				59FE696B2722BC38006C1C08 /* CheckoutViewController.swift */,
+				59FE6977272C1188006C1C08 /* SettingsViewController.swift */,
+				59880819274D7FF100099FD5 /* OutcomeViewController.swift */,
+				5988081A274D7FF100099FD5 /* OutcomeViewController.xib */,
+			);
+			path = "Gr4vy UIKit Sample App";
+			sourceTree = "<group>";
+		};
+		59FE69712722C131006C1C08 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		5978B280271C7F1300F5CC00 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5978B296271C7F1400F5CC00 /* gr4vy_iOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		5978B284271C7F1300F5CC00 /* gr4vy-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5978B299271C7F1400F5CC00 /* Build configuration list for PBXNativeTarget "gr4vy-iOS" */;
+			buildPhases = (
+				5978B280271C7F1300F5CC00 /* Headers */,
+				5978B281271C7F1300F5CC00 /* Sources */,
+				5978B282271C7F1300F5CC00 /* Frameworks */,
+				5978B283271C7F1300F5CC00 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "gr4vy-iOS";
+			productName = "gr4vy-iOS";
+			productReference = 5978B285271C7F1300F5CC00 /* gr4vy_iOS.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		5978B28E271C7F1400F5CC00 /* gr4vy-iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5978B29C271C7F1400F5CC00 /* Build configuration list for PBXNativeTarget "gr4vy-iOSTests" */;
+			buildPhases = (
+				5978B28B271C7F1400F5CC00 /* Sources */,
+				5978B28C271C7F1400F5CC00 /* Frameworks */,
+				5978B28D271C7F1400F5CC00 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5978B292271C7F1400F5CC00 /* PBXTargetDependency */,
+			);
+			name = "gr4vy-iOSTests";
+			productName = "gr4vy-iOSTests";
+			productReference = 5978B28F271C7F1400F5CC00 /* gr4vy-iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		59FE69542722BBB2006C1C08 /* Gr4vy UIKit Sample App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59FE69662722BBB3006C1C08 /* Build configuration list for PBXNativeTarget "Gr4vy UIKit Sample App" */;
+			buildPhases = (
+				59FE69512722BBB2006C1C08 /* Sources */,
+				59FE69522722BBB2006C1C08 /* Frameworks */,
+				59FE69532722BBB2006C1C08 /* Resources */,
+				59FE69762722C132006C1C08 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				59FE69752722C132006C1C08 /* PBXTargetDependency */,
+			);
+			name = "Gr4vy UIKit Sample App";
+			productName = "Gr4vy UIKit Sample App";
+			productReference = 59FE69552722BBB2006C1C08 /* Gr4vy UIKit Sample App.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5978B27C271C7F1300F5CC00 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1300;
+				LastUpgradeCheck = 1300;
+				TargetAttributes = {
+					5978B284271C7F1300F5CC00 = {
+						CreatedOnToolsVersion = 13.0;
+					};
+					5978B28E271C7F1400F5CC00 = {
+						CreatedOnToolsVersion = 13.0;
+					};
+					59FE69542722BBB2006C1C08 = {
+						CreatedOnToolsVersion = 13.0;
+					};
+				};
+			};
+			buildConfigurationList = 5978B27F271C7F1300F5CC00 /* Build configuration list for PBXProject "gr4vy-iOS" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5978B27B271C7F1300F5CC00;
+			productRefGroup = 5978B286271C7F1300F5CC00 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5978B284271C7F1300F5CC00 /* gr4vy-iOS */,
+				5978B28E271C7F1400F5CC00 /* gr4vy-iOSTests */,
+				59FE69542722BBB2006C1C08 /* Gr4vy UIKit Sample App */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5978B283271C7F1300F5CC00 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				592F9FE8278CCB7A00A8D538 /* README.md in Resources */,
+				598D6A48272F32B600EE5777 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5978B28D271C7F1400F5CC00 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59FE69532722BBB2006C1C08 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59FE69642722BBB3006C1C08 /* LaunchScreen.storyboard in Resources */,
+				59FE69612722BBB3006C1C08 /* Assets.xcassets in Resources */,
+				5988081C274D7FF100099FD5 /* OutcomeViewController.xib in Resources */,
+				59FE695F2722BBB2006C1C08 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5978B281271C7F1300F5CC00 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59FE69502722BB7A006C1C08 /* Gr4vy.swift in Sources */,
+				5978B28A271C7F1300F5CC00 /* gr4vy_iOS.docc in Sources */,
+				59D09964274654C70086348B /* Gr4vyLogger.swift in Sources */,
+				5986DBF42785EBD800D0A458 /* Gr4vyUtility.swift in Sources */,
+				598D6A4A272F3AEF00EE5777 /* Gr4vyMessage.swift in Sources */,
+				59FE696A2722BBD7006C1C08 /* Gr4vyViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5978B28B271C7F1400F5CC00 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5978B295271C7F1400F5CC00 /* gr4vy_iOSTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59FE69512722BBB2006C1C08 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59FE69582722BBB2006C1C08 /* AppDelegate.swift in Sources */,
+				59FE695A2722BBB2006C1C08 /* SceneDelegate.swift in Sources */,
+				59FE6978272C1188006C1C08 /* SettingsViewController.swift in Sources */,
+				5988081B274D7FF100099FD5 /* OutcomeViewController.swift in Sources */,
+				59FE696C2722BC38006C1C08 /* CheckoutViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5978B292271C7F1400F5CC00 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5978B284271C7F1300F5CC00 /* gr4vy-iOS */;
+			targetProxy = 5978B291271C7F1400F5CC00 /* PBXContainerItemProxy */;
+		};
+		59FE69752722C132006C1C08 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5978B284271C7F1300F5CC00 /* gr4vy-iOS */;
+			targetProxy = 59FE69742722C132006C1C08 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		59FE695D2722BBB2006C1C08 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				59FE695E2722BBB2006C1C08 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		59FE69622722BBB3006C1C08 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				59FE69632722BBB3006C1C08 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5978B297271C7F1400F5CC00 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		5978B298271C7F1400F5CC00 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		5978B29A271C7F1400F5CC00 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.gr4vy.gr4vy-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5978B29B271C7F1400F5CC00 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.gr4vy.gr4vy-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		5978B29D271C7F1400F5CC00 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.gr4vy.gr4vy-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5978B29E271C7F1400F5CC00 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.gr4vy.gr4vy-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		59FE69672722BBB3006C1C08 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Gr4vy UIKit Sample App/Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "app.gr4vy.Gr4vy-UIKit-Sample-App";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		59FE69682722BBB3006C1C08 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Gr4vy UIKit Sample App/Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "app.gr4vy.Gr4vy-UIKit-Sample-App";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5978B27F271C7F1300F5CC00 /* Build configuration list for PBXProject "gr4vy-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5978B297271C7F1400F5CC00 /* Debug */,
+				5978B298271C7F1400F5CC00 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5978B299271C7F1400F5CC00 /* Build configuration list for PBXNativeTarget "gr4vy-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5978B29A271C7F1400F5CC00 /* Debug */,
+				5978B29B271C7F1400F5CC00 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5978B29C271C7F1400F5CC00 /* Build configuration list for PBXNativeTarget "gr4vy-iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5978B29D271C7F1400F5CC00 /* Debug */,
+				5978B29E271C7F1400F5CC00 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		59FE69662722BBB3006C1C08 /* Build configuration list for PBXNativeTarget "Gr4vy UIKit Sample App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59FE69672722BBB3006C1C08 /* Debug */,
+				59FE69682722BBB3006C1C08 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5978B27C271C7F1300F5CC00 /* Project object */;
+}

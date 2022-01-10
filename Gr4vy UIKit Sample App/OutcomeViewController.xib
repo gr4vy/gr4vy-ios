@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OutcomeViewController" customModule="Gr4vy_UIKit_Sample_App" customModuleProvider="target">
+            <connections>
+                <outlet property="continueButton" destination="J8O-bn-SP0" id="LGy-vJ-FI5"/>
+                <outlet property="descriptionLabel" destination="XMH-xV-IsE" id="Dpj-1t-urO"/>
+                <outlet property="resultImageView" destination="pW7-gP-6r8" id="3Yq-68-5Ie"/>
+                <outlet property="subtitleLabel" destination="pAb-iU-2mi" id="Wi7-HU-6oE"/>
+                <outlet property="titleLabel" destination="y4W-6k-6My" id="LeH-gf-3jw"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="hxi-Db-ifO">
+                    <rect key="frame" x="40" y="280" width="334" height="336"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="RFn-Pp-d3b">
+                            <rect key="frame" x="4.5" y="0.0" width="325" height="246"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Success" translatesAutoresizingMaskIntoConstraints="NO" id="pW7-gP-6r8">
+                                    <rect key="frame" x="127.5" y="0.0" width="70" height="72"/>
+                                </imageView>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Fre-Px-RD3">
+                                    <rect key="frame" x="0.0" y="100" width="325" height="146"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thank you for shopping with us!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y4W-6k-6My">
+                                            <rect key="frame" x="0.0" y="0.0" width="325" height="61"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your payment processed successfully" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pAb-iU-2mi">
+                                            <rect key="frame" x="0.0" y="77" width="325" height="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You should now receive an email with your receipt and order details." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XMH-xV-IsE">
+                                            <rect key="frame" x="0.0" y="110" width="325" height="36"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="pAb-iU-2mi" secondAttribute="trailing" id="2td-jy-UAX"/>
+                                        <constraint firstAttribute="trailing" secondItem="XMH-xV-IsE" secondAttribute="trailing" id="8Ww-Zg-gRl"/>
+                                        <constraint firstAttribute="trailing" secondItem="y4W-6k-6My" secondAttribute="trailing" id="Ajm-u1-E5W"/>
+                                        <constraint firstItem="y4W-6k-6My" firstAttribute="leading" secondItem="Fre-Px-RD3" secondAttribute="leading" id="NaR-vz-HYx"/>
+                                        <constraint firstItem="pAb-iU-2mi" firstAttribute="leading" secondItem="Fre-Px-RD3" secondAttribute="leading" id="Xoe-d4-oNH"/>
+                                        <constraint firstItem="XMH-xV-IsE" firstAttribute="leading" secondItem="Fre-Px-RD3" secondAttribute="leading" id="vO1-VG-Xlb"/>
+                                    </constraints>
+                                </stackView>
+                            </subviews>
+                        </stackView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J8O-bn-SP0">
+                            <rect key="frame" x="67" y="286" width="200" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="t8r-vq-pkb"/>
+                            </constraints>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="filled">
+                                <attributedString key="attributedTitle">
+                                    <fragment content="Continue Shopping">
+                                        <attributes>
+                                            <font key="NSFont" size="16" name="Helvetica"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="continue:" destination="-1" eventType="touchUpInside" id="6OQ-sj-Top"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="J8O-bn-SP0" firstAttribute="width" secondItem="hxi-Db-ifO" secondAttribute="width" multiplier="0.6" id="tjg-kA-d7A"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="hxi-Db-ifO" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="52k-TH-eff"/>
+                <constraint firstAttribute="trailing" secondItem="hxi-Db-ifO" secondAttribute="trailing" constant="40" id="FqM-zA-Eog"/>
+                <constraint firstItem="hxi-Db-ifO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="mRX-Fq-L8Z"/>
+                <constraint firstItem="hxi-Db-ifO" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="qSC-V1-ZtD"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="82"/>
+        </view>
+        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="vjC-a5-sbl">
+            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <point key="canvasLocation" x="710" y="82"/>
+        </imageView>
+    </objects>
+    <resources>
+        <image name="Success" width="70" height="72"/>
+    </resources>
+</document>
