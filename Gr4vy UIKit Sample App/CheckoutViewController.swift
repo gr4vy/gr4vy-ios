@@ -34,15 +34,16 @@ class CheckoutViewController: UIViewController {
                             let outcomeViewController = OutcomeViewController(nibName: "OutcomeViewController",
                                                                               bundle:  nil)
                             switch event {
-                            case .transactionFailed:
+                            case .transactionFailed(let transactionID, let status, let paymentMethodID):
+                                print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID)")
                                 outcomeViewController.outcome = .failure(reason: "transactionFailed")
-                            case .transactionCreated:
+                            case .transactionCreated(let transactionID, let status, let paymentMethodID):
+                                print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID)")
                                 outcomeViewController.outcome = .success
                             case .generalError(let error):
                                 outcomeViewController.outcome = .failure(reason: error.description)
-                            case .paymentMethodSelected:
-                                // Handle a change in payment method selected here
-                                print("Handle a change in payment method selected here")
+                            case .paymentMethodSelected(let id, let method, let mode):
+                                print("Handle a change in payment method selected here, ID: \(id), Method: \(method), Mode: \(mode)")
                                 return
                             }
                             

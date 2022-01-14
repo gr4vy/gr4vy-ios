@@ -32,9 +32,19 @@ Replace `YOUR_TARGET_NAME` and then, in the `Podfile` directory, type:
 $ pod install
 ```
 
+or for M1 Macs:
+
+```bash
+$ arch -x86_64 pod install
+```
+
 ## Get started
 
 To use Gr4vy Embed, import the library and call the `.launch()` method.
+
+```swift 
+import gr4vy_iOS
+```
 
 ```swift
 Gr4vy.shared.launch(gr4vyId: [GR4VY_ID],
@@ -42,7 +52,6 @@ Gr4vy.shared.launch(gr4vyId: [GR4VY_ID],
                            amount: 1299,
                            currency: "USD",
                            country: "US",
-                           buyerId: [BUYER_ID],
                            presentingViewController: self,
                            onEvent: { event in
                             // Handle the events sent via Gr4vy. See below.
@@ -52,7 +61,6 @@ Gr4vy.shared.launch(gr4vyId: [GR4VY_ID],
 > **Note**: 
 > Replace `[GR4VY_ID]` with the ID of your instance. 
 > Replace `[TOKEN]` with your JWT access token (See any of our [server-side SDKs](https://github.com/gr4vy?q=sdk) for more details.). 
-> Replace `[BUYER_ID]` with your buyer ID.
 > `presentingViewController` is the current view controller this SDK is launched from. gr4vy-ios presents on top of the current view controller, passing events via the `onEvent` callback. 
 
 ### Options
@@ -66,7 +74,7 @@ These are the parameteres available on the `launch` method:
 | `amount`                  | **`Required`**      | The amount to authorize or capture in the specified `currency` only.|                                                                                   |
 | `currency`                | **`Required`**      | A valid, active, 3-character `ISO 4217` currency code to authorize or capture the `amount` for.|
 | `country`                 | **`Required`**      | A valid `ISO 3166` country code.|
-| `buyerId`                 | **`Required`**      | An optional ID for a Gr4vy buyer. The transaction will automatically be associated to a buyer with that ID. If no buyer with this ID exists then it will be ignored.|
+| `buyerId`                 | `Optional`      | An optional ID for a Gr4vy buyer. The transaction will automatically be associated to a buyer with that ID. If no buyer with this ID exists then it will be ignored.|
 | `presentingViewController`| **`Required`**       | The view controller presenting the Gr4vy flow. |
 | `externalIdentifier`      | `Optional`      | An optional external identifier that can be supplied. This will automatically be associated to any resource created by Gr4vy and can subsequently be used to find a resource by that ID. |
 | `store`                   | `Optional`       | `'ask'`, `true`, `false` - Explicitly store the payment method or ask the buyer, this is used when a buyerId is provided.|
@@ -85,7 +93,23 @@ The `onEvent` option can be used to listen to certain events emitted from the SD
 Gr4vy.shared.launch(gr4vyId: [GR4VY_ID],
                             ...
                            onEvent: { event in
-                            // Handle the events sent via Gr4vy. This is an enum with 4 cases.
+                            switch event {
+                              case .transactionFailed(let transactionID, let status, let paymentMethodID):
+                                  // Handle transactionFailed here
+                                  print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID)")
+                                  return
+                              case .transactionCreated(let transactionID, let status, let paymentMethodID):
+                                  // Handle transactionCreated here
+                                  print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID)")
+                                  return
+                              case .generalError(let error):
+                                  // Handle generalError here
+                                  print("Handle generalError here")
+                              case .paymentMethodSelected(let id, let method, let mode):
+                                  // Handle a change in payment method selected here
+                                  print("Handle a change in payment method selected here, ID: \(id), Method: \(method), Mode: \(mode)")
+                                  return
+                            }
         })
 ```
 

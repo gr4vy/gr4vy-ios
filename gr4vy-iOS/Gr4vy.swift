@@ -9,9 +9,9 @@ import Foundation
 import UIKit
 
 public enum Gr4vyEvent: Equatable {
-    case transactionCreated(status: String)
-    case transactionFailed(transactionID: String, status: String, paymentMethodID: String)
-    case paymentMethodSelected(id: String, method: String, mode: String)
+    case transactionCreated(transactionID: String, status: String, paymentMethodID: String?)
+    case transactionFailed(transactionID: String, status: String, paymentMethodID: String?)
+    case paymentMethodSelected(id: String?, method: String, mode: String)
     case generalError(String)
 }
 
@@ -37,7 +37,7 @@ public class Gr4vy {
                       amount: Int,
                       currency: String,
                       country: String,
-                      buyerId: String,
+                      buyerId: String?,
                       externalIdentifier: String? = nil,
                       store: String? = nil,
                       display: String? = nil,
@@ -173,7 +173,7 @@ struct Gr4vySetup {
     var amount: Int
     var currency: String
     var country: String
-    var buyerId: String
+    var buyerId: String?
     var environment: Gr4vyEnvironment
     var externalIdentifier: String?
     var store: String?

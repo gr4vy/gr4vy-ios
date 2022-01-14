@@ -36,8 +36,12 @@ struct Gr4vyUtility {
             optionalData = optionalData + ", intent: '\(intent)'"
         }
         
+        if let buyerId = setup.buyerId {
+            optionalData = optionalData + ", buyerId: '\(buyerId)'"
+        }
+        
         let content =
-        "window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.\(setup.instance).gr4vy.app', apiUrl: 'https://api.\(setup.instance).gr4vy.app', buyerId: '\(setup.buyerId)', token: '\(setup.token)', amount: \(setup.amount), country: '\(setup.country)', currency: '\(setup.currency)'"
+        "window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.\(setup.instance).gr4vy.app', apiUrl: 'https://api.\(setup.instance).gr4vy.app', token: '\(setup.token)', amount: \(setup.amount), country: '\(setup.country)', currency: '\(setup.currency)'"
         +
         optionalData
         +
@@ -60,25 +64,28 @@ struct Gr4vyUtility {
     static func handleTransactionCreated(from payload: [String: Any]) -> Gr4vyEvent {
         
         guard let data = payload["data"] as? [String: Any], let status = data["status"] as? String else {
-            return .generalError("Gr4vy Error: Pop up transcation created failed.")
+            return .generalError("Gr4vy Error: Pop up transaction created failed.")
         }
         
         switch status {
         // Success statuses
         case "capture_succeeded", "capture_pending", "authorization_succeeded", "authorization_pending":
-            return .transactionCreated(status: status)
+            guard let transactionID = data["transactionID"] as? String else {
+                return .generalError("Gr4vy Error: transaction success has failed, no transactionID and/or paymentMethodID found")
+            }
+            return .transactionCreated(transactionID: transactionID, status: status, paymentMethodID: data["paymentMethodID"] as? String)
             
         // Failure statuses
         case "capture_declined", "authorization_failed":
-            guard let transactionID = data["transactionID"] as? String, let paymentMethodID = data["paymentMethodID"] as? String else {
+            guard let transactionID = data["transactionID"] as? String else {
                 return .generalError("Gr4vy Error: transaction failed, no transactionID and/or paymentMethodID found")
             }
-            return .transactionFailed(transactionID: transactionID, status: status, paymentMethodID: paymentMethodID)
+            return .transactionFailed(transactionID: transactionID, status: status, paymentMethodID: data["paymentMethodID"] as? String)
         default:
-            guard let transactionID = data["transactionID"] as? String, let paymentMethodID = data["paymentMethodID"] as? String else {
+            guard let transactionID = data["transactionID"] as? String else {
                 return .generalError("Gr4vy Error: transaction failed, no transactionID and/or paymentMethodID found")
             }
-            return .transactionFailed(transactionID: transactionID, status: status, paymentMethodID: paymentMethodID)
+            return .transactionFailed(transactionID: transactionID, status: status, paymentMethodID: data["paymentMethodID"] as? String)
         }
     }
     
@@ -92,12 +99,11 @@ struct Gr4vyUtility {
     
     static func handlePaymentSelected(from payload: [String: Any]) -> Gr4vyEvent? {
         guard let data = payload["data"] as? [String: String],
-                let id = data["id"],
                 let method = data["method"],
                 let mode = data["mode"] else {
             return nil
         }
         
-        return .paymentMethodSelected(id: id, method: method, mode: mode)
+        return .paymentMethodSelected(id: data["id"], method: method, mode: mode)
     }
 }
