@@ -1,4 +1,4 @@
-name: gr4vy-iOS workflow
+name: CI
 
 on:
   push:
