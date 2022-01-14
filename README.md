@@ -1,6 +1,7 @@
 # Gr4vy iOS SDK
 
 ![Build Status](https://github.com/gr4vy/gr4vy-ios/actions/workflows/ios.yml/badge.svg?branch=main)
+
 [![Swift](https://img.shields.io/badge/Swift-5.3_5.4_5.5-orange?style=for-the-badge)](https://img.shields.io/badge/Swift-5.3_5.4_5.5-Orange?style=flat-square)
 [![Platforms](https://img.shields.io/badge/Platforms-iOS-yellowgreen?style=for-the-badge)](https://img.shields.io/badge/Platforms-macOS_iOS_tvOS_watchOS_Linux_Windows-Green?style=flat-square)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/gr4vy-ios.svg?style=for-the-badge)](https://img.shields.io/cocoapods/v/gr4vy-ios.svg)
