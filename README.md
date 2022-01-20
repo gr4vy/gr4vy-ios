@@ -121,7 +121,9 @@ Returns a data about the transaction object when the transaction was successfull
 
 ```json
 {
+  "transactionID": "8724fd24-5489-4a5d-90fd-0604df7d3b83",
   "status": "pending",
+  "paymentMethodID": "17d57b9a-408d-49b8-9a97-9db382593003"
 }
 ```
 
@@ -158,9 +160,6 @@ Returned when the user selects a payment method.
   "mode": "card"
 }
 ```
-
-
-
 
 ## License
 
