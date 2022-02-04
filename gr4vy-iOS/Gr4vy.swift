@@ -42,6 +42,9 @@ public class Gr4vy {
                       store: String? = nil,
                       display: String? = nil,
                       intent: String? = nil,
+                      metadata: [String: String]? = nil,
+                      paymentSource: Gr4vyPaymentSource? = nil,
+                      cartItems: [Gr4vyCartItem]? = nil,
                       presentingViewController: UIViewController,
                       environment: Gr4vyEnvironment = .production,
                       debugMode: Bool = false,
@@ -57,7 +60,10 @@ public class Gr4vy {
                                 externalIdentifier: externalIdentifier,
                                 store: store,
                                 display: display,
-                                intent: intent)
+                                intent: intent,
+                                metadata: metadata,
+                                paymentSource: paymentSource,
+                                cartItems: cartItems)
         
         self.onEvent = onEvent
         self.debugMode = debugMode
@@ -179,7 +185,21 @@ struct Gr4vySetup {
     var store: String?
     var display: String?
     var intent: String?
+    var metadata: [String: String]?
+    var paymentSource: Gr4vyPaymentSource?
+    var cartItems: [Gr4vyCartItem]?
     var instance: String {
         return environment == .production ? gr4vyId : "sandbox.\(gr4vyId)"
     }
+}
+
+public enum Gr4vyPaymentSource: String {
+    case installment
+    case recurring
+}
+
+public struct Gr4vyCartItem {
+    let name: String
+    let quantity: Int
+    let unitAmount: Int
 }

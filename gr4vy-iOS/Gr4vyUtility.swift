@@ -36,6 +36,34 @@ struct Gr4vyUtility {
             optionalData = optionalData + ", intent: '\(intent)'"
         }
         
+        if let metadata = setup.metadata {
+            var metadataString = ", metadata: {"
+            for (index, key) in Array(metadata.keys).sorted().enumerated() {
+                guard key != "" else {
+                    continue
+                }
+                let ending = index + 1 == metadata.count ? "" : ", "
+                let value = metadata[key]!
+                metadataString = metadataString + "\(key): '\(value)'" + ending
+            }
+            metadataString = metadataString + "}"
+            optionalData = optionalData + metadataString
+        }
+        
+        if let paymentSource = setup.paymentSource {
+            optionalData = optionalData + ", paymentSource: '\(paymentSource.rawValue)'"
+        }
+        
+        if let cartItems = setup.cartItems {
+            var cartItemsString = ", cartItems: ["
+            for (index, item) in cartItems.enumerated() {
+                let ending = index + 1 == cartItems.count ? "" : ", "
+                cartItemsString = cartItemsString + "{name: '\(item.name)', quantity: \(item.quantity), unitAmount: \(item.unitAmount)}" + ending
+            }
+            cartItemsString = cartItemsString + "]"
+            optionalData = optionalData + cartItemsString
+        }
+        
         if let buyerId = setup.buyerId {
             optionalData = optionalData + ", buyerId: '\(buyerId)'"
         }
