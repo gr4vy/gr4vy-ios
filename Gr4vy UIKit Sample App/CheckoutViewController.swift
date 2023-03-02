@@ -22,28 +22,35 @@ class CheckoutViewController: UIViewController {
         let buyerId = "<BUYER ID HERE>"
         let gr4vyId = "<GR4VY ID HERE>"
         
-        Gr4vy.shared.launch(gr4vyId: gr4vyId,
-                           token: token,
-                           amount: 10873,
-                           currency: UserDefaults.standard.object(forKey:"Currency") as! String,
-                           country: "GB",
-                           buyerId: buyerId,
-                           presentingViewController: self,
-                           environment: .sandbox,
+        guard let gr4vy = Gr4vy(gr4vyId: gr4vyId,
+                                token: token,
+                                amount: 10873,
+                                currency: UserDefaults.standard.object(forKey:"Currency") as! String,
+                                country: "GB",
+                                buyerId: buyerId,
+                                environment: .sandbox,
+                                debugMode: true) else {
+            print("Unable to load Gr4vy")
+            return
+        }
+        
+        gr4vy.launch(
+            presentingViewController: self,
                            onEvent: { event in
                             let outcomeViewController = OutcomeViewController(nibName: "OutcomeViewController",
                                                                               bundle:  nil)
                             switch event {
                             case .transactionFailed(let transactionID, let status, let paymentMethodID):
-                                print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID)")
+                                print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
                                 outcomeViewController.outcome = .failure(reason: "transactionFailed")
                             case .transactionCreated(let transactionID, let status, let paymentMethodID):
-                                print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID)")
+                                print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
                                 outcomeViewController.outcome = .success
                             case .generalError(let error):
+                                print("Error: \(error.description)")
                                 outcomeViewController.outcome = .failure(reason: error.description)
                             case .paymentMethodSelected(let id, let method, let mode):
-                                print("Handle a change in payment method selected here, ID: \(id), Method: \(method), Mode: \(mode)")
+                                print("Handle a change in payment method selected here, ID: \(id ?? "Unknown"), Method: \(method), Mode: \(mode)")
                                 return
                             }
                             

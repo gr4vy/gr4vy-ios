@@ -56,157 +56,157 @@ class gr4vy_iOSTests: XCTestCase {
         setup.currency = "GBP"
         
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.buyerId = nil
         
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', supportedApplePayVersion: 5},})", sut)
     }
     
     func testGenerateUpdateOptionsSucceedsWithDifferentAmounts() {
         setup.amount = 1000
     
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 1000, country: 'GB', currency: 'GBP', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 1000, country: 'GB', currency: 'GBP', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.amount = 1
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 1, country: 'GB', currency: 'GBP', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 1, country: 'GB', currency: 'GBP', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.amount = -1
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: -1, country: 'GB', currency: 'GBP', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: -1, country: 'GB', currency: 'GBP', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.amount = 0
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 0, country: 'GB', currency: 'GBP', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 0, country: 'GB', currency: 'GBP', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.amount = 2147483647 // Int.max
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 2147483647, country: 'GB', currency: 'GBP', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 2147483647, country: 'GB', currency: 'GBP', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
     }
     
     func testGenerateUpdateOptionsSucceedsWithDifferentExternalIdentifiers() {
         setup.externalIdentifier = nil
     
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.externalIdentifier = "ABC"
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', externalIdentifier: 'ABC', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', externalIdentifier: 'ABC', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.externalIdentifier = "123456789"
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', externalIdentifier: '123456789', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', externalIdentifier: '123456789', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.externalIdentifier = ""
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', externalIdentifier: '', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', externalIdentifier: '', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
     }
     
     func testGenerateUpdateOptionsSucceedsWithDifferentIntent() {
         setup.intent = nil
     
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.intent = "ABC"
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', intent: 'ABC', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', intent: 'ABC', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.intent = "authorize"
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', intent: 'authorize', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', intent: 'authorize', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.intent = "capture"
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', intent: 'capture', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', intent: 'capture', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.intent = ""
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', intent: '', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', intent: '', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
     }
 
     func testGenerateUpdateOptionsSucceedsWithDifferentStore() {
         setup.store = nil
     
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.store = "ABC"
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', store: 'ABC', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', store: 'ABC', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.store = "ask"
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', store: 'ask', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', store: 'ask', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.store = "true"
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', store: 'true', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', store: 'true', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.store = "false"
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', store: 'false', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', store: 'false', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.store = ""
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', store: '', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', store: '', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
     }
     
     func testGenerateUpdateOptionsSucceedsWithDifferentDisplay() {
         setup.display = nil
     
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.display = "ABC"
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', display: 'ABC', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', display: 'ABC', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.display = "all"
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', display: 'all', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', display: 'all', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.display = "addOnly"
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', display: 'addOnly', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', display: 'addOnly', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.display = "storedOnly"
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', display: 'storedOnly', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', display: 'storedOnly', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.display = "supportsTokenization"
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', display: 'supportsTokenization', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', display: 'supportsTokenization', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.display = ""
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', display: '', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', display: '', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
     }
     
     func testGenerateUpdateOptionsSucceedsWithDifferentOptionalInput() {
@@ -216,7 +216,7 @@ class gr4vy_iOSTests: XCTestCase {
         setup.externalIdentifier = nil
         
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.externalIdentifier = ""
         setup.store = ""
@@ -224,7 +224,7 @@ class gr4vy_iOSTests: XCTestCase {
         setup.intent = ""
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', externalIdentifier: '', store: '', display: '', intent: '', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', externalIdentifier: '', store: '', display: '', intent: '', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.externalIdentifier = ""
         setup.store = nil
@@ -232,7 +232,7 @@ class gr4vy_iOSTests: XCTestCase {
         setup.intent = nil
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', externalIdentifier: '', display: '', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', externalIdentifier: '', display: '', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.externalIdentifier = "XYZ"
         setup.store = "STORE"
@@ -240,65 +240,65 @@ class gr4vy_iOSTests: XCTestCase {
         setup.intent = "INTENT"
     
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', externalIdentifier: 'XYZ', store: 'STORE', display: 'DISPLAY', intent: 'INTENT', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', externalIdentifier: 'XYZ', store: 'STORE', display: 'DISPLAY', intent: 'INTENT', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
     }
     
     func testGenerateUpdateOptionsSucceedsWithDifferentMetadataObjects() {
         setup.metadata = [:]
 
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', metadata: {}, buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', metadata: {}, buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
 
         setup.metadata = ["":""]
 
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', metadata: {}, buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', metadata: {}, buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.metadata = ["foo": "bar"]
         
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', metadata: {foo: 'bar'}, buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', metadata: {foo: 'bar'}, buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.metadata = ["apples": "oranges", "foo": "bar"]
         
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', metadata: {apples: 'oranges', foo: 'bar'}, buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', metadata: {apples: 'oranges', foo: 'bar'}, buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
     }
     
     func testGenerateUpdateOptionsSucceedsWithDifferentPaymentSources() {
         setup.paymentSource = .installment
         
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', paymentSource: 'installment', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', paymentSource: 'installment', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.paymentSource = .recurring
         
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', paymentSource: 'recurring', buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', paymentSource: 'recurring', buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
     }
     
     func testGenerateUpdateOptionsSucceedsWithDifferentCartItems() {
         setup.cartItems = []
         
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', cartItems: [], buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', cartItems: [], buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.cartItems = [Gr4vyCartItem(name: "Pot Plant", quantity: 1, unitAmount: 1299)]
         
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', cartItems: [{name: 'Pot Plant', quantity: 1, unitAmount: 1299}], buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', cartItems: [{name: 'Pot Plant', quantity: 1, unitAmount: 1299}], buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.cartItems = [Gr4vyCartItem(name: "Pot Plant", quantity: 1, unitAmount: 1299),
                            Gr4vyCartItem(name: "House Plant", quantity: 2, unitAmount: 2499)]
         
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', cartItems: [{name: 'Pot Plant', quantity: 1, unitAmount: 1299}, {name: 'House Plant', quantity: 2, unitAmount: 2499}], buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', cartItems: [{name: 'Pot Plant', quantity: 1, unitAmount: 1299}, {name: 'House Plant', quantity: 2, unitAmount: 2499}], buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
         
         setup.cartItems = [Gr4vyCartItem(name: "Pot Plant", quantity: -1, unitAmount: -1),
                            Gr4vyCartItem(name: "House Plant", quantity: 0, unitAmount: 0)]
         
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', cartItems: [{name: 'Pot Plant', quantity: -1, unitAmount: -1}, {name: 'House Plant', quantity: 0, unitAmount: 0}], buyerId: 'BUYER123'},})", sut)
+        XCTAssertEqual("window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', cartItems: [{name: 'Pot Plant', quantity: -1, unitAmount: -1}, {name: 'House Plant', quantity: 0, unitAmount: 0}], buyerId: 'BUYER123', supportedApplePayVersion: 5},})", sut)
     }
     
     func testApprovalURLSucceeds() {
@@ -355,42 +355,42 @@ class gr4vy_iOSTests: XCTestCase {
         
         var sut = Gr4vyUtility.handleTransactionCreated(from: payload)
         
-        payload = ["data": ["status": "capture_succeeded", "transactionID": "123"]]
+        payload = ["data": ["status": "capture_succeeded", "id": "123"]]
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
         XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "capture_succeeded", paymentMethodID: nil), sut)
         
-        payload = ["data": ["status": "capture_succeeded", "transactionID": "123", "paymentMethodID": "ABC"]]
+        payload = ["data": ["status": "capture_succeeded", "id": "123", "paymentMethodID": "ABC"]]
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
         XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "capture_succeeded", paymentMethodID: "ABC"), sut)
         
-        payload = ["data": ["status": "capture_pending", "transactionID": "123"]]
+        payload = ["data": ["status": "capture_pending", "id": "123"]]
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
         XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "capture_pending", paymentMethodID: nil) , sut)
         
-        payload = ["data": ["status": "capture_pending", "transactionID": "123", "paymentMethodID": "ABC"]]
+        payload = ["data": ["status": "capture_pending", "id": "123", "paymentMethodID": "ABC"]]
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
         XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "capture_pending", paymentMethodID: "ABC") , sut)
         
-        payload = ["data": ["status": "authorization_succeeded", "transactionID": "123"]]
+        payload = ["data": ["status": "authorization_succeeded", "id": "123"]]
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
         XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "authorization_succeeded", paymentMethodID: nil) , sut)
         
-        payload = ["data": ["status": "authorization_succeeded", "transactionID": "123", "paymentMethodID": "ABC"]]
+        payload = ["data": ["status": "authorization_succeeded", "id": "123", "paymentMethodID": "ABC"]]
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
         XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "authorization_succeeded", paymentMethodID: "ABC") , sut)
         
-        payload = ["data": ["status": "authorization_succeeded", "transactionID": "123"]]
+        payload = ["data": ["status": "authorization_succeeded", "id": "123"]]
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
         XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "authorization_succeeded", paymentMethodID: nil) , sut)
         
-        payload = ["data": ["status": "authorization_pending", "transactionID": "123", "paymentMethodID": "ABC"]]
+        payload = ["data": ["status": "authorization_pending", "id": "123", "paymentMethodID": "ABC"]]
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
         XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "authorization_pending", paymentMethodID: "ABC") , sut)
@@ -452,17 +452,17 @@ class gr4vy_iOSTests: XCTestCase {
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
         XCTAssertEqual(Gr4vyEvent.generalError("Gr4vy Error: transaction failed, no transactionID and/or paymentMethodID found") , sut)
         
-        payload = ["data": ["status": "newStatus", "paymentMethodID": "paymentID", "transactionID": "transactionID"]]
+        payload = ["data": ["status": "newStatus", "paymentMethodID": "paymentID", "id": "transactionID"]]
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
         XCTAssertEqual(Gr4vyEvent.transactionFailed(transactionID: "transactionID", status: "newStatus", paymentMethodID: "paymentID") , sut)
         
-        payload = ["data": ["status": "authorization_failed", "paymentMethodID": "paymentID", "transactionID": "transactionID"]]
+        payload = ["data": ["status": "authorization_failed", "paymentMethodID": "paymentID", "id": "transactionID"]]
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
         XCTAssertEqual(Gr4vyEvent.transactionFailed(transactionID: "transactionID", status: "authorization_failed", paymentMethodID: "paymentID") , sut)
         
-        payload = ["data": ["status": "capture_declined", "paymentMethodID": "paymentID", "transactionID": "transactionID"]]
+        payload = ["data": ["status": "capture_declined", "paymentMethodID": "paymentID", "id": "transactionID"]]
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
         XCTAssertEqual(Gr4vyEvent.transactionFailed(transactionID: "transactionID", status: "capture_declined", paymentMethodID: "paymentID") , sut)

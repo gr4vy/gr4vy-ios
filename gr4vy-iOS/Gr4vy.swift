@@ -7,6 +7,8 @@
 
 import Foundation
 import UIKit
+import SwiftUI
+import PassKit
 
 public enum Gr4vyEvent: Equatable {
     case transactionCreated(transactionID: String, status: String, paymentMethodID: String?)
@@ -24,31 +26,30 @@ public typealias Gr4vyCompletionHandler = (Gr4vyEvent) -> ()
 
 public class Gr4vy {
     
-    public static let shared = Gr4vy()
-    
     private var rootViewController: Gr4vyViewController!
     private var popUpViewController: Gr4vyViewController?
-    private var onEvent: Gr4vyCompletionHandler?
     private var setup: Gr4vySetup!
     private var debugMode: Bool = false
-
-    public func launch(gr4vyId: String,
-                      token: String,
-                      amount: Int,
-                      currency: String,
-                      country: String,
-                      buyerId: String?,
-                      externalIdentifier: String? = nil,
-                      store: String? = nil,
-                      display: String? = nil,
-                      intent: String? = nil,
-                      metadata: [String: String]? = nil,
-                      paymentSource: Gr4vyPaymentSource? = nil,
-                      cartItems: [Gr4vyCartItem]? = nil,
-                      presentingViewController: UIViewController,
-                      environment: Gr4vyEnvironment = .production,
-                      debugMode: Bool = false,
-                      onEvent: Gr4vyCompletionHandler? = nil) {
+    
+    public var onEvent: Gr4vyCompletionHandler?
+    
+    public init?(gr4vyId: String,
+                 token: String,
+                 amount: Int,
+                 currency: String,
+                 country: String,
+                 buyerId: String?,
+                 externalIdentifier: String? = nil,
+                 store: String? = nil,
+                 display: String? = nil,
+                 intent: String? = nil,
+                 metadata: [String: String]? = nil,
+                 paymentSource: Gr4vyPaymentSource? = nil,
+                 cartItems: [Gr4vyCartItem]? = nil,
+                 environment: Gr4vyEnvironment = .production,
+                 applePayMerchantId: String? = nil,
+                 debugMode: Bool = false,
+                 onEvent: Gr4vyCompletionHandler? = nil) {
         
         self.setup = Gr4vySetup(gr4vyId: gr4vyId,
                                 token: token,
@@ -63,16 +64,32 @@ public class Gr4vy {
                                 intent: intent,
                                 metadata: metadata,
                                 paymentSource: paymentSource,
-                                cartItems: cartItems)
+                                cartItems: cartItems,
+                                applePayMerchantId: applePayMerchantId)
+        
+        self.debugMode = debugMode
+        self.onEvent = onEvent
+        
+        guard let url = Gr4vyUtility.getInitialURL(from: setup) else {
+            dismissWithEvent(.generalError("Gr4vy Error: Failed to load"))
+            return nil
+        }
+        
+        rootViewController = Gr4vyViewController()
+        rootViewController.delegate = self
+        rootViewController.url = url
+    }
+    
+    public func launch(presentingViewController: UIViewController,
+                       onEvent: Gr4vyCompletionHandler? = nil) {
         
         self.onEvent = onEvent
-        self.debugMode = debugMode
         
         guard let url = Gr4vyUtility.getInitialURL(from: setup) else {
             dismissWithEvent(.generalError("Gr4vy Error: Failed to load"))
             return
         }
-       
+        
         rootViewController = Gr4vyViewController()
         rootViewController.delegate = self
         rootViewController.url = url
@@ -82,10 +99,27 @@ public class Gr4vy {
         
         presentingViewController.present(navigationController, animated: true, completion: nil)
     }
+    
+    
+    @ViewBuilder
+    public func view() -> some View {
+        ViewControllerWrapper(rootViewController: rootViewController)
+    }
+    
+    public struct ViewControllerWrapper: UIViewControllerRepresentable {
+        
+        let rootViewController: Gr4vyViewController
+        
+        public func makeUIViewController(context: Context) -> UINavigationController {
+            return UINavigationController(rootViewController: rootViewController)
+        }
+        
+        public func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {}
+    }
 }
 
 extension Gr4vy: Gr4vyInternalDelegate {
-
+    
     func dismissWithEvent(_ event: Gr4vyEvent) {
         
         // If the popUpViewController is not shown/created, just dismiss the rootViewController
@@ -117,13 +151,13 @@ extension Gr4vy: Gr4vyInternalDelegate {
         }
         
         switch messageType {
-        
-        // Root Only
+            
+            // Root Only
         case .frameReady:
             rootViewController.sendJavascriptMessage(Gr4vyUtility.generateUpdateOptions(from: setup)) { _, _ in }
             return
             
-        // Root Only
+            // Root Only
         case .approvalUrl:
             guard let url = Gr4vyUtility.handleApprovalUrl(from: message.payload) else {
                 dismissWithEvent(.generalError("Gr4vy Error: Approval URL Failure"))
@@ -140,18 +174,23 @@ extension Gr4vy: Gr4vyInternalDelegate {
             rootViewController.present(nav, animated: true, completion: nil)
             return
             
-        // Root Only
+            // Root Only
         case .transactionCreated:
             dismissWithEvent(Gr4vyUtility.handleTransactionCreated(from: message.payload))
             return
+        case .transactionFailed:
+            error(message: "Gr4vy Error: transaction Failed")
+            error(message: "\(message.payload.debugDescription)")
+            dismissWithEvent(.generalError("Gr4vy Error: transaction Failed"))
+            return
             
-        // Popover Only
+            // Popover Only
         case .transactionUpdated, .approvalErrored:
             guard let content = Gr4vyUtility.handleTransactionUpdated(from: message.payload) else {
                 dismissWithEvent(.generalError("Gr4vy Error: transactionUpdated / approvalErrored pass through failed. "))
                 return
             }
-
+            
             rootViewController.sendJavascriptMessage(content) { _, _ in }
             popUpViewController!.dismiss(animated: true, completion: nil)
             return
@@ -164,12 +203,53 @@ extension Gr4vy: Gr4vyInternalDelegate {
             
             self.onEvent?(message)
             return
+            
+            // Apple Pay
+        case .appleStartSession:
+            guard let merchantId = setup.applePayMerchantId else {
+                error(message: "Gr4vy Error: Apple Pay session error - No Merchant ID set in SDK Setup")
+                return
+            }
+            
+            guard let request = handleAppleStartSession(message: message, merchantId: merchantId) else {
+                error(message: "Gr4vy Error: Apple Pay session error")
+                return
+            }
+            guard let paymentVC = PKPaymentAuthorizationViewController(paymentRequest: request) else {
+                error(message: "Gr4vy Error: This device does not support Apple Pay")
+                return
+            }
+            rootViewController.applePayState = .started
+            
+            paymentVC.delegate = rootViewController
+            rootViewController.present(paymentVC, animated: true, completion: nil)
+            
+            return
+            
+        case .appleCompletePayment:
+            rootViewController.applePayState = .started
+            self.rootViewController.sendJavascriptMessage(Gr4vyUtility.generateAppleCompleteSession()) { _, _ in }
         }
+    }
+    
+    func handleAppleStartSession(message: Gr4vyMessage, merchantId: String) -> PKPaymentRequest? {
+        return Gr4vyUtility.handleAppleStartSession(from: message.payload, merchantId: merchantId)
+    }
+    
+    func generateApplePayAuthorized(payment: PKPayment) {
+        rootViewController.sendJavascriptMessage(Gr4vyUtility.generateApplePayAuthorized(from: payment)) { _, _ in }
+    }
+    
+    func handleAppleCancelSession() {
+        rootViewController.sendJavascriptMessage(Gr4vyUtility.generateAppleCancelSession()) { _, _ in }
     }
 }
 
 protocol Gr4vyInternalDelegate {
     func handle(message: Gr4vyMessage)
+    func handleAppleStartSession(message: Gr4vyMessage, merchantId: String) -> PKPaymentRequest?
+    func generateApplePayAuthorized(payment: PKPayment)
+    func handleAppleCancelSession()
     func error(message: String)
 }
 
@@ -188,6 +268,7 @@ struct Gr4vySetup {
     var metadata: [String: String]?
     var paymentSource: Gr4vyPaymentSource?
     var cartItems: [Gr4vyCartItem]?
+    var applePayMerchantId: String?
     var instance: String {
         return environment == .production ? gr4vyId : "sandbox.\(gr4vyId)"
     }
@@ -203,3 +284,92 @@ public struct Gr4vyCartItem {
     let quantity: Int
     let unitAmount: Int
 }
+
+extension Data {
+    var prettyPrintedJSONString: NSString? { /// NSString gives us a nice sanitized debugDescription
+        guard let object = try? JSONSerialization.jsonObject(with: self, options: []),
+              let data = try? JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted]),
+              let prettyPrintedString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else { return nil }
+        
+        return prettyPrintedString
+    }
+}
+
+struct ApplePayPayment: Codable {
+    let paymentData: ApplePayPaymentTokenData // Codable
+    let paymentMethod: ApplePayPaymentMethod // Codable
+    let transactionIdentifier: String
+    
+    init?(token: PKPaymentToken) {
+        guard let paymentData = ApplePayPaymentTokenData(data: token.paymentData),
+              let paymentMethod = ApplePayPaymentMethod(paymentMethod: token.paymentMethod) else {
+            return nil
+        }
+        self.paymentData = paymentData
+        self.paymentMethod = paymentMethod
+        self.transactionIdentifier = token.transactionIdentifier
+    }
+}
+
+struct ApplePayPaymentMethod: Codable {
+    let displayName: String
+    let network: String
+    let type: String
+    let methodType: Int
+    
+    init?(paymentMethod: PKPaymentMethod) {
+        self.type = paymentMethod.type.description
+        self.displayName = paymentMethod.displayName ?? "unknown"
+        self.network = paymentMethod.network?.rawValue ?? "unknown"
+        self.methodType = Int(paymentMethod.type.rawValue)
+    }
+}
+
+extension PKPaymentMethodType: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .credit: return "credit"
+        case .debit: return "debit"
+        case .prepaid: return "prepaid"
+        case .store: return "store"
+        case .eMoney: return "eMoney"
+        default:
+            return "unknown"
+        }
+    }
+}
+
+struct ApplePayPaymentTokenData: Codable {
+    let data: String
+    let header: [String: String]
+    let version: String
+    let signature: String
+    
+    init?(data: Data) {
+        guard let paymentData = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [AnyHashable: AnyHashable] else {
+            return nil
+        }
+        guard let rawData = paymentData["data"] as? String,
+              let rawHeader = paymentData["header"] as? [String: String],
+              let rawVersion = paymentData["version"] as? String,
+              let rawSignature = paymentData["signature"] as? String else {
+            return nil
+        }
+        self.data = rawData
+        self.header = rawHeader
+        self.version = rawVersion
+        self.signature = rawSignature
+        
+    }
+}
+
+struct ApplePayPaymentTokenDataHeader: Codable {
+    let publicKeyHash, ephemeralPublicKey, transactionID: String
+    
+    enum CodingKeys: String, CodingKey {
+        case publicKeyHash, ephemeralPublicKey
+        case transactionID = "transactionId"
+    }
+}
+
+

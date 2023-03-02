@@ -22,7 +22,7 @@ gr4vy-ios doesn't contain any external dependencies.
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'gr4vy-ios', '1.2.0'
+    pod 'gr4vy-ios', '1.3.0'
 end
 ```
 
@@ -84,6 +84,8 @@ These are the parameteres available on the `launch` method:
 | `paymentSource`           | `Optional` | `installment`, `recurring` - Can be used to signal that Embed is used to capture the first transaction for a subscription or an installment. When used, `store` is implied to be `true` and `display` is implied to be `supportsTokenization`. This means that payment options that do not support tokenization are automatically hidden. |
 | `cartItems`               | `Optional` | An optional array of cart item objects, each object must define a `name`, `quantity`, and `unitAmount`.|
 | `environment`| `Optional`       | `.sandbox`, `.production`. Defaults to `.production`. When `.sandbox` is provided the URL will contain `sandbox.GR4VY_ID`. |
+| `applePayMerchantId`| `Optional`       | The Apple merchant ID to be used during Apple Pay transcations |
+
 | `debugMode`| `Optional`       | `true`, `false`. Defaults to `false`, this prints to the console. |
 | `onEvent`                 | `Optional`      | **Please see below for more details.** |
 
@@ -97,21 +99,18 @@ Gr4vy.shared.launch(gr4vyId: [GR4VY_ID],
                             ...
                            onEvent: { event in
                             switch event {
-                              case .transactionFailed(let transactionID, let status, let paymentMethodID):
-                                  // Handle transactionFailed here
-                                  print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID)")
-                                  return
-                              case .transactionCreated(let transactionID, let status, let paymentMethodID):
-                                  // Handle transactionCreated here
-                                  print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID)")
-                                  return
-                              case .generalError(let error):
-                                  // Handle generalError here
-                                  print("Handle generalError here")
-                              case .paymentMethodSelected(let id, let method, let mode):
-                                  // Handle a change in payment method selected here
-                                  print("Handle a change in payment method selected here, ID: \(id), Method: \(method), Mode: \(mode)")
-                                  return
+                            case .transactionFailed(let transactionID, let status, let paymentMethodID):
+                                print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+                                outcomeViewController.outcome = .failure(reason: "transactionFailed")
+                            case .transactionCreated(let transactionID, let status, let paymentMethodID):
+                                print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+                                outcomeViewController.outcome = .success
+                            case .generalError(let error):
+                                print("Error: \(error.description)")
+                                outcomeViewController.outcome = .failure(reason: error.description)
+                            case .paymentMethodSelected(let id, let method, let mode):
+                                print("Handle a change in payment method selected here, ID: \(id ?? "Unknown"), Method: \(method), Mode: \(mode)")
+                                return
                             }
         })
 ```
@@ -163,6 +162,10 @@ Returned when the user selects a payment method.
   "mode": "card"
 }
 ```
+
+### Apple Pay
+
+In order for Apple Pay to be enabled, you must provide a valid Apple merchant ID. The same Apple merchant ID which is set as part of `Signing & Capabilities` within a given Xcode project. Please ensure you provisioning profiles and signing certificates are updated to contain this valid Apple Merchant ID. The SDK will do various checks to ensure the device is capable of Apple Pay and will be enabled if both the device and merchant ID is valid. 
 
 ## License
 

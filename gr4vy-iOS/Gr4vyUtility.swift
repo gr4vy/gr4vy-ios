@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PassKit
 
 struct Gr4vyUtility {
     
@@ -68,14 +69,26 @@ struct Gr4vyUtility {
             optionalData = optionalData + ", buyerId: '\(buyerId)'"
         }
         
+        if deviceSupportsApplePay() {
+            optionalData = optionalData + ", supportedApplePayVersion: 5"
+        }
+        
         let content =
         "window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.\(setup.instance).gr4vy.app', apiUrl: 'https://api.\(setup.instance).gr4vy.app', token: '\(setup.token)', amount: \(setup.amount), country: '\(setup.country)', currency: '\(setup.currency)'"
         +
         optionalData
         +
-       "},})"
+        "},})"
         
         return content
+    }
+    
+    static func generateAppleCompleteSession() -> String {
+        return "window.postMessage({ type: 'appleCompleteSession'})"
+    }
+    
+    static func generateAppleCancelSession() -> String {
+        return "window.postMessage({ type: 'appleCancelSession'})"
     }
     
     static func handleApprovalUrl(from payload: [String: Any]) -> URL? {
@@ -96,21 +109,21 @@ struct Gr4vyUtility {
         }
         
         switch status {
-        // Success statuses
+            // Success statuses
         case "capture_succeeded", "capture_pending", "authorization_succeeded", "authorization_pending":
-            guard let transactionID = data["transactionID"] as? String else {
+            guard let transactionID = data["id"] as? String else {
                 return .generalError("Gr4vy Error: transaction success has failed, no transactionID and/or paymentMethodID found")
             }
             return .transactionCreated(transactionID: transactionID, status: status, paymentMethodID: data["paymentMethodID"] as? String)
             
-        // Failure statuses
+            // Failure statuses
         case "capture_declined", "authorization_failed":
-            guard let transactionID = data["transactionID"] as? String else {
+            guard let transactionID = data["id"] as? String else {
                 return .generalError("Gr4vy Error: transaction failed, no transactionID and/or paymentMethodID found")
             }
             return .transactionFailed(transactionID: transactionID, status: status, paymentMethodID: data["paymentMethodID"] as? String)
         default:
-            guard let transactionID = data["transactionID"] as? String else {
+            guard let transactionID = data["id"] as? String else {
                 return .generalError("Gr4vy Error: transaction failed, no transactionID and/or paymentMethodID found")
             }
             return .transactionFailed(transactionID: transactionID, status: status, paymentMethodID: data["paymentMethodID"] as? String)
@@ -127,11 +140,81 @@ struct Gr4vyUtility {
     
     static func handlePaymentSelected(from payload: [String: Any]) -> Gr4vyEvent? {
         guard let data = payload["data"] as? [String: String],
-                let method = data["method"],
-                let mode = data["mode"] else {
+              let method = data["method"],
+              let mode = data["mode"] else {
             return nil
         }
         
         return .paymentMethodSelected(id: data["id"], method: method, mode: mode)
+    }
+    
+    static func generateApplePayAuthorized(from payment: PKPayment) -> String {
+        let token = payment.token.paymentData.prettyPrintedJSONString!.replacingOccurrences(of: "\n", with: "")
+        let content =
+        "window.postMessage({ type: 'applePayAuthorized', data: { 'payment_data': \(token) } })"
+        return content
+    }
+    
+    static func handleAppleStartSession(from payload: [String: Any], merchantId: String) -> PKPaymentRequest? {
+        guard let data = payload["data"] as? [String: Any],
+              let _ = data["supportedNetworks"] as? [String],
+              let countryCode = data["countryCode"] as? String,
+              let currencyCode = data["currencyCode"] as? String,
+              let total = data["total"] as? [String: Any],
+              let value = total["label"] as? String,
+              let amount = total["amount"] as? String else {
+            return nil
+        }
+        
+        let paymentItem = PKPaymentSummaryItem.init(label: value, amount: NSDecimalNumber(string: amount))
+        
+        let paymentNetworks = [
+            PKPaymentNetwork.amex,
+            PKPaymentNetwork.cartesBancaires,
+            PKPaymentNetwork.discover,
+            PKPaymentNetwork.eftpos,
+            PKPaymentNetwork.electron,
+            PKPaymentNetwork.elo,
+            PKPaymentNetwork.interac,
+            PKPaymentNetwork.JCB,
+            PKPaymentNetwork.mada,
+            PKPaymentNetwork.maestro,
+            PKPaymentNetwork.masterCard,
+            PKPaymentNetwork.privateLabel,
+            PKPaymentNetwork.visa,
+            PKPaymentNetwork.vPay
+        ]
+        
+        guard deviceSupportsApplePay(paymentNetworks: paymentNetworks) else {
+            return nil
+        }
+        
+        let request = PKPaymentRequest()
+        request.currencyCode = currencyCode
+        request.countryCode = countryCode
+        request.merchantCapabilities = PKMerchantCapability.capability3DS
+        request.merchantIdentifier = merchantId
+        request.supportedNetworks = paymentNetworks
+        request.paymentSummaryItems = [paymentItem]
+        return request
+        
+    }
+    
+    static func deviceSupportsApplePay(paymentNetworks: [PKPaymentNetwork] = [PKPaymentNetwork.amex,
+                                                                              PKPaymentNetwork.cartesBancaires,
+                                                                              PKPaymentNetwork.discover,
+                                                                              PKPaymentNetwork.eftpos,
+                                                                              PKPaymentNetwork.electron,
+                                                                              PKPaymentNetwork.elo,
+                                                                              PKPaymentNetwork.interac,
+                                                                              PKPaymentNetwork.JCB,
+                                                                              PKPaymentNetwork.mada,
+                                                                              PKPaymentNetwork.maestro,
+                                                                              PKPaymentNetwork.masterCard,
+                                                                              PKPaymentNetwork.privateLabel,
+                                                                              PKPaymentNetwork.visa,
+                                                                              PKPaymentNetwork.vPay]) -> Bool {
+        return PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: paymentNetworks)
+        
     }
 }

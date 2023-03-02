@@ -7,15 +7,17 @@
 
 import UIKit
 import WebKit
+import PassKit
 
 public class Gr4vyViewController: UIViewController , WKNavigationDelegate {
     
     var delegate: Gr4vyInternalDelegate?
     var url: URLRequest!
+    var applePayState: ApplePayState = .started
     
     private let postMessageHandler = "nativeapp"
     private var webView = WKWebView()
-     
+    
     deinit {
         webView.stopLoading()
         webView.configuration.userContentController.removeScriptMessageHandler(forName: postMessageHandler)
@@ -71,7 +73,7 @@ public class Gr4vyViewController: UIViewController , WKNavigationDelegate {
     }
     
     private func setupWKWebViewConstraints() {
-        webView.frame = view.bounds;
+        webView.frame = view.bounds
         webView.navigationDelegate = self
         webView.scrollView.bounces = false
         webView.scrollView.showsVerticalScrollIndicator = false
@@ -79,7 +81,7 @@ public class Gr4vyViewController: UIViewController , WKNavigationDelegate {
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(webView)
     }
-
+    
     private func setupWKWebViewJavascriptHandler() {
         webView.configuration.userContentController.add(self, name: postMessageHandler)
     }
@@ -112,5 +114,26 @@ extension Gr4vyViewController: WKScriptMessageHandler {
         }
         
         delegate?.handle(message: Gr4vyMessage(type: type, payload: dict))
+        
     }
+}
+
+extension Gr4vyViewController: PKPaymentAuthorizationViewControllerDelegate {
+    public func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
+        if applePayState == .started {
+            delegate?.handleAppleCancelSession()
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    public func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
+        applePayState = .authorized
+        delegate?.generateApplePayAuthorized(payment: payment)
+        return completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
+    }
+}
+
+enum ApplePayState {
+    case started
+    case authorized
 }

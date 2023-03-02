@@ -19,7 +19,11 @@ struct Gr4vyMessage {
         // Embed → Embed UI
         case approvalErrored
         case transactionUpdated
+        case transactionFailed
         // Other
         case paymentMethodSelected
+        // Apple pay
+        case appleStartSession
+        case appleCompletePayment
     }
 }
