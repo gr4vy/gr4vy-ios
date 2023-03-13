@@ -43,19 +43,32 @@ $ arch -x86_64 pod install
 To use Gr4vy Embed, import the library and call the `.launch()` method.
 
 ```swift 
-import gr4vy_iOS
+import gr4vy_ios
 ```
 
 ```swift
-Gr4vy.shared.launch(gr4vyId: [GR4VY_ID],
-                           token: [TOKEN],
+let result = Gr4vy.init(gr4vyId: "[GR4VY_ID]",
+                           token: "[TOKEN]",
                            amount: 1299,
                            currency: "USD",
                            country: "US",
-                           presentingViewController: self,
-                           onEvent: { event in
-                            // Handle the events sent via Gr4vy. See below.
-        })
+                           buyerId: nil,
+                           environment: Gr4vyEnvironment.sandbox,
+                           applePayMerchantId: "[APPLE_PAY_MERCHANTID]"
+        )
+result?.launch(presentingViewController: self, onEvent: { event in
+    switch event {
+    case .transactionFailed(let transactionID, let status, let paymentMethodID):
+        print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+    case .transactionCreated(let transactionID, let status, let paymentMethodID):
+        print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+    case .generalError(let error):
+        print("Error: \(error.description)")
+    case .paymentMethodSelected(let id, let method, let mode):
+        print("Handle a change in payment method selected here, ID: \(id ?? "Unknown"), Method: \(method), Mode: \(mode)")
+        return
+    }
+})
 ```
 
 > **Note**: 
@@ -165,7 +178,7 @@ Returned when the user selects a payment method.
 
 ### Apple Pay
 
-In order for Apple Pay to be enabled, you must provide a valid Apple merchant ID. The same Apple merchant ID which is set as part of `Signing & Capabilities` within a given Xcode project. Please ensure you provisioning profiles and signing certificates are updated to contain this valid Apple Merchant ID. The SDK will do various checks to ensure the device is capable of Apple Pay and will be enabled if both the device and merchant ID is valid. 
+To enable Apple Pay in your iOS project, you will need to pass the configured `applePayMerchantId` to the SDK in the `Gr4vy.init()` call.  In addition you'll need to enable Apple Pay within the `Signing & Capabilities` Xcode project settings and set the Apple Pay `Merchant IDs` (NOTE: ensure your provisioning profiles and signing certificates are updated to contain this valid Apple Merchant ID). The SDK will do various checks to ensure the device is capable of Apple Pay and will be enabled if both the device and merchant ID is valid. 
 
 ## License
 
