@@ -5,7 +5,7 @@
 //
 
 import SwiftUI
-import gr4vy_iOS
+import gr4vy_ios
 
 struct CheckoutView: View {
     
@@ -28,6 +28,30 @@ struct CheckoutView: View {
                           country: "GB",
                           buyerId: buyerId,
                           environment: .sandbox,
+                          theme: Gr4vyTheme(fonts: Gr4vyFonts(body: "google:Lato, Tahoma, Arial"),
+                                            colors: Gr4vyColours(text: "#fff",
+                                                                 subtleText: "#a1b0bd",
+                                                                 labelText: "#fff",
+                                                                 primary: "#fff",
+                                                                 pageBackground: "#1d334b",
+                                                                 containerBackgroundUnchecked: "#1d334b",
+                                                                 containerBackground: "#2c4765",
+                                                                 containerBorder: "#304c6a",
+                                                                 inputBorder: "#f2f2f2",
+                                                                 inputBackground: "#2a4159",
+                                                                 inputText: "#fff",
+                                                                 danger: "#ff556a",
+                                                                 dangerBackground: "#2c4765",
+                                                                 dangerText: "#fff",
+                                                                 info: "#3ea2ff",
+                                                                 infoBackground: "#e7f2fb",
+                                                                 infoText: "#0367c4",
+                                                                 focus: "#4844ff",
+                                                                 headerText: "#ffffff",
+                                                                 headerBackground: "#2c4765"),
+                                            borderWidths: Gr4vyBorderWidths(container: "thin", input: "thin"),
+                                            radii: Gr4vyRadii(container: "subtle", input: "subtle"),
+                                            shadows: Gr4vyShadows(focusRing: "0 0 0 2px #ffffff, 0 0 0 4px #4844ff")),
                           onEvent: { event in
             switch event {
             case .transactionFailed(let transactionID, let status, let paymentMethodID):

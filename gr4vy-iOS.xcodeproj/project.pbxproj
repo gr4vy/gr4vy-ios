@@ -11,11 +11,11 @@
 		592C4BC028BF9AEF00063AC7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 592C4BBF28BF9AEF00063AC7 /* Assets.xcassets */; };
 		592C4BC328BF9AEF00063AC7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 592C4BC228BF9AEF00063AC7 /* Preview Assets.xcassets */; };
 		592C4BC828BF9EAB00063AC7 /* CheckoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592C4BC728BF9EAB00063AC7 /* CheckoutView.swift */; };
-		592C4BCF28C0FE8B00063AC7 /* gr4vy_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5978B285271C7F1300F5CC00 /* gr4vy_iOS.framework */; platformFilter = ios; };
-		592C4BD028C0FE8B00063AC7 /* gr4vy_iOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5978B285271C7F1300F5CC00 /* gr4vy_iOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		592C4BCF28C0FE8B00063AC7 /* gr4vy_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5978B285271C7F1300F5CC00 /* gr4vy_ios.framework */; platformFilter = ios; };
+		592C4BD028C0FE8B00063AC7 /* gr4vy_ios.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5978B285271C7F1300F5CC00 /* gr4vy_ios.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		592F9FE8278CCB7A00A8D538 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 592F9FE7278CCB7A00A8D538 /* README.md */; };
 		5978B28A271C7F1300F5CC00 /* gr4vy_iOS.docc in Sources */ = {isa = PBXBuildFile; fileRef = 5978B289271C7F1300F5CC00 /* gr4vy_iOS.docc */; };
-		5978B290271C7F1400F5CC00 /* gr4vy_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5978B285271C7F1300F5CC00 /* gr4vy_iOS.framework */; };
+		5978B290271C7F1400F5CC00 /* gr4vy_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5978B285271C7F1300F5CC00 /* gr4vy_ios.framework */; };
 		5978B295271C7F1400F5CC00 /* gr4vy_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5978B294271C7F1400F5CC00 /* gr4vy_iOSTests.swift */; };
 		5978B296271C7F1400F5CC00 /* gr4vy_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 5978B288271C7F1300F5CC00 /* gr4vy_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5986DBF42785EBD800D0A458 /* Gr4vyUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5986DBF32785EBD800D0A458 /* Gr4vyUtility.swift */; };
@@ -33,8 +33,8 @@
 		59FE69642722BBB3006C1C08 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59FE69622722BBB3006C1C08 /* LaunchScreen.storyboard */; };
 		59FE696A2722BBD7006C1C08 /* Gr4vyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE69692722BBD7006C1C08 /* Gr4vyViewController.swift */; };
 		59FE696C2722BC38006C1C08 /* CheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE696B2722BC38006C1C08 /* CheckoutViewController.swift */; };
-		59FE69722722C131006C1C08 /* gr4vy_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5978B285271C7F1300F5CC00 /* gr4vy_iOS.framework */; };
-		59FE69732722C131006C1C08 /* gr4vy_iOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5978B285271C7F1300F5CC00 /* gr4vy_iOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		59FE69722722C131006C1C08 /* gr4vy_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5978B285271C7F1300F5CC00 /* gr4vy_ios.framework */; };
+		59FE69732722C131006C1C08 /* gr4vy_ios.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5978B285271C7F1300F5CC00 /* gr4vy_ios.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		59FE6978272C1188006C1C08 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE6977272C1188006C1C08 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -69,7 +69,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				592C4BD028C0FE8B00063AC7 /* gr4vy_iOS.framework in Embed Frameworks */,
+				592C4BD028C0FE8B00063AC7 /* gr4vy_ios.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -80,7 +80,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				59FE69732722C131006C1C08 /* gr4vy_iOS.framework in Embed Frameworks */,
+				59FE69732722C131006C1C08 /* gr4vy_ios.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,10 +96,10 @@
 		592C4BD428C1059B00063AC7 /* Gr4vy UIKit Sample App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Gr4vy UIKit Sample App.entitlements"; sourceTree = "<group>"; };
 		592C4BD528C8D97400063AC7 /* Gr4vy SwiftUI Sample App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Gr4vy SwiftUI Sample App.entitlements"; sourceTree = "<group>"; };
 		592F9FE7278CCB7A00A8D538 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		5978B285271C7F1300F5CC00 /* gr4vy_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = gr4vy_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5978B285271C7F1300F5CC00 /* gr4vy_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = gr4vy_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5978B288271C7F1300F5CC00 /* gr4vy_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gr4vy_iOS.h; sourceTree = "<group>"; };
 		5978B289271C7F1300F5CC00 /* gr4vy_iOS.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = gr4vy_iOS.docc; sourceTree = "<group>"; };
-		5978B28F271C7F1400F5CC00 /* gr4vy-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "gr4vy-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5978B28F271C7F1400F5CC00 /* gr4vy-iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "gr4vy-iosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5978B294271C7F1400F5CC00 /* gr4vy_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gr4vy_iOSTests.swift; sourceTree = "<group>"; };
 		5986DBF32785EBD800D0A458 /* Gr4vyUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vyUtility.swift; sourceTree = "<group>"; };
 		59880819274D7FF100099FD5 /* OutcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomeViewController.swift; sourceTree = "<group>"; };
@@ -126,7 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				592C4BCF28C0FE8B00063AC7 /* gr4vy_iOS.framework in Frameworks */,
+				592C4BCF28C0FE8B00063AC7 /* gr4vy_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,7 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5978B290271C7F1400F5CC00 /* gr4vy_iOS.framework in Frameworks */,
+				5978B290271C7F1400F5CC00 /* gr4vy_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,7 +149,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59FE69722722C131006C1C08 /* gr4vy_iOS.framework in Frameworks */,
+				59FE69722722C131006C1C08 /* gr4vy_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,8 +193,8 @@
 		5978B286271C7F1300F5CC00 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5978B285271C7F1300F5CC00 /* gr4vy_iOS.framework */,
-				5978B28F271C7F1400F5CC00 /* gr4vy-iOSTests.xctest */,
+				5978B285271C7F1300F5CC00 /* gr4vy_ios.framework */,
+				5978B28F271C7F1400F5CC00 /* gr4vy-iosTests.xctest */,
 				59FE69552722BBB2006C1C08 /* Gr4vy UIKit Sample App.app */,
 				592C4BB928BF9AEE00063AC7 /* Gr4vy SwiftUI Sample App.app */,
 			);
@@ -282,9 +282,9 @@
 			productReference = 592C4BB928BF9AEE00063AC7 /* Gr4vy SwiftUI Sample App.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5978B284271C7F1300F5CC00 /* gr4vy-iOS */ = {
+		5978B284271C7F1300F5CC00 /* gr4vy-ios */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5978B299271C7F1400F5CC00 /* Build configuration list for PBXNativeTarget "gr4vy-iOS" */;
+			buildConfigurationList = 5978B299271C7F1400F5CC00 /* Build configuration list for PBXNativeTarget "gr4vy-ios" */;
 			buildPhases = (
 				5978B280271C7F1300F5CC00 /* Headers */,
 				5978B281271C7F1300F5CC00 /* Sources */,
@@ -295,14 +295,14 @@
 			);
 			dependencies = (
 			);
-			name = "gr4vy-iOS";
+			name = "gr4vy-ios";
 			productName = "gr4vy-iOS";
-			productReference = 5978B285271C7F1300F5CC00 /* gr4vy_iOS.framework */;
+			productReference = 5978B285271C7F1300F5CC00 /* gr4vy_ios.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		5978B28E271C7F1400F5CC00 /* gr4vy-iOSTests */ = {
+		5978B28E271C7F1400F5CC00 /* gr4vy-iosTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5978B29C271C7F1400F5CC00 /* Build configuration list for PBXNativeTarget "gr4vy-iOSTests" */;
+			buildConfigurationList = 5978B29C271C7F1400F5CC00 /* Build configuration list for PBXNativeTarget "gr4vy-iosTests" */;
 			buildPhases = (
 				5978B28B271C7F1400F5CC00 /* Sources */,
 				5978B28C271C7F1400F5CC00 /* Frameworks */,
@@ -313,9 +313,9 @@
 			dependencies = (
 				5978B292271C7F1400F5CC00 /* PBXTargetDependency */,
 			);
-			name = "gr4vy-iOSTests";
+			name = "gr4vy-iosTests";
 			productName = "gr4vy-iOSTests";
-			productReference = 5978B28F271C7F1400F5CC00 /* gr4vy-iOSTests.xctest */;
+			productReference = 5978B28F271C7F1400F5CC00 /* gr4vy-iosTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		59FE69542722BBB2006C1C08 /* Gr4vy UIKit Sample App */ = {
@@ -361,7 +361,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5978B27F271C7F1300F5CC00 /* Build configuration list for PBXProject "gr4vy-iOS" */;
+			buildConfigurationList = 5978B27F271C7F1300F5CC00 /* Build configuration list for PBXProject "gr4vy-ios" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -374,8 +374,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5978B284271C7F1300F5CC00 /* gr4vy-iOS */,
-				5978B28E271C7F1400F5CC00 /* gr4vy-iOSTests */,
+				5978B284271C7F1300F5CC00 /* gr4vy-ios */,
+				5978B28E271C7F1400F5CC00 /* gr4vy-iosTests */,
 				59FE69542722BBB2006C1C08 /* Gr4vy UIKit Sample App */,
 				592C4BB828BF9AEE00063AC7 /* Gr4vy SwiftUI Sample App */,
 			);
@@ -471,17 +471,17 @@
 		592C4BD228C0FE8B00063AC7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			platformFilter = ios;
-			target = 5978B284271C7F1300F5CC00 /* gr4vy-iOS */;
+			target = 5978B284271C7F1300F5CC00 /* gr4vy-ios */;
 			targetProxy = 592C4BD128C0FE8B00063AC7 /* PBXContainerItemProxy */;
 		};
 		5978B292271C7F1400F5CC00 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5978B284271C7F1300F5CC00 /* gr4vy-iOS */;
+			target = 5978B284271C7F1300F5CC00 /* gr4vy-ios */;
 			targetProxy = 5978B291271C7F1400F5CC00 /* PBXContainerItemProxy */;
 		};
 		59FE69752722C132006C1C08 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5978B284271C7F1300F5CC00 /* gr4vy-iOS */;
+			target = 5978B284271C7F1300F5CC00 /* gr4vy-ios */;
 			targetProxy = 59FE69742722C132006C1C08 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -864,7 +864,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5978B27F271C7F1300F5CC00 /* Build configuration list for PBXProject "gr4vy-iOS" */ = {
+		5978B27F271C7F1300F5CC00 /* Build configuration list for PBXProject "gr4vy-ios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5978B297271C7F1400F5CC00 /* Debug */,
@@ -873,7 +873,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5978B299271C7F1400F5CC00 /* Build configuration list for PBXNativeTarget "gr4vy-iOS" */ = {
+		5978B299271C7F1400F5CC00 /* Build configuration list for PBXNativeTarget "gr4vy-ios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5978B29A271C7F1400F5CC00 /* Debug */,
@@ -882,7 +882,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5978B29C271C7F1400F5CC00 /* Build configuration list for PBXNativeTarget "gr4vy-iOSTests" */ = {
+		5978B29C271C7F1400F5CC00 /* Build configuration list for PBXNativeTarget "gr4vy-iosTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5978B29D271C7F1400F5CC00 /* Debug */,

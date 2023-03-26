@@ -6,15 +6,16 @@
 //
 
 import UIKit
-import gr4vy_iOS
+import gr4vy_ios
 
 class CheckoutViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Checkout"
+        
     }
-
+    
     @IBAction func checkout(_ sender: Any) {
         
         // TODO: Set your own token, buyerID and gr4vyID here
@@ -29,32 +30,59 @@ class CheckoutViewController: UIViewController {
                                 country: "GB",
                                 buyerId: buyerId,
                                 environment: .sandbox,
-                                debugMode: true) else {
+                                theme: Gr4vyTheme(fonts: Gr4vyFonts(body: "google:Lato, Tahoma, Arial"),
+                                                  colors: Gr4vyColours(text: "#fff",
+                                                                       subtleText: "#a1b0bd",
+                                                                       labelText: "#fff",
+                                                                       primary: "#fff",
+                                                                       pageBackground: "#1d334b",
+                                                                       containerBackgroundUnchecked: "#1d334b",
+                                                                       containerBackground: "#2c4765",
+                                                                       containerBorder: "#304c6a",
+                                                                       inputBorder: "#f2f2f2",
+                                                                       inputBackground: "#2a4159",
+                                                                       inputText: "#fff",
+                                                                       danger: "#ff556a",
+                                                                       dangerBackground: "#2c4765",
+                                                                       dangerText: "#fff",
+                                                                       info: "#3ea2ff",
+                                                                       infoBackground: "#e7f2fb",
+                                                                       infoText: "#0367c4",
+                                                                       focus: "#4844ff",
+                                                                       headerText: "#ffffff",
+                                                                       headerBackground: "#2c4765"),
+                                                  borderWidths: Gr4vyBorderWidths(container: "thin", input: "thin"),
+                                                  radii: Gr4vyRadii(container: "subtle", input: "subtle"),
+                                                  shadows: Gr4vyShadows(focusRing: "0 0 0 2px #ffffff, 0 0 0 4px #4844ff")),
+                                requireSecurityCode: true,
+                                shippingDetailsId: "shippingDetailsId",
+                                debugMode: true
+        ) else {
             print("Unable to load Gr4vy")
             return
         }
         
         gr4vy.launch(
             presentingViewController: self,
-                           onEvent: { event in
-                            let outcomeViewController = OutcomeViewController(nibName: "OutcomeViewController",
-                                                                              bundle:  nil)
-                            switch event {
-                            case .transactionFailed(let transactionID, let status, let paymentMethodID):
-                                print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
-                                outcomeViewController.outcome = .failure(reason: "transactionFailed")
-                            case .transactionCreated(let transactionID, let status, let paymentMethodID):
-                                print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
-                                outcomeViewController.outcome = .success
-                            case .generalError(let error):
-                                print("Error: \(error.description)")
-                                outcomeViewController.outcome = .failure(reason: error.description)
-                            case .paymentMethodSelected(let id, let method, let mode):
-                                print("Handle a change in payment method selected here, ID: \(id ?? "Unknown"), Method: \(method), Mode: \(mode)")
-                                return
-                            }
-                            
-                            self.present(outcomeViewController, animated: true, completion: nil)
-        })
+            onEvent: { event in
+                let outcomeViewController = OutcomeViewController(nibName: "OutcomeViewController",
+                                                                  bundle:  nil)
+                switch event {
+                case .transactionFailed(let transactionID, let status, let paymentMethodID):
+                    print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+                    outcomeViewController.outcome = .failure(reason: "transactionFailed")
+                case .transactionCreated(let transactionID, let status, let paymentMethodID):
+                    print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+                    outcomeViewController.outcome = .success
+                case .generalError(let error):
+                    print("Error: \(error.description)")
+                    outcomeViewController.outcome = .failure(reason: error.description)
+                case .paymentMethodSelected(let id, let method, let mode):
+                    print("Handle a change in payment method selected here, ID: \(id ?? "Unknown"), Method: \(method), Mode: \(mode)")
+                    return
+                }
+                
+                self.present(outcomeViewController, animated: true, completion: nil)
+            })
     }
 }

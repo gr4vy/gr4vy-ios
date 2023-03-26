@@ -73,6 +73,30 @@ struct Gr4vyUtility {
             optionalData = optionalData + ", supportedApplePayVersion: 5"
         }
         
+        if let theme = setup.theme {
+            optionalData = optionalData + ", theme: \(theme.toString())"
+        }
+        
+        if let buyerExternalIdentifier = setup.buyerExternalIdentifier {
+            optionalData = optionalData + ", buyerExternalIdentifier: '\(buyerExternalIdentifier)'"
+        }
+        
+        if let locale = setup.locale {
+            optionalData = optionalData + ", locale: '\(locale)'"
+        }
+    
+        if let statementDescriptor = setup.statementDescriptor {
+            optionalData = optionalData + ", statementDescriptor: \(statementDescriptor.toString())"
+        }
+        
+        if let requireSecurityCode = setup.requireSecurityCode {
+            optionalData = optionalData + ", requireSecurityCode: '\(requireSecurityCode.description)'"
+        }
+        
+        if let shippingDetailsId = setup.shippingDetailsId {
+            optionalData = optionalData + ", shippingDetailsId: '\(shippingDetailsId)'"
+        }
+        
         let content =
         "window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.\(setup.instance).gr4vy.app', apiUrl: 'https://api.\(setup.instance).gr4vy.app', token: '\(setup.token)', amount: \(setup.amount), country: '\(setup.country)', currency: '\(setup.currency)'"
         +
@@ -89,6 +113,10 @@ struct Gr4vyUtility {
     
     static func generateAppleCancelSession() -> String {
         return "window.postMessage({ type: 'appleCancelSession'})"
+    }
+    
+    static func generateApprovalCancelled() -> String {
+        return "window.postMessage({ type: 'approvalCancelled'})"
     }
     
     static func handleApprovalUrl(from payload: [String: Any]) -> URL? {

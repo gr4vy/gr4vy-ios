@@ -14,6 +14,7 @@ public class Gr4vyViewController: UIViewController , WKNavigationDelegate {
     var delegate: Gr4vyInternalDelegate?
     var url: URLRequest!
     var applePayState: ApplePayState = .started
+    var theme: Gr4vyTheme?
     
     private let postMessageHandler = "nativeapp"
     private var webView = WKWebView()
@@ -24,6 +25,31 @@ public class Gr4vyViewController: UIViewController , WKNavigationDelegate {
         webView.navigationDelegate = nil
         webView.scrollView.delegate = nil
         webView = WKWebView()
+    }
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let theme = theme {
+            if theme.navigationTextColor == nil && theme.navigationBackgroundColor == nil {
+                return
+            }
+            
+            self.edgesForExtendedLayout = []
+            
+            let navigationBarAppearance = UINavigationBarAppearance()
+            navigationBarAppearance.configureWithDefaultBackground()
+            if let navigationBackgroundColor = theme.navigationBackgroundColor {
+                navigationBarAppearance.backgroundColor = navigationBackgroundColor
+            }
+            if let navigationTextColor = theme.navigationTextColor {
+                navigationBarAppearance.titleTextAttributes = [.foregroundColor: navigationTextColor]
+                navigationController?.navigationBar.tintColor = navigationTextColor
+            }
+            
+            navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+            navigationController?.navigationBar.compactAppearance = navigationBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+        }
     }
     
     public override func viewDidLoad() {
@@ -68,6 +94,7 @@ public class Gr4vyViewController: UIViewController , WKNavigationDelegate {
         if webView.canGoBack {
             webView.goBack()
         } else {
+            delegate?.handleApprovalCancelled()
             self.dismiss(animated: true, completion: nil)
         }
     }

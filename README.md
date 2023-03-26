@@ -22,7 +22,7 @@ gr4vy-ios doesn't contain any external dependencies.
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'gr4vy-ios', '1.3.0'
+    pod 'gr4vy-ios', '1.4.0'
 end
 ```
 
@@ -43,24 +43,67 @@ $ arch -x86_64 pod install
 To use Gr4vy Embed, import the library and call the `.launch()` method.
 
 ```swift 
-import gr4vy_iOS
+import gr4vy_ios
+```
+### UIKit
+```swift
+let gr4vy = Gr4vy(gr4vyId: "[GR4VY_ID]",
+                  token: "[TOKEN]",
+                  amount: 1299,
+                  currency: "USD",
+                  country: "US",
+                  applePayMerchantId: "[APPLE_PAY_MERCHANTID]" // Optional, ensure this is added to enable Apple Pay
+)
+
+gr4vy?.launch(
+    presentingViewController: self,
+    onEvent: { event in
+        switch event {
+        case .transactionFailed(let transactionID, let status, let paymentMethodID):
+            print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+        case .transactionCreated(let transactionID, let status, let paymentMethodID):
+            print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+        case .generalError(let error):
+            print("Error: \(error.description)")
+        case .paymentMethodSelected(let id, let method, let mode):
+            print("Handle a change in payment method selected here, ID: \(id ?? "Unknown"), Method: \(method), Mode: \(mode)")
+            return
+        }
+    })
 ```
 
+### SwiftUI
 ```swift
-Gr4vy.shared.launch(gr4vyId: [GR4VY_ID],
-                           token: [TOKEN],
-                           amount: 1299,
-                           currency: "USD",
-                           country: "US",
-                           presentingViewController: self,
-                           onEvent: { event in
-                            // Handle the events sent via Gr4vy. See below.
-        })
+let gr4vy = Gr4vy(gr4vyId: "[GR4VY_ID]",
+                  token: "[TOKEN]",
+                  amount: 1299,
+                  currency: "USD",
+                  country: "USD",
+                  applePayMerchantId: "[APPLE_PAY_MERCHANTID]" // Optional, ensure this is added to enable Apple Pay
+                  onEvent: { event in
+    switch event {
+    case .transactionFailed(let transactionID, let status, let paymentMethodID):
+        print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+    case .transactionCreated(let transactionID, let status, let paymentMethodID):
+        print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+    case .generalError(let error):
+        print("Error: \(error.description)")
+    case .paymentMethodSelected(let id, let method, let mode):
+        print("Handle a change in payment method selected here, ID: \(id ?? "Unknown"), Method: \(method), Mode: \(mode)")
+        return
+    }
+})
+
+// Then whenever the view is needed:
+gr4vy?.view()
 ```
+
+
 
 > **Note**: 
-> Replace `[GR4VY_ID]` with the ID of your instance. 
-> Replace `[TOKEN]` with your JWT access token (See any of our [server-side SDKs](https://github.com/gr4vy?q=sdk) for more details.). 
+> Replace `"[GR4VY_ID]"` with the ID of your instance. 
+> Replace `"[TOKEN]"` with your JWT access token (See any of our [server-side SDKs](https://github.com/gr4vy?q=sdk) for more details.). 
+> Replace `"[APPLE_PAY_MERCHANTID]"` with the merchant ID registered for the bundle ID you want to use.
 > `presentingViewController` is the current view controller this SDK is launched from. gr4vy-ios presents on top of the current view controller, passing events via the `onEvent` callback. 
 
 ### Options
@@ -85,7 +128,12 @@ These are the parameteres available on the `launch` method:
 | `cartItems`               | `Optional` | An optional array of cart item objects, each object must define a `name`, `quantity`, and `unitAmount`.|
 | `environment`| `Optional`       | `.sandbox`, `.production`. Defaults to `.production`. When `.sandbox` is provided the URL will contain `sandbox.GR4VY_ID`. |
 | `applePayMerchantId`| `Optional`       | The Apple merchant ID to be used during Apple Pay transcations |
-
+| `theme`| `Optional`       | Theme customisation options. See [Theming](https://github.com/gr4vy/gr4vy-embed/tree/main/packages/embed#theming). The iOS SDK also contains an additional two properties within the `colors` object; `headerBackground` and `headerText`. These are used for the navigation background and forground colors. |
+| `buyerExternalIdentifier`| `Optional`       | An optional external ID for a Gr4vy buyer. The transaction will automatically be associated to a buyer with that external ID. If no buyer with this external ID exists then it will be ignored. This option is ignored if the `buyerId` is provided. |
+| `locale`| `Optional`       | An optional locale, this consists of a `ISO 639 Language Code` followed by an optional `ISO 3166 Country Code`, e.g. `en`, `en-gb` or `pt-br`. |
+| `statementDescriptor`| `Optional`       | An optional object with information about the purchase to construct the statement information the buyer will see in their bank statement. Please note support for these fields varies across payment service providers and underlying banks, so Gr4vy can only ensure a best effort approach for each supported platform. As an example, most platforms will only support a concatenation of `name` and `description` fields, this is truncated to a length of 22 characters within embed. The object can contain `name`, `description`, `phoneNumber`, `city` and `url` properties, with string values. `phoneNumber` should be in E164 format. Gr4vy recommends avoiding characters outside the alphanumeric range and the dot (`.`) to ensure wide compatibility. |
+| `requireSecurityCode`| `Optional`       | An optional boolean which forces security code to be prompted for stored card payments. |
+| `shippingDetailsId`| `Optional`       | An optional unique identifier of a set of shipping details stored for the buyer. |
 | `debugMode`| `Optional`       | `true`, `false`. Defaults to `false`, this prints to the console. |
 | `onEvent`                 | `Optional`      | **Please see below for more details.** |
 
@@ -95,24 +143,21 @@ These are the parameteres available on the `launch` method:
 The `onEvent` option can be used to listen to certain events emitted from the SDK.
 
 ```swift
-Gr4vy.shared.launch(gr4vyId: [GR4VY_ID],
-                            ...
-                           onEvent: { event in
-                            switch event {
-                            case .transactionFailed(let transactionID, let status, let paymentMethodID):
-                                print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
-                                outcomeViewController.outcome = .failure(reason: "transactionFailed")
-                            case .transactionCreated(let transactionID, let status, let paymentMethodID):
-                                print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
-                                outcomeViewController.outcome = .success
-                            case .generalError(let error):
-                                print("Error: \(error.description)")
-                                outcomeViewController.outcome = .failure(reason: error.description)
-                            case .paymentMethodSelected(let id, let method, let mode):
-                                print("Handle a change in payment method selected here, ID: \(id ?? "Unknown"), Method: \(method), Mode: \(mode)")
-                                return
-                            }
-        })
+onEvent: { event in
+ switch event {
+ case .transactionFailed(let transactionID, let status, let paymentMethodID):
+     print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+     outcomeViewController.outcome = .failure(reason: "transactionFailed")
+ case .transactionCreated(let transactionID, let status, let paymentMethodID):
+     print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+     outcomeViewController.outcome = .success
+ case .generalError(let error):
+     print("Error: \(error.description)")
+     outcomeViewController.outcome = .failure(reason: error.description)
+ case .paymentMethodSelected(let id, let method, let mode):
+     print("Handle a change in payment method selected here, ID: \(id ?? "Unknown"), Method: \(method), Mode: \(mode)")
+     return
+ }
 ```
 
 gr4vy-ios emits the following events:
@@ -165,7 +210,7 @@ Returned when the user selects a payment method.
 
 ### Apple Pay
 
-In order for Apple Pay to be enabled, you must provide a valid Apple merchant ID. The same Apple merchant ID which is set as part of `Signing & Capabilities` within a given Xcode project. Please ensure you provisioning profiles and signing certificates are updated to contain this valid Apple Merchant ID. The SDK will do various checks to ensure the device is capable of Apple Pay and will be enabled if both the device and merchant ID is valid. 
+To enable Apple Pay in your iOS project, you will need to pass the configured `applePayMerchantId` to the SDK in the `Gr4vy.init()` call.  In addition you'll need to enable Apple Pay within the `Signing & Capabilities` Xcode project settings and set the Apple Pay `Merchant IDs` (NOTE: ensure your provisioning profiles and signing certificates are updated to contain this valid Apple Merchant ID). The SDK will do various checks to ensure the device is capable of Apple Pay and will be enabled if both the device and merchant ID is valid. 
 
 ## License
 

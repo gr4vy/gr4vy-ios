@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import gr4vy_iOS
+@testable import gr4vy_ios
 
 class gr4vy_iOSTests: XCTestCase {
 

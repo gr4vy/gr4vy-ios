@@ -38,7 +38,7 @@ public class Gr4vy {
                  amount: Int,
                  currency: String,
                  country: String,
-                 buyerId: String?,
+                 buyerId: String? = nil,
                  externalIdentifier: String? = nil,
                  store: String? = nil,
                  display: String? = nil,
@@ -48,6 +48,12 @@ public class Gr4vy {
                  cartItems: [Gr4vyCartItem]? = nil,
                  environment: Gr4vyEnvironment = .production,
                  applePayMerchantId: String? = nil,
+                 theme: Gr4vyTheme? = nil,
+                 buyerExternalIdentifier: String? = nil,
+                 locale: String? = nil,
+                 statementDescriptor: Gr4vyStatementDescriptor? = nil,
+                 requireSecurityCode: Bool? = nil,
+                 shippingDetailsId: String? = nil,
                  debugMode: Bool = false,
                  onEvent: Gr4vyCompletionHandler? = nil) {
         
@@ -65,7 +71,13 @@ public class Gr4vy {
                                 metadata: metadata,
                                 paymentSource: paymentSource,
                                 cartItems: cartItems,
-                                applePayMerchantId: applePayMerchantId)
+                                applePayMerchantId: applePayMerchantId,
+                                theme: theme,
+                                buyerExternalIdentifier: buyerExternalIdentifier,
+                                locale: locale,
+                                statementDescriptor: statementDescriptor,
+                                requireSecurityCode: requireSecurityCode,
+                                shippingDetailsId: shippingDetailsId)
         
         self.debugMode = debugMode
         self.onEvent = onEvent
@@ -78,6 +90,7 @@ public class Gr4vy {
         rootViewController = Gr4vyViewController()
         rootViewController.delegate = self
         rootViewController.url = url
+        rootViewController.theme = theme
     }
     
     public func launch(presentingViewController: UIViewController,
@@ -93,6 +106,7 @@ public class Gr4vy {
         rootViewController = Gr4vyViewController()
         rootViewController.delegate = self
         rootViewController.url = url
+        rootViewController.theme = setup.theme
         
         let navigationController = UINavigationController(rootViewController: rootViewController)
         navigationController.modalPresentationStyle = .overFullScreen
@@ -119,7 +133,6 @@ public class Gr4vy {
 }
 
 extension Gr4vy: Gr4vyInternalDelegate {
-    
     func dismissWithEvent(_ event: Gr4vyEvent) {
         
         // If the popUpViewController is not shown/created, just dismiss the rootViewController
@@ -167,10 +180,11 @@ extension Gr4vy: Gr4vyInternalDelegate {
             popUpViewController = Gr4vyViewController()
             popUpViewController!.delegate = self
             popUpViewController!.url = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData)
+            popUpViewController!.theme = setup.theme
             
             let nav = UINavigationController(rootViewController: popUpViewController!)
             nav.modalPresentationStyle = .overFullScreen
-            
+
             rootViewController.present(nav, animated: true, completion: nil)
             return
             
@@ -243,6 +257,10 @@ extension Gr4vy: Gr4vyInternalDelegate {
     func handleAppleCancelSession() {
         rootViewController.sendJavascriptMessage(Gr4vyUtility.generateAppleCancelSession()) { _, _ in }
     }
+    
+    func handleApprovalCancelled() {
+        rootViewController.sendJavascriptMessage(Gr4vyUtility.generateApprovalCancelled()) { _, _ in }
+    }
 }
 
 protocol Gr4vyInternalDelegate {
@@ -250,8 +268,8 @@ protocol Gr4vyInternalDelegate {
     func handleAppleStartSession(message: Gr4vyMessage, merchantId: String) -> PKPaymentRequest?
     func generateApplePayAuthorized(payment: PKPayment)
     func handleAppleCancelSession()
-    func error(message: String)
-}
+    func handleApprovalCancelled()
+    func error(message: String)}
 
 struct Gr4vySetup {
     var gr4vyId: String
@@ -269,8 +287,243 @@ struct Gr4vySetup {
     var paymentSource: Gr4vyPaymentSource?
     var cartItems: [Gr4vyCartItem]?
     var applePayMerchantId: String?
+    var theme: Gr4vyTheme?
+    var buyerExternalIdentifier: String?
+    var locale: String?
+    var statementDescriptor: Gr4vyStatementDescriptor?
+    var requireSecurityCode: Bool?
+    var shippingDetailsId: String?
     var instance: String {
         return environment == .production ? gr4vyId : "sandbox.\(gr4vyId)"
+    }
+}
+
+public struct Gr4vyTheme {
+    
+    let fonts: Gr4vyFonts?
+    let colors: Gr4vyColours?
+    let borderWidths: Gr4vyBorderWidths?
+    let radii: Gr4vyRadii?
+    let shadows: Gr4vyShadows?
+    var navigationBackgroundColor: UIColor? {
+        guard let headerBackground = colors?.headerBackground else {
+            return nil
+        }
+        return hexStringToUIColor(hex: headerBackground)
+    }
+    var navigationTextColor: UIColor? {
+        guard let headerText = colors?.headerText else {
+            return nil
+        }
+        return hexStringToUIColor(hex: headerText)
+    }
+    
+    public init(fonts: Gr4vyFonts? = nil, colors: Gr4vyColours? = nil, borderWidths: Gr4vyBorderWidths? = nil, radii: Gr4vyRadii? = nil, shadows: Gr4vyShadows? = nil) {
+        self.fonts = fonts
+        self.colors = colors
+        self.borderWidths = borderWidths
+        self.radii = radii
+        self.shadows = shadows
+    }
+    
+    func toString() -> String {
+        var data = ""
+        
+        if let fonts = fonts, let body = fonts.body {
+            data = data + "'fonts': { 'body': '\(body)' }, "
+        }
+        
+        if let colors = colors {
+            
+            data = data + "'colors': {"
+            
+            let mirror = Mirror(reflecting: colors)
+            for child in mirror.children  {
+                if let key = child.label, let value = child.value as? String {
+                    data = data + "'\(key)': '\(value)', "
+                }
+            }
+            
+            data = data + "}, "
+        }
+        
+        if let borderWidths = borderWidths {
+            data = data + "'borderWidths': {"
+            
+            if let input = borderWidths.input {
+                data = data + "'input': '\(input)', "
+            }
+            if let container = borderWidths.container {
+                data = data + "'container': '\(container)', "
+            }
+            
+            data = data + "}, "
+        }
+        
+        if let radii = radii {
+            data = data + "'radii': {"
+            
+            if let input = radii.input {
+                data = data + "'input': '\(input)', "
+            }
+            if let container = radii.container {
+                data = data + "'container': '\(container)', "
+            }
+            
+            data = data + "}, "
+        }
+        
+        if let shadows = shadows, let focusRing = shadows.focusRing {
+            data = data + "'shadows': { 'focusRing': '\(focusRing)' },"
+        }
+        
+        return "{" + data + "}"
+    }
+    
+    private func hexStringToUIColor (hex:String) -> UIColor? {
+        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+
+        if (cString.hasPrefix("#")) {
+            cString.remove(at: cString.startIndex)
+        }
+
+        if ((cString.count) != 6) {
+            return nil
+        }
+
+        var rgbValue:UInt64 = 0
+        Scanner(string: cString).scanHexInt64(&rgbValue)
+
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
+}
+
+public struct Gr4vyFonts {
+    let body: String?
+    
+    public init(body: String? = nil) {
+        self.body = body
+    }
+}
+
+public struct Gr4vyColours {
+    let text: String?
+    let subtleText: String?
+    let labelText: String?
+    let primary: String?
+    let pageBackground: String?
+    let containerBackgroundUnchecked: String?
+    let containerBackground: String?
+    let containerBorder: String?
+    let inputBorder: String?
+    let inputBackground: String?
+    let inputText: String?
+    let inputRadioBorder: String?
+    let inputRadioBorderChecked: String?
+    let danger: String?
+    let dangerBackground: String?
+    let dangerText: String?
+    let info: String?
+    let infoBackground: String?
+    let infoText: String?
+    let focus: String?
+    let headerText: String?
+    let headerBackground: String?
+    
+    public init(text: String? = nil, subtleText: String? = nil, labelText: String? = nil, primary: String? = nil, pageBackground: String? = nil, containerBackgroundUnchecked: String? = nil, containerBackground: String? = nil, containerBorder: String? = nil, inputBorder: String? = nil, inputBackground: String? = nil, inputText: String? = nil, inputRadioBorder: String? = nil, inputRadioBorderChecked: String? = nil, danger: String? = nil, dangerBackground: String? = nil, dangerText: String? = nil, info: String? = nil, infoBackground: String? = nil, infoText: String? = nil, focus: String? = nil, headerText: String? = nil, headerBackground: String? = nil) {
+        self.text = text
+        self.subtleText = subtleText
+        self.labelText = labelText
+        self.primary = primary
+        self.pageBackground = pageBackground
+        self.containerBackgroundUnchecked = containerBackgroundUnchecked
+        self.containerBackground = containerBackground
+        self.containerBorder = containerBorder
+        self.inputBorder = inputBorder
+        self.inputBackground = inputBackground
+        self.inputText = inputText
+        self.inputRadioBorder = inputRadioBorder
+        self.inputRadioBorderChecked = inputRadioBorderChecked
+        self.danger = danger
+        self.dangerBackground = dangerBackground
+        self.dangerText = dangerText
+        self.info = info
+        self.infoBackground = infoBackground
+        self.infoText = infoText
+        self.focus = focus
+        self.headerText = headerText
+        self.headerBackground = headerBackground
+    }
+}
+
+public struct Gr4vyBorderWidths {
+    let container: String?
+    let input: String?
+    
+    public init(container: String? = nil, input: String? = nil) {
+        self.container = container
+        self.input = input
+    }
+}
+
+public struct Gr4vyRadii {
+    let container: String?
+    let input: String?
+    
+    public init(container: String? = nil, input: String? = nil) {
+        self.container = container
+        self.input = input
+    }
+}
+
+public struct Gr4vyShadows {
+    let focusRing: String?
+    
+    public init(focusRing: String? = nil) {
+        self.focusRing = focusRing
+    }
+}
+
+public struct Gr4vyStatementDescriptor {
+    let name: String?
+    let description: String?
+    let phoneNumber: String?
+    let city: String?
+    let url: String?
+    
+    public init(name: String? = nil, description: String? = nil, phoneNumber: String? = nil, city: String? = nil, url: String? = nil) {
+        self.name = name
+        self.description = description
+        self.phoneNumber = phoneNumber
+        self.city = city
+        self.url = url
+    }
+    
+    func toString() -> String {
+        var data = ""
+        
+        if let name = name {
+            data = data + "'name': '\(name)', "
+        }
+        if let description = description {
+            data = data + "'description': '\(description)', "
+        }
+        if let phoneNumber = phoneNumber {
+            data = data + "'phoneNumber': '\(phoneNumber)', "
+        }
+        if let city = city {
+            data = data + "'city': '\(city)', "
+        }
+        if let url = url {
+            data = data + "'url': '\(url)', "
+        }
+        
+        return "{" + data + "}"
     }
 }
 
