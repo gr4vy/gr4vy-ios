@@ -24,6 +24,12 @@
 		598D6A48272F32B600EE5777 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 598D6A47272F32B600EE5777 /* Assets.xcassets */; };
 		598D6A4A272F3AEF00EE5777 /* Gr4vyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598D6A49272F3AEF00EE5777 /* Gr4vyMessage.swift */; };
 		5990A81C29A6466800ECE90F /* OutcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990A81B29A6466800ECE90F /* OutcomeView.swift */; };
+		59C5D45529E34C51008FFEBC /* Gr4vyTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C5D45429E34C51008FFEBC /* Gr4vyTheme.swift */; };
+		59C5D45829E34CAC008FFEBC /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C5D45729E34CAC008FFEBC /* Data+Extensions.swift */; };
+		59C5D45A29E34D04008FFEBC /* Gr4vyCartItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C5D45929E34D04008FFEBC /* Gr4vyCartItem.swift */; };
+		59C5D45C29E34D19008FFEBC /* Gr4vyPaymentSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C5D45B29E34D19008FFEBC /* Gr4vyPaymentSource.swift */; };
+		59C5D45E29E34D32008FFEBC /* Gr4vyStatementDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C5D45D29E34D32008FFEBC /* Gr4vyStatementDescriptor.swift */; };
+		59C5D46029E34D56008FFEBC /* Gr4vySetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C5D45F29E34D56008FFEBC /* Gr4vySetup.swift */; };
 		59D09964274654C70086348B /* Gr4vyLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D09963274654C70086348B /* Gr4vyLogger.swift */; };
 		59FE69502722BB7A006C1C08 /* Gr4vy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE694F2722BB7A006C1C08 /* Gr4vy.swift */; };
 		59FE69582722BBB2006C1C08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE69572722BBB2006C1C08 /* AppDelegate.swift */; };
@@ -107,6 +113,12 @@
 		598D6A47272F32B600EE5777 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		598D6A49272F3AEF00EE5777 /* Gr4vyMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vyMessage.swift; sourceTree = "<group>"; };
 		5990A81B29A6466800ECE90F /* OutcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomeView.swift; sourceTree = "<group>"; };
+		59C5D45429E34C51008FFEBC /* Gr4vyTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vyTheme.swift; sourceTree = "<group>"; };
+		59C5D45729E34CAC008FFEBC /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
+		59C5D45929E34D04008FFEBC /* Gr4vyCartItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vyCartItem.swift; sourceTree = "<group>"; };
+		59C5D45B29E34D19008FFEBC /* Gr4vyPaymentSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vyPaymentSource.swift; sourceTree = "<group>"; };
+		59C5D45D29E34D32008FFEBC /* Gr4vyStatementDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vyStatementDescriptor.swift; sourceTree = "<group>"; };
+		59C5D45F29E34D56008FFEBC /* Gr4vySetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vySetup.swift; sourceTree = "<group>"; };
 		59D09963274654C70086348B /* Gr4vyLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vyLogger.swift; sourceTree = "<group>"; };
 		59FE694F2722BB7A006C1C08 /* Gr4vy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gr4vy.swift; sourceTree = "<group>"; };
 		59FE69552722BBB2006C1C08 /* Gr4vy UIKit Sample App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gr4vy UIKit Sample App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -204,6 +216,8 @@
 		5978B287271C7F1300F5CC00 /* gr4vy-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				59C5D45629E34C80008FFEBC /* Extensions */,
+				59C5D45329E34C3B008FFEBC /* Models */,
 				59FE694F2722BB7A006C1C08 /* Gr4vy.swift */,
 				5978B288271C7F1300F5CC00 /* gr4vy_iOS.h */,
 				5978B289271C7F1300F5CC00 /* gr4vy_iOS.docc */,
@@ -222,6 +236,26 @@
 				5978B294271C7F1400F5CC00 /* gr4vy_iOSTests.swift */,
 			);
 			path = "gr4vy-iOSTests";
+			sourceTree = "<group>";
+		};
+		59C5D45329E34C3B008FFEBC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				59C5D45929E34D04008FFEBC /* Gr4vyCartItem.swift */,
+				59C5D45429E34C51008FFEBC /* Gr4vyTheme.swift */,
+				59C5D45B29E34D19008FFEBC /* Gr4vyPaymentSource.swift */,
+				59C5D45D29E34D32008FFEBC /* Gr4vyStatementDescriptor.swift */,
+				59C5D45F29E34D56008FFEBC /* Gr4vySetup.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		59C5D45629E34C80008FFEBC /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				59C5D45729E34CAC008FFEBC /* Data+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		59FE69562722BBB2006C1C08 /* Gr4vy UIKit Sample App */ = {
@@ -436,10 +470,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59C5D45C29E34D19008FFEBC /* Gr4vyPaymentSource.swift in Sources */,
+				59C5D45A29E34D04008FFEBC /* Gr4vyCartItem.swift in Sources */,
 				59FE69502722BB7A006C1C08 /* Gr4vy.swift in Sources */,
 				5978B28A271C7F1300F5CC00 /* gr4vy_iOS.docc in Sources */,
+				59C5D46029E34D56008FFEBC /* Gr4vySetup.swift in Sources */,
 				59D09964274654C70086348B /* Gr4vyLogger.swift in Sources */,
+				59C5D45E29E34D32008FFEBC /* Gr4vyStatementDescriptor.swift in Sources */,
 				5986DBF42785EBD800D0A458 /* Gr4vyUtility.swift in Sources */,
+				59C5D45829E34CAC008FFEBC /* Data+Extensions.swift in Sources */,
+				59C5D45529E34C51008FFEBC /* Gr4vyTheme.swift in Sources */,
 				598D6A4A272F3AEF00EE5777 /* Gr4vyMessage.swift in Sources */,
 				59FE696A2722BBD7006C1C08 /* Gr4vyViewController.swift in Sources */,
 			);

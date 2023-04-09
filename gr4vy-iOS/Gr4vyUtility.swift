@@ -11,7 +11,7 @@ import PassKit
 struct Gr4vyUtility {
     
     static func getInitialURL(from setup: Gr4vySetup) -> URLRequest? {
-        let urlString = "https://embed.\(setup.instance).gr4vy.app/mobile.html?channel=123"
+        let urlString = "https://embed.\(setup.instance).gr4vy.app/mobile?channel=123"
         guard let url = URL(string: urlString) else {
             return nil
         }
@@ -119,6 +119,19 @@ struct Gr4vyUtility {
         return "window.postMessage({ type: 'approvalCancelled'})"
     }
     
+    static func generateNavigationBack() -> String {
+        return "window.postMessage({ type: 'navigationBack'})"
+    }
+    
+    static func handleNavigationUpdate(from payload: [String: Any]) -> NavigationUpdate? {
+        guard let data = payload["data"] as? [String: Any],
+              let title = data["title"] as? String,
+              let canGoBack = data["canGoBack"] as? Bool else {
+            return nil
+        }
+        return NavigationUpdate(title: title, canGoBack: canGoBack)
+    }
+    
     static func handleApprovalUrl(from payload: [String: Any]) -> URL? {
         guard let urlString = payload["data"] as? String else {
             return nil
@@ -185,7 +198,6 @@ struct Gr4vyUtility {
     
     static func handleAppleStartSession(from payload: [String: Any], merchantId: String) -> PKPaymentRequest? {
         guard let data = payload["data"] as? [String: Any],
-              let _ = data["supportedNetworks"] as? [String],
               let countryCode = data["countryCode"] as? String,
               let currencyCode = data["currencyCode"] as? String,
               let total = data["total"] as? [String: Any],
@@ -244,5 +256,10 @@ struct Gr4vyUtility {
                                                                               PKPaymentNetwork.vPay]) -> Bool {
         return PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: paymentNetworks)
         
+    }
+    
+    struct NavigationUpdate: Equatable {
+        let title: String
+        let canGoBack: Bool
     }
 }

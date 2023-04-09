@@ -15,9 +15,11 @@ public class Gr4vyViewController: UIViewController , WKNavigationDelegate {
     var url: URLRequest!
     var applePayState: ApplePayState = .started
     var theme: Gr4vyTheme?
+    var viewType: Gr4vyViewType = .root
     
     private let postMessageHandler = "nativeapp"
     private var webView = WKWebView()
+    private var backBtn = UIBarButtonItem()
     
     deinit {
         webView.stopLoading()
@@ -59,12 +61,12 @@ public class Gr4vyViewController: UIViewController , WKNavigationDelegate {
         navigationItem.title = ""
         
         // Setup the back button
-        let backBtn = UIBarButtonItem()
         let image = UIImage(named: "BackButton", in: Bundle(for: Gr4vy.self), compatibleWith: nil)
         backBtn.image = image
         backBtn.action = #selector(backTapped)
         backBtn.target = self
-        navigationItem.leftBarButtonItem = backBtn
+        
+        setBackButton(isEnabled: true)
         
         // Setup the WebView
         setupWKWebViewConstraints()
@@ -91,6 +93,7 @@ public class Gr4vyViewController: UIViewController , WKNavigationDelegate {
     }
     
     @objc private func backTapped(sender: UIButton) {
+        delegate?.handleBackButtonPressed()
         if webView.canGoBack {
             webView.goBack()
         } else {
@@ -111,6 +114,14 @@ public class Gr4vyViewController: UIViewController , WKNavigationDelegate {
     
     private func setupWKWebViewJavascriptHandler() {
         webView.configuration.userContentController.add(self, name: postMessageHandler)
+    }
+    
+    func setBackButton(isEnabled: Bool) {
+        if isEnabled {
+            navigationItem.leftBarButtonItem = backBtn
+        } else {
+            navigationItem.leftBarButtonItem = nil
+        }
     }
 }
 
@@ -140,7 +151,7 @@ extension Gr4vyViewController: WKScriptMessageHandler {
             return
         }
         
-        delegate?.handle(message: Gr4vyMessage(type: type, payload: dict))
+        delegate?.handle(message: Gr4vyMessage(type: type, payload: dict), viewType: viewType)
         
     }
 }
@@ -163,4 +174,9 @@ extension Gr4vyViewController: PKPaymentAuthorizationViewControllerDelegate {
 enum ApplePayState {
     case started
     case authorized
+}
+
+enum Gr4vyViewType {
+    case root
+    case popUp
 }

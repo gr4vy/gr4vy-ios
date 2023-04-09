@@ -25,7 +25,7 @@ class CheckoutViewController: UIViewController {
         
         guard let gr4vy = Gr4vy(gr4vyId: gr4vyId,
                                 token: token,
-                                amount: 10873,
+                                amount: 100,
                                 currency: UserDefaults.standard.object(forKey:"Currency") as! String,
                                 country: "GB",
                                 buyerId: buyerId,
@@ -54,8 +54,6 @@ class CheckoutViewController: UIViewController {
                                                   borderWidths: Gr4vyBorderWidths(container: "thin", input: "thin"),
                                                   radii: Gr4vyRadii(container: "subtle", input: "subtle"),
                                                   shadows: Gr4vyShadows(focusRing: "0 0 0 2px #ffffff, 0 0 0 4px #4844ff")),
-                                requireSecurityCode: true,
-                                shippingDetailsId: "shippingDetailsId",
                                 debugMode: true
         ) else {
             print("Unable to load Gr4vy")

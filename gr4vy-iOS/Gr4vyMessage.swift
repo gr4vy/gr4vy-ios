@@ -22,6 +22,7 @@ struct Gr4vyMessage {
         case transactionFailed
         // Other
         case paymentMethodSelected
+        case navigation
         // Apple pay
         case appleStartSession
         case appleCompletePayment

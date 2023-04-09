@@ -137,6 +137,10 @@ extension Gr4vy: Gr4vyInternalDelegate {
         
         // If the popUpViewController is not shown/created, just dismiss the rootViewController
         guard let popUpViewController = popUpViewController else {
+            guard let _ = rootViewController else {
+                self.onEvent?(event)
+                return
+            }
             self.rootViewController.dismiss(animated: true) {
                 self.onEvent?(event)
             }
@@ -157,9 +161,9 @@ extension Gr4vy: Gr4vyInternalDelegate {
         }
     }
     
-    func handle(message: Gr4vyMessage) {
+    func handle(message: Gr4vyMessage, viewType: Gr4vyViewType) {
         guard let messageType = Gr4vyMessage.Gr4vyMessageType(rawValue: message.type) else {
-            error(message: "Gravy Information: Unknown message type recieved.")
+            error(message: "Gravy Information: Unknown message type recieved. \(message.type)")
             return
         }
         
@@ -178,6 +182,7 @@ extension Gr4vy: Gr4vyInternalDelegate {
             }
             
             popUpViewController = Gr4vyViewController()
+            popUpViewController?.viewType = .popUp
             popUpViewController!.delegate = self
             popUpViewController!.url = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData)
             popUpViewController!.theme = setup.theme
@@ -216,6 +221,23 @@ extension Gr4vy: Gr4vyInternalDelegate {
             }
             
             self.onEvent?(message)
+            return
+        
+        case .navigation:
+            guard let navigationUpdate = Gr4vyUtility.handleNavigationUpdate(from: message.payload) else {
+                error(message: "Gr4vy Error: navigation parse failure")
+                return
+            }
+            
+            switch viewType {
+            case .popUp:
+                popUpViewController?.title = navigationUpdate.title
+                popUpViewController?.setBackButton(isEnabled: navigationUpdate.canGoBack)
+            case .root:
+                rootViewController.title = navigationUpdate.title
+                rootViewController.setBackButton(isEnabled: navigationUpdate.canGoBack)
+            }
+            
             return
             
             // Apple Pay
@@ -261,368 +283,18 @@ extension Gr4vy: Gr4vyInternalDelegate {
     func handleApprovalCancelled() {
         rootViewController.sendJavascriptMessage(Gr4vyUtility.generateApprovalCancelled()) { _, _ in }
     }
+    
+    func handleBackButtonPressed() {
+        rootViewController.sendJavascriptMessage(Gr4vyUtility.generateNavigationBack()) { _, _ in }
+    }
 }
 
 protocol Gr4vyInternalDelegate {
-    func handle(message: Gr4vyMessage)
+    func handle(message: Gr4vyMessage, viewType: Gr4vyViewType)
     func handleAppleStartSession(message: Gr4vyMessage, merchantId: String) -> PKPaymentRequest?
     func generateApplePayAuthorized(payment: PKPayment)
     func handleAppleCancelSession()
     func handleApprovalCancelled()
-    func error(message: String)}
-
-struct Gr4vySetup {
-    var gr4vyId: String
-    var token: String
-    var amount: Int
-    var currency: String
-    var country: String
-    var buyerId: String?
-    var environment: Gr4vyEnvironment
-    var externalIdentifier: String?
-    var store: String?
-    var display: String?
-    var intent: String?
-    var metadata: [String: String]?
-    var paymentSource: Gr4vyPaymentSource?
-    var cartItems: [Gr4vyCartItem]?
-    var applePayMerchantId: String?
-    var theme: Gr4vyTheme?
-    var buyerExternalIdentifier: String?
-    var locale: String?
-    var statementDescriptor: Gr4vyStatementDescriptor?
-    var requireSecurityCode: Bool?
-    var shippingDetailsId: String?
-    var instance: String {
-        return environment == .production ? gr4vyId : "sandbox.\(gr4vyId)"
-    }
+    func handleBackButtonPressed()
+    func error(message: String)
 }
-
-public struct Gr4vyTheme {
-    
-    let fonts: Gr4vyFonts?
-    let colors: Gr4vyColours?
-    let borderWidths: Gr4vyBorderWidths?
-    let radii: Gr4vyRadii?
-    let shadows: Gr4vyShadows?
-    var navigationBackgroundColor: UIColor? {
-        guard let headerBackground = colors?.headerBackground else {
-            return nil
-        }
-        return hexStringToUIColor(hex: headerBackground)
-    }
-    var navigationTextColor: UIColor? {
-        guard let headerText = colors?.headerText else {
-            return nil
-        }
-        return hexStringToUIColor(hex: headerText)
-    }
-    
-    public init(fonts: Gr4vyFonts? = nil, colors: Gr4vyColours? = nil, borderWidths: Gr4vyBorderWidths? = nil, radii: Gr4vyRadii? = nil, shadows: Gr4vyShadows? = nil) {
-        self.fonts = fonts
-        self.colors = colors
-        self.borderWidths = borderWidths
-        self.radii = radii
-        self.shadows = shadows
-    }
-    
-    func toString() -> String {
-        var data = ""
-        
-        if let fonts = fonts, let body = fonts.body {
-            data = data + "'fonts': { 'body': '\(body)' }, "
-        }
-        
-        if let colors = colors {
-            
-            data = data + "'colors': {"
-            
-            let mirror = Mirror(reflecting: colors)
-            for child in mirror.children  {
-                if let key = child.label, let value = child.value as? String {
-                    data = data + "'\(key)': '\(value)', "
-                }
-            }
-            
-            data = data + "}, "
-        }
-        
-        if let borderWidths = borderWidths {
-            data = data + "'borderWidths': {"
-            
-            if let input = borderWidths.input {
-                data = data + "'input': '\(input)', "
-            }
-            if let container = borderWidths.container {
-                data = data + "'container': '\(container)', "
-            }
-            
-            data = data + "}, "
-        }
-        
-        if let radii = radii {
-            data = data + "'radii': {"
-            
-            if let input = radii.input {
-                data = data + "'input': '\(input)', "
-            }
-            if let container = radii.container {
-                data = data + "'container': '\(container)', "
-            }
-            
-            data = data + "}, "
-        }
-        
-        if let shadows = shadows, let focusRing = shadows.focusRing {
-            data = data + "'shadows': { 'focusRing': '\(focusRing)' },"
-        }
-        
-        return "{" + data + "}"
-    }
-    
-    private func hexStringToUIColor (hex:String) -> UIColor? {
-        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-
-        if (cString.hasPrefix("#")) {
-            cString.remove(at: cString.startIndex)
-        }
-
-        if ((cString.count) != 6) {
-            return nil
-        }
-
-        var rgbValue:UInt64 = 0
-        Scanner(string: cString).scanHexInt64(&rgbValue)
-
-        return UIColor(
-            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-            alpha: CGFloat(1.0)
-        )
-    }
-}
-
-public struct Gr4vyFonts {
-    let body: String?
-    
-    public init(body: String? = nil) {
-        self.body = body
-    }
-}
-
-public struct Gr4vyColours {
-    let text: String?
-    let subtleText: String?
-    let labelText: String?
-    let primary: String?
-    let pageBackground: String?
-    let containerBackgroundUnchecked: String?
-    let containerBackground: String?
-    let containerBorder: String?
-    let inputBorder: String?
-    let inputBackground: String?
-    let inputText: String?
-    let inputRadioBorder: String?
-    let inputRadioBorderChecked: String?
-    let danger: String?
-    let dangerBackground: String?
-    let dangerText: String?
-    let info: String?
-    let infoBackground: String?
-    let infoText: String?
-    let focus: String?
-    let headerText: String?
-    let headerBackground: String?
-    
-    public init(text: String? = nil, subtleText: String? = nil, labelText: String? = nil, primary: String? = nil, pageBackground: String? = nil, containerBackgroundUnchecked: String? = nil, containerBackground: String? = nil, containerBorder: String? = nil, inputBorder: String? = nil, inputBackground: String? = nil, inputText: String? = nil, inputRadioBorder: String? = nil, inputRadioBorderChecked: String? = nil, danger: String? = nil, dangerBackground: String? = nil, dangerText: String? = nil, info: String? = nil, infoBackground: String? = nil, infoText: String? = nil, focus: String? = nil, headerText: String? = nil, headerBackground: String? = nil) {
-        self.text = text
-        self.subtleText = subtleText
-        self.labelText = labelText
-        self.primary = primary
-        self.pageBackground = pageBackground
-        self.containerBackgroundUnchecked = containerBackgroundUnchecked
-        self.containerBackground = containerBackground
-        self.containerBorder = containerBorder
-        self.inputBorder = inputBorder
-        self.inputBackground = inputBackground
-        self.inputText = inputText
-        self.inputRadioBorder = inputRadioBorder
-        self.inputRadioBorderChecked = inputRadioBorderChecked
-        self.danger = danger
-        self.dangerBackground = dangerBackground
-        self.dangerText = dangerText
-        self.info = info
-        self.infoBackground = infoBackground
-        self.infoText = infoText
-        self.focus = focus
-        self.headerText = headerText
-        self.headerBackground = headerBackground
-    }
-}
-
-public struct Gr4vyBorderWidths {
-    let container: String?
-    let input: String?
-    
-    public init(container: String? = nil, input: String? = nil) {
-        self.container = container
-        self.input = input
-    }
-}
-
-public struct Gr4vyRadii {
-    let container: String?
-    let input: String?
-    
-    public init(container: String? = nil, input: String? = nil) {
-        self.container = container
-        self.input = input
-    }
-}
-
-public struct Gr4vyShadows {
-    let focusRing: String?
-    
-    public init(focusRing: String? = nil) {
-        self.focusRing = focusRing
-    }
-}
-
-public struct Gr4vyStatementDescriptor {
-    let name: String?
-    let description: String?
-    let phoneNumber: String?
-    let city: String?
-    let url: String?
-    
-    public init(name: String? = nil, description: String? = nil, phoneNumber: String? = nil, city: String? = nil, url: String? = nil) {
-        self.name = name
-        self.description = description
-        self.phoneNumber = phoneNumber
-        self.city = city
-        self.url = url
-    }
-    
-    func toString() -> String {
-        var data = ""
-        
-        if let name = name {
-            data = data + "'name': '\(name)', "
-        }
-        if let description = description {
-            data = data + "'description': '\(description)', "
-        }
-        if let phoneNumber = phoneNumber {
-            data = data + "'phoneNumber': '\(phoneNumber)', "
-        }
-        if let city = city {
-            data = data + "'city': '\(city)', "
-        }
-        if let url = url {
-            data = data + "'url': '\(url)', "
-        }
-        
-        return "{" + data + "}"
-    }
-}
-
-public enum Gr4vyPaymentSource: String {
-    case installment
-    case recurring
-}
-
-public struct Gr4vyCartItem {
-    let name: String
-    let quantity: Int
-    let unitAmount: Int
-}
-
-extension Data {
-    var prettyPrintedJSONString: NSString? { /// NSString gives us a nice sanitized debugDescription
-        guard let object = try? JSONSerialization.jsonObject(with: self, options: []),
-              let data = try? JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted]),
-              let prettyPrintedString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else { return nil }
-        
-        return prettyPrintedString
-    }
-}
-
-struct ApplePayPayment: Codable {
-    let paymentData: ApplePayPaymentTokenData // Codable
-    let paymentMethod: ApplePayPaymentMethod // Codable
-    let transactionIdentifier: String
-    
-    init?(token: PKPaymentToken) {
-        guard let paymentData = ApplePayPaymentTokenData(data: token.paymentData),
-              let paymentMethod = ApplePayPaymentMethod(paymentMethod: token.paymentMethod) else {
-            return nil
-        }
-        self.paymentData = paymentData
-        self.paymentMethod = paymentMethod
-        self.transactionIdentifier = token.transactionIdentifier
-    }
-}
-
-struct ApplePayPaymentMethod: Codable {
-    let displayName: String
-    let network: String
-    let type: String
-    let methodType: Int
-    
-    init?(paymentMethod: PKPaymentMethod) {
-        self.type = paymentMethod.type.description
-        self.displayName = paymentMethod.displayName ?? "unknown"
-        self.network = paymentMethod.network?.rawValue ?? "unknown"
-        self.methodType = Int(paymentMethod.type.rawValue)
-    }
-}
-
-extension PKPaymentMethodType: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .credit: return "credit"
-        case .debit: return "debit"
-        case .prepaid: return "prepaid"
-        case .store: return "store"
-        case .eMoney: return "eMoney"
-        default:
-            return "unknown"
-        }
-    }
-}
-
-struct ApplePayPaymentTokenData: Codable {
-    let data: String
-    let header: [String: String]
-    let version: String
-    let signature: String
-    
-    init?(data: Data) {
-        guard let paymentData = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [AnyHashable: AnyHashable] else {
-            return nil
-        }
-        guard let rawData = paymentData["data"] as? String,
-              let rawHeader = paymentData["header"] as? [String: String],
-              let rawVersion = paymentData["version"] as? String,
-              let rawSignature = paymentData["signature"] as? String else {
-            return nil
-        }
-        self.data = rawData
-        self.header = rawHeader
-        self.version = rawVersion
-        self.signature = rawSignature
-        
-    }
-}
-
-struct ApplePayPaymentTokenDataHeader: Codable {
-    let publicKeyHash, ephemeralPublicKey, transactionID: String
-    
-    enum CodingKeys: String, CodingKey {
-        case publicKeyHash, ephemeralPublicKey
-        case transactionID = "transactionId"
-    }
-}
-
-
