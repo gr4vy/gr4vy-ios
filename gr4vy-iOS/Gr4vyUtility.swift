@@ -69,8 +69,12 @@ struct Gr4vyUtility {
             optionalData = optionalData + ", buyerId: '\(buyerId)'"
         }
         
-        if deviceSupportsApplePay() {
-            optionalData = optionalData + ", supportedApplePayVersion: 5"
+        if let applePayMerchantId = setup.applePayMerchantId, !applePayMerchantId.isEmpty {
+            if deviceSupportsApplePay() {
+                optionalData = optionalData + ", supportedApplePayVersion: 5"
+            }
+        } else {
+            optionalData = optionalData + ", supportedApplePayVersion: 0"
         }
         
         if let theme = setup.theme {
