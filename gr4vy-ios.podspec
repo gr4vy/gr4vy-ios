@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'gr4vy-ios'
-  s.version = '1.5.4'
+  s.version = '1.5.5'
   s.license = 'MIT'
   s.summary = 'Quickly embed Gr4vy in your iOS app to store card details, authorize payments, and capture a transaction.'
   s.homepage = 'https://github.com/gr4vy/gr4vy-ios'
@@ -12,5 +12,5 @@ Pod::Spec.new do |s|
 
   s.swift_versions = ['5.3', '5.4', '5.5']
   s.source_files = 'gr4vy-iOS/**/*.swift'
-  s.resources = 'gr4vy-iOS/*.xcassets'
+  s.resource_bundles = {"gr4vy-ios" => ["gr4vy-ios/*.xcassets"] }
 end

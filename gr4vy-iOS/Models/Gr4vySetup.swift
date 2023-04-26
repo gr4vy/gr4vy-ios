@@ -30,4 +30,28 @@ struct Gr4vySetup {
     var instance: String {
         return environment == .production ? gr4vyId : "sandbox.\(gr4vyId)"
     }
+    
+    public init(gr4vyId: String, token: String, amount: Int, currency: String, country: String, buyerId: String? = nil, environment: Gr4vyEnvironment, externalIdentifier: String? = nil, store: String? = nil, display: String? = nil, intent: String? = nil, metadata: [String : String]? = nil, paymentSource: Gr4vyPaymentSource? = nil, cartItems: [Gr4vyCartItem]? = nil, applePayMerchantId: String? = nil, theme: Gr4vyTheme? = nil, buyerExternalIdentifier: String? = nil, locale: String? = nil, statementDescriptor: Gr4vyStatementDescriptor? = nil, requireSecurityCode: Bool? = nil, shippingDetailsId: String? = nil) {
+        self.gr4vyId = gr4vyId
+        self.token = token
+        self.amount = amount
+        self.currency = currency
+        self.country = country
+        self.buyerId = buyerId
+        self.environment = environment
+        self.externalIdentifier = externalIdentifier
+        self.store = store
+        self.display = display
+        self.intent = intent
+        self.metadata = metadata
+        self.paymentSource = paymentSource
+        self.cartItems = cartItems
+        self.applePayMerchantId = applePayMerchantId
+        self.theme = theme
+        self.buyerExternalIdentifier = buyerExternalIdentifier
+        self.locale = locale
+        self.statementDescriptor = statementDescriptor
+        self.requireSecurityCode = requireSecurityCode
+        self.shippingDetailsId = shippingDetailsId
+    }
 }
