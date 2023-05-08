@@ -26,7 +26,7 @@ struct Gr4vyUtility {
         }
         
         if let store = setup.store {
-            optionalData = optionalData + ", store: '\(store)'"
+            optionalData = optionalData + ", store: \(store.getStringRepresentation())"
         }
         
         if let display = setup.display {
@@ -101,8 +101,12 @@ struct Gr4vyUtility {
             optionalData = optionalData + ", shippingDetailsId: '\(shippingDetailsId)'"
         }
         
+        if let merchantAccountId = setup.merchantAccountId {
+            optionalData = optionalData + ", merchantAccountId: '\(merchantAccountId)'"
+        }
+        
         let content =
-        "window.postMessage({ type: 'updateOptions', data: { apiHost: 'api.\(setup.instance).gr4vy.app', apiUrl: 'https://api.\(setup.instance).gr4vy.app', token: '\(setup.token)', amount: \(setup.amount), country: '\(setup.country)', currency: '\(setup.currency)'"
+        "window.postMessage({ channel: 123, type: 'updateOptions', data: { apiHost: 'api.\(setup.instance).gr4vy.app', apiUrl: 'https://api.\(setup.instance).gr4vy.app', token: '\(setup.token)', amount: \(setup.amount), country: '\(setup.country)', currency: '\(setup.currency)'"
         +
         optionalData
         +
@@ -112,19 +116,19 @@ struct Gr4vyUtility {
     }
     
     static func generateAppleCompleteSession() -> String {
-        return "window.postMessage({ type: 'appleCompleteSession'})"
+        return "window.postMessage({ channel: 123, type: 'appleCompleteSession'})"
     }
     
     static func generateAppleCancelSession() -> String {
-        return "window.postMessage({ type: 'appleCancelSession'})"
+        return "window.postMessage({ channel: 123, type: 'appleCancelSession'})"
     }
     
     static func generateApprovalCancelled() -> String {
-        return "window.postMessage({ type: 'approvalCancelled'})"
+        return "window.postMessage({ channel: 123, type: 'approvalCancelled'})"
     }
     
     static func generateNavigationBack() -> String {
-        return "window.postMessage({ type: 'navigationBack'})"
+        return "window.postMessage({ channel: 123, type: 'navigationBack'})"
     }
     
     static func handleNavigationUpdate(from payload: [String: Any]) -> NavigationUpdate? {
@@ -134,6 +138,15 @@ struct Gr4vyUtility {
             return nil
         }
         return NavigationUpdate(title: title, canGoBack: canGoBack)
+    }
+    
+    static func handleOpenLink(from payload: [String: Any]) -> URL? {
+        guard let data = payload["data"] as? [String: Any],
+              let urlString = data["url"] as? String else {
+            return nil
+        }
+        
+        return URL(string: urlString)
     }
     
     static func handleApprovalUrl(from payload: [String: Any]) -> URL? {
@@ -163,17 +176,23 @@ struct Gr4vyUtility {
             
             // Failure statuses
         case "capture_declined", "authorization_failed":
-            guard let transactionID = data["id"] as? String else {
-                return .generalError("Gr4vy Error: transaction failed, no transactionID and/or paymentMethodID found")
-            }
-            return .transactionFailed(transactionID: transactionID, status: status, paymentMethodID: data["paymentMethodID"] as? String)
+            return .transactionFailed(transactionID: data["id"] as? String ?? "", status: status, paymentMethodID: data["paymentMethodID"] as? String)
         default:
-            guard let transactionID = data["id"] as? String else {
-                return .generalError("Gr4vy Error: transaction failed, no transactionID and/or paymentMethodID found")
-            }
-            return .transactionFailed(transactionID: transactionID, status: status, paymentMethodID: data["paymentMethodID"] as? String)
+            return .transactionFailed(transactionID: data["id"] as? String ?? "", status: status, paymentMethodID: data["paymentMethodID"] as? String)
         }
     }
+    
+    static func handleTransactionFailed(from payload: [String: Any]) -> Gr4vyEvent {
+        guard let data = payload["data"] as? [String: Any] else {
+            return .generalError("Gr4vy Error: Transaction failed.")
+        }
+        let transactionID = data["id"] as? String ?? ""
+        let status = data["status"] as? String ?? ""
+        let paymentMethodID = data["paymentMethodID"] as? String
+        
+        return .transactionFailed(transactionID: transactionID, status: status, paymentMethodID: paymentMethodID)
+    }
+    
     
     static func handleTransactionUpdated(from payload: [String: Any]) -> String? {
         guard let passOnMessage = try? JSONSerialization.data(withJSONObject: payload, options: .withoutEscapingSlashes), let message = String(data: passOnMessage, encoding: .utf8) else {
@@ -183,20 +202,10 @@ struct Gr4vyUtility {
         return "window.postMessage(\(message.replacingOccurrences(of: "\"", with: "\"")))"
     }
     
-    static func handlePaymentSelected(from payload: [String: Any]) -> Gr4vyEvent? {
-        guard let data = payload["data"] as? [String: String],
-              let method = data["method"],
-              let mode = data["mode"] else {
-            return nil
-        }
-        
-        return .paymentMethodSelected(id: data["id"], method: method, mode: mode)
-    }
-    
     static func generateApplePayAuthorized(from payment: PKPayment) -> String {
         let token = payment.token.paymentData.prettyPrintedJSONString!.replacingOccurrences(of: "\n", with: "")
         let content =
-        "window.postMessage({ type: 'applePayAuthorized', data: { 'payment_data': \(token) } })"
+        "window.postMessage({ channel: 123, type: 'applePayAuthorized', data: { 'payment_data': \(token) } })"
         return content
     }
     

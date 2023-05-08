@@ -58,16 +58,19 @@ struct CheckoutView: View {
                 print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
                 outcome = .failure(reason: "transactionFailed")
                 presentingModal = true
+                return
             case .transactionCreated(let transactionID, let status, let paymentMethodID):
                 print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
                 outcome = .success
                 presentingModal = true
+                return
             case .generalError(let error):
                 print("Error: \(error.description)")
                 outcome = .failure(reason: error.description)
                 presentingModal = true
-            case .paymentMethodSelected(let id, let method, let mode):
-                print("Handle a change in payment method selected here, ID: \(id ?? "Unknown"), Method: \(method), Mode: \(mode)")
+                return
+            case .cancelled:
+                print("User cancelled")
                 return
             }
         })

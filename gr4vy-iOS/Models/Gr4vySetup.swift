@@ -14,7 +14,7 @@ struct Gr4vySetup {
     var buyerId: String?
     var environment: Gr4vyEnvironment
     var externalIdentifier: String?
-    var store: String?
+    var store: Gr4vyStore?
     var display: String?
     var intent: String?
     var metadata: [String: String]?
@@ -27,11 +27,12 @@ struct Gr4vySetup {
     var statementDescriptor: Gr4vyStatementDescriptor?
     var requireSecurityCode: Bool?
     var shippingDetailsId: String?
+    var merchantAccountId: String?
     var instance: String {
         return environment == .production ? gr4vyId : "sandbox.\(gr4vyId)"
     }
     
-    public init(gr4vyId: String, token: String, amount: Int, currency: String, country: String, buyerId: String? = nil, environment: Gr4vyEnvironment, externalIdentifier: String? = nil, store: String? = nil, display: String? = nil, intent: String? = nil, metadata: [String : String]? = nil, paymentSource: Gr4vyPaymentSource? = nil, cartItems: [Gr4vyCartItem]? = nil, applePayMerchantId: String? = nil, theme: Gr4vyTheme? = nil, buyerExternalIdentifier: String? = nil, locale: String? = nil, statementDescriptor: Gr4vyStatementDescriptor? = nil, requireSecurityCode: Bool? = nil, shippingDetailsId: String? = nil) {
+    public init(gr4vyId: String, token: String, amount: Int, currency: String, country: String, buyerId: String? = nil, environment: Gr4vyEnvironment, externalIdentifier: String? = nil, store: Gr4vyStore? = nil, display: String? = nil, intent: String? = nil, metadata: [String : String]? = nil, paymentSource: Gr4vyPaymentSource? = nil, cartItems: [Gr4vyCartItem]? = nil, applePayMerchantId: String? = nil, theme: Gr4vyTheme? = nil, buyerExternalIdentifier: String? = nil, locale: String? = nil, statementDescriptor: Gr4vyStatementDescriptor? = nil, requireSecurityCode: Bool? = nil, shippingDetailsId: String? = nil, merchantAccountId: String? = nil) {
         self.gr4vyId = gr4vyId
         self.token = token
         self.amount = amount
@@ -53,5 +54,6 @@ struct Gr4vySetup {
         self.statementDescriptor = statementDescriptor
         self.requireSecurityCode = requireSecurityCode
         self.shippingDetailsId = shippingDetailsId
+        self.merchantAccountId = merchantAccountId
     }
 }

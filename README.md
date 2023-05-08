@@ -26,7 +26,7 @@ gr4vy-ios doesn't contain any external dependencies.
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'gr4vy-ios', '1.5.5'
+    pod 'gr4vy-ios', '1.6.0'
 end
 ```
 
@@ -67,12 +67,12 @@ gr4vy?.launch(
         switch event {
         case .transactionFailed(let transactionID, let status, let paymentMethodID):
             print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+            return
         case .transactionCreated(let transactionID, let status, let paymentMethodID):
             print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+            return
         case .generalError(let error):
             print("Error: \(error.description)")
-        case .paymentMethodSelected(let id, let method, let mode):
-            print("Handle a change in payment method selected here, ID: \(id ?? "Unknown"), Method: \(method), Mode: \(mode)")
             return
         }
     })
@@ -91,12 +91,12 @@ let gr4vy = Gr4vy(gr4vyId: "[GR4VY_ID]",
     switch event {
     case .transactionFailed(let transactionID, let status, let paymentMethodID):
         print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+        return
     case .transactionCreated(let transactionID, let status, let paymentMethodID):
         print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+        return
     case .generalError(let error):
         print("Error: \(error.description)")
-    case .paymentMethodSelected(let id, let method, let mode):
-        print("Handle a change in payment method selected here, ID: \(id ?? "Unknown"), Method: \(method), Mode: \(mode)")
         return
     }
 })
@@ -140,6 +140,7 @@ These are the parameteres available on the `launch` method:
 | `statementDescriptor`| `Optional`       | An optional object with information about the purchase to construct the statement information the buyer will see in their bank statement. Please note support for these fields varies across payment service providers and underlying banks, so Gr4vy can only ensure a best effort approach for each supported platform. As an example, most platforms will only support a concatenation of `name` and `description` fields, this is truncated to a length of 22 characters within embed. The object can contain `name`, `description`, `phoneNumber`, `city` and `url` properties, with string values. `phoneNumber` should be in E164 format. Gr4vy recommends avoiding characters outside the alphanumeric range and the dot (`.`) to ensure wide compatibility. |
 | `requireSecurityCode`| `Optional`       | An optional boolean which forces security code to be prompted for stored card payments. |
 | `shippingDetailsId`| `Optional`       | An optional unique identifier of a set of shipping details stored for the buyer. |
+| `merchantAccountId`| `Optional`       | An optional merchant account ID. |
 | `debugMode`| `Optional`       | `true`, `false`. Defaults to `false`, this prints to the console. |
 | `onEvent`                 | `Optional`      | **Please see below for more details.** |
 
@@ -152,15 +153,12 @@ onEvent: { event in
  switch event {
  case .transactionFailed(let transactionID, let status, let paymentMethodID):
      print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
-     outcomeViewController.outcome = .failure(reason: "transactionFailed")
+     return
  case .transactionCreated(let transactionID, let status, let paymentMethodID):
      print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
-     outcomeViewController.outcome = .success
+     return
  case .generalError(let error):
      print("Error: \(error.description)")
-     outcomeViewController.outcome = .failure(reason: error.description)
- case .paymentMethodSelected(let id, let method, let mode):
-     print("Handle a change in payment method selected here, ID: \(id ?? "Unknown"), Method: \(method), Mode: \(mode)")
      return
  }
 ```
@@ -198,18 +196,6 @@ Returned when the SDK encounters an error.
 ```json
 {
   "Gr4vy Error: Failed to load"
-}
-```
-
-#### `paymentMethodSelected`
-
-Returned when the user selects a payment method.
-
-```json
-{
-  "id": "17d57b9a-408d-49b8-9a97-9db382593003",
-  "method": "card",
-  "mode": "card"
 }
 ```
 

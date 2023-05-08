@@ -7,13 +7,14 @@
 
 import Foundation
 import UIKit
+import SafariServices
 import SwiftUI
 import PassKit
 
 public enum Gr4vyEvent: Equatable {
     case transactionCreated(transactionID: String, status: String, paymentMethodID: String?)
     case transactionFailed(transactionID: String, status: String, paymentMethodID: String?)
-    case paymentMethodSelected(id: String?, method: String, mode: String)
+    case cancelled
     case generalError(String)
 }
 
@@ -40,7 +41,7 @@ public class Gr4vy {
                  country: String,
                  buyerId: String? = nil,
                  externalIdentifier: String? = nil,
-                 store: String? = nil,
+                 store: Gr4vyStore? = nil,
                  display: String? = nil,
                  intent: String? = nil,
                  metadata: [String: String]? = nil,
@@ -54,6 +55,7 @@ public class Gr4vy {
                  statementDescriptor: Gr4vyStatementDescriptor? = nil,
                  requireSecurityCode: Bool? = nil,
                  shippingDetailsId: String? = nil,
+                 merchantAccountId: String? = nil,
                  debugMode: Bool = false,
                  onEvent: Gr4vyCompletionHandler? = nil) {
         
@@ -77,7 +79,8 @@ public class Gr4vy {
                                 locale: locale,
                                 statementDescriptor: statementDescriptor,
                                 requireSecurityCode: requireSecurityCode,
-                                shippingDetailsId: shippingDetailsId)
+                                shippingDetailsId: shippingDetailsId,
+                                merchantAccountId: merchantAccountId)
         
         self.debugMode = debugMode
         self.onEvent = onEvent
@@ -163,7 +166,7 @@ extension Gr4vy: Gr4vyInternalDelegate {
     
     func handle(message: Gr4vyMessage, viewType: Gr4vyViewType) {
         guard let messageType = Gr4vyMessage.Gr4vyMessageType(rawValue: message.type) else {
-            error(message: "Gravy Information: Unknown message type recieved. \(message.type)")
+            error(message: "Gr4vy Information: Unknown message type recieved. \(message.type)")
             return
         }
         
@@ -195,12 +198,19 @@ extension Gr4vy: Gr4vyInternalDelegate {
             
             // Root Only
         case .transactionCreated:
-            dismissWithEvent(Gr4vyUtility.handleTransactionCreated(from: message.payload))
+            let message = Gr4vyUtility.handleTransactionCreated(from: message.payload)
+            switch message {
+                case .transactionCreated:
+                    dismissWithEvent(message)
+                    return
+                default:
+                    self.onEvent?(message)
+            }
             return
         case .transactionFailed:
             error(message: "Gr4vy Error: transaction Failed")
             error(message: "\(message.payload.debugDescription)")
-            dismissWithEvent(.generalError("Gr4vy Error: transaction Failed"))
+            self.onEvent?(Gr4vyUtility.handleTransactionFailed(from: message.payload))
             return
             
             // Popover Only
@@ -212,15 +222,6 @@ extension Gr4vy: Gr4vyInternalDelegate {
             
             rootViewController.sendJavascriptMessage(content) { _, _ in }
             popUpViewController!.dismiss(animated: true, completion: nil)
-            return
-            
-        case .paymentMethodSelected:
-            guard let message = Gr4vyUtility.handlePaymentSelected(from: message.payload) else {
-                error(message: "Gr4vy Error: paymentMethodSelected failure")
-                return
-            }
-            
-            self.onEvent?(message)
             return
         
         case .navigation:
@@ -238,6 +239,19 @@ extension Gr4vy: Gr4vyInternalDelegate {
                 rootViewController.setBackButton(isEnabled: navigationUpdate.canGoBack)
             }
             
+            return
+        
+        case .openLink:
+            guard let url = Gr4vyUtility.handleOpenLink(from: message.payload) else {
+                error(message: "Gr4vy Error: Open link URL not valid")
+                return
+            }
+            switch viewType {
+            case .popUp:
+                popUpViewController?.present(SFSafariViewController(url: url), animated: true)
+            case .root:
+                rootViewController?.present(SFSafariViewController(url: url), animated: true)
+            }
             return
             
             // Apple Pay
@@ -287,6 +301,12 @@ extension Gr4vy: Gr4vyInternalDelegate {
     func handleBackButtonPressed() {
         rootViewController.sendJavascriptMessage(Gr4vyUtility.generateNavigationBack()) { _, _ in }
     }
+    
+    func handleCancelled(viewType: Gr4vyViewType) {
+        if viewType == .root {
+            self.onEvent?(.cancelled)
+        }
+    }
 }
 
 protocol Gr4vyInternalDelegate {
@@ -296,5 +316,6 @@ protocol Gr4vyInternalDelegate {
     func handleAppleCancelSession()
     func handleApprovalCancelled()
     func handleBackButtonPressed()
+    func handleCancelled(viewType: Gr4vyViewType)
     func error(message: String)
 }

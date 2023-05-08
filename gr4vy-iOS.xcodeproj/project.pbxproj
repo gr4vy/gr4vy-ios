@@ -30,6 +30,7 @@
 		59C5D45C29E34D19008FFEBC /* Gr4vyPaymentSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C5D45B29E34D19008FFEBC /* Gr4vyPaymentSource.swift */; };
 		59C5D45E29E34D32008FFEBC /* Gr4vyStatementDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C5D45D29E34D32008FFEBC /* Gr4vyStatementDescriptor.swift */; };
 		59C5D46029E34D56008FFEBC /* Gr4vySetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C5D45F29E34D56008FFEBC /* Gr4vySetup.swift */; };
+		59C5D46229F162C0008FFEBC /* Gr4vyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C5D46129F162C0008FFEBC /* Gr4vyStore.swift */; };
 		59D09964274654C70086348B /* Gr4vyLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D09963274654C70086348B /* Gr4vyLogger.swift */; };
 		59FE69502722BB7A006C1C08 /* Gr4vy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE694F2722BB7A006C1C08 /* Gr4vy.swift */; };
 		59FE69582722BBB2006C1C08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE69572722BBB2006C1C08 /* AppDelegate.swift */; };
@@ -119,6 +120,7 @@
 		59C5D45B29E34D19008FFEBC /* Gr4vyPaymentSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vyPaymentSource.swift; sourceTree = "<group>"; };
 		59C5D45D29E34D32008FFEBC /* Gr4vyStatementDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vyStatementDescriptor.swift; sourceTree = "<group>"; };
 		59C5D45F29E34D56008FFEBC /* Gr4vySetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vySetup.swift; sourceTree = "<group>"; };
+		59C5D46129F162C0008FFEBC /* Gr4vyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vyStore.swift; sourceTree = "<group>"; };
 		59D09963274654C70086348B /* Gr4vyLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vyLogger.swift; sourceTree = "<group>"; };
 		59FE694F2722BB7A006C1C08 /* Gr4vy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gr4vy.swift; sourceTree = "<group>"; };
 		59FE69552722BBB2006C1C08 /* Gr4vy UIKit Sample App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gr4vy UIKit Sample App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -246,6 +248,7 @@
 				59C5D45B29E34D19008FFEBC /* Gr4vyPaymentSource.swift */,
 				59C5D45D29E34D32008FFEBC /* Gr4vyStatementDescriptor.swift */,
 				59C5D45F29E34D56008FFEBC /* Gr4vySetup.swift */,
+				59C5D46129F162C0008FFEBC /* Gr4vyStore.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -481,6 +484,7 @@
 				59C5D45829E34CAC008FFEBC /* Data+Extensions.swift in Sources */,
 				59C5D45529E34C51008FFEBC /* Gr4vyTheme.swift in Sources */,
 				598D6A4A272F3AEF00EE5777 /* Gr4vyMessage.swift in Sources */,
+				59C5D46229F162C0008FFEBC /* Gr4vyStore.swift in Sources */,
 				59FE696A2722BBD7006C1C08 /* Gr4vyViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -29,6 +29,7 @@ class CheckoutViewController: UIViewController {
                                 currency: UserDefaults.standard.object(forKey:"Currency") as! String,
                                 country: "GB",
                                 buyerId: buyerId,
+                                store: .false,
                                 environment: .sandbox,
                                 theme: Gr4vyTheme(fonts: Gr4vyFonts(body: "google:Lato, Tahoma, Arial"),
                                                   colors: Gr4vyColours(text: "#fff",
@@ -75,8 +76,8 @@ class CheckoutViewController: UIViewController {
                 case .generalError(let error):
                     print("Error: \(error.description)")
                     outcomeViewController.outcome = .failure(reason: error.description)
-                case .paymentMethodSelected(let id, let method, let mode):
-                    print("Handle a change in payment method selected here, ID: \(id ?? "Unknown"), Method: \(method), Mode: \(mode)")
+                case .cancelled:
+                    print("User cancelled")
                     return
                 }
                 

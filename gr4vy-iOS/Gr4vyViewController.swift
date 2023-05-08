@@ -31,6 +31,9 @@ public class Gr4vyViewController: UIViewController , WKNavigationDelegate {
     
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        setupWKWebViewJavascriptHandler()
+        
         if let theme = theme {
             if theme.navigationTextColor == nil && theme.navigationBackgroundColor == nil {
                 return
@@ -80,12 +83,7 @@ public class Gr4vyViewController: UIViewController , WKNavigationDelegate {
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         webView.navigationDelegate = nil
-        if #available(iOS 14.0, *) {
-            webView.configuration.userContentController.removeAllScriptMessageHandlers()
-        } else {
-            // Fallback on earlier versions
-            webView.configuration.userContentController.removeScriptMessageHandler(forName: postMessageHandler)
-        }
+        removeJavascriptHandlers()
     }
     
     func sendJavascriptMessage(_ message: String, completionHandler: @escaping ((Any?, Error?) -> Void)) {
@@ -98,6 +96,7 @@ public class Gr4vyViewController: UIViewController , WKNavigationDelegate {
             webView.goBack()
         } else {
             delegate?.handleApprovalCancelled()
+            delegate?.handleCancelled(viewType: viewType)
             self.dismiss(animated: true, completion: nil)
         }
     }
@@ -112,7 +111,17 @@ public class Gr4vyViewController: UIViewController , WKNavigationDelegate {
         view.addSubview(webView)
     }
     
+    private func removeJavascriptHandlers() {
+        if #available(iOS 14.0, *) {
+            webView.configuration.userContentController.removeAllScriptMessageHandlers()
+        } else {
+            // Fallback on earlier versions
+            webView.configuration.userContentController.removeScriptMessageHandler(forName: postMessageHandler)
+        }
+    }
+    
     private func setupWKWebViewJavascriptHandler() {
+        removeJavascriptHandlers()
         webView.configuration.userContentController.add(self, name: postMessageHandler)
     }
     
