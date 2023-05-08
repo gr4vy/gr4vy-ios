@@ -160,6 +160,9 @@ onEvent: { event in
  case .generalError(let error):
      print("Error: \(error.description)")
      return
+ case .cancelled:
+     print("User cancelled")
+     return
  }
 ```
 
@@ -198,6 +201,11 @@ Returned when the SDK encounters an error.
   "Gr4vy Error: Failed to load"
 }
 ```
+
+#### `cancelled`
+
+Returned when the user cancels the SDK.
+
 
 ### Apple Pay
 
