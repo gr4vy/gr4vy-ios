@@ -2,8 +2,6 @@
 //  Gr4vyStore.swift
 //  gr4vy-ios
 //
-//  Created by Adam Gask on 20/04/2023.
-//
 
 import Foundation
 

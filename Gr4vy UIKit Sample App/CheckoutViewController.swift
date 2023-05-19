@@ -25,7 +25,7 @@ class CheckoutViewController: UIViewController {
         
         guard let gr4vy = Gr4vy(gr4vyId: gr4vyId,
                                 token: token,
-                                amount: 100,
+                                amount: 10873,
                                 currency: UserDefaults.standard.object(forKey:"Currency") as! String,
                                 country: "GB",
                                 buyerId: buyerId,

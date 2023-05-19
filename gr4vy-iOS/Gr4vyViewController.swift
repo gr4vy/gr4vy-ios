@@ -64,7 +64,7 @@ public class Gr4vyViewController: UIViewController , WKNavigationDelegate {
         navigationItem.title = ""
         
         // Setup the back button
-        let image = UIImage(named: "BackButton", in: Bundle(for: Gr4vy.self), compatibleWith: nil)
+        let image = UIImage.fetchGr4vyImage(named: "BackButton")
         backBtn.image = image
         backBtn.action = #selector(backTapped)
         backBtn.target = self

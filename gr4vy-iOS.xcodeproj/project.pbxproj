@@ -32,6 +32,7 @@
 		59C5D46029E34D56008FFEBC /* Gr4vySetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C5D45F29E34D56008FFEBC /* Gr4vySetup.swift */; };
 		59C5D46229F162C0008FFEBC /* Gr4vyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C5D46129F162C0008FFEBC /* Gr4vyStore.swift */; };
 		59D09964274654C70086348B /* Gr4vyLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D09963274654C70086348B /* Gr4vyLogger.swift */; };
+		59F72C012A17BE2B00DD2833 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F72C002A17BE2B00DD2833 /* UIImage+Extensions.swift */; };
 		59FE69502722BB7A006C1C08 /* Gr4vy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE694F2722BB7A006C1C08 /* Gr4vy.swift */; };
 		59FE69582722BBB2006C1C08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE69572722BBB2006C1C08 /* AppDelegate.swift */; };
 		59FE695A2722BBB2006C1C08 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE69592722BBB2006C1C08 /* SceneDelegate.swift */; };
@@ -122,6 +123,7 @@
 		59C5D45F29E34D56008FFEBC /* Gr4vySetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vySetup.swift; sourceTree = "<group>"; };
 		59C5D46129F162C0008FFEBC /* Gr4vyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vyStore.swift; sourceTree = "<group>"; };
 		59D09963274654C70086348B /* Gr4vyLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vyLogger.swift; sourceTree = "<group>"; };
+		59F72C002A17BE2B00DD2833 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		59FE694F2722BB7A006C1C08 /* Gr4vy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gr4vy.swift; sourceTree = "<group>"; };
 		59FE69552722BBB2006C1C08 /* Gr4vy UIKit Sample App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gr4vy UIKit Sample App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FE69572722BBB2006C1C08 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				59C5D45729E34CAC008FFEBC /* Data+Extensions.swift */,
+				59F72C002A17BE2B00DD2833 /* UIImage+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				59C5D45C29E34D19008FFEBC /* Gr4vyPaymentSource.swift in Sources */,
 				59C5D45A29E34D04008FFEBC /* Gr4vyCartItem.swift in Sources */,
 				59FE69502722BB7A006C1C08 /* Gr4vy.swift in Sources */,
+				59F72C012A17BE2B00DD2833 /* UIImage+Extensions.swift in Sources */,
 				5978B28A271C7F1300F5CC00 /* gr4vy_iOS.docc in Sources */,
 				59C5D46029E34D56008FFEBC /* Gr4vySetup.swift in Sources */,
 				59D09964274654C70086348B /* Gr4vyLogger.swift in Sources */,
