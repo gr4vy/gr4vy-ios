@@ -313,19 +313,19 @@ class gr4vy_iOSTests: XCTestCase {
         setup.cartItems = [Gr4vyCartItem(name: "Pot Plant", quantity: 1, unitAmount: 1299)]
         
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ channel: 123, type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', cartItems: [{name: 'Pot Plant', quantity: 1, unitAmount: 1299}], buyerId: 'BUYER123', supportedApplePayVersion: 0},})", sut)
+        XCTAssertEqual("window.postMessage({ channel: 123, type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', cartItems: [{name: 'Pot Plant', quantity: 1, unitAmount: 1299, discountAmount: 0, taxAmount: 0}], buyerId: 'BUYER123', supportedApplePayVersion: 0},})", sut)
         
         setup.cartItems = [Gr4vyCartItem(name: "Pot Plant", quantity: 1, unitAmount: 1299),
                            Gr4vyCartItem(name: "House Plant", quantity: 2, unitAmount: 2499)]
         
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ channel: 123, type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', cartItems: [{name: 'Pot Plant', quantity: 1, unitAmount: 1299}, {name: 'House Plant', quantity: 2, unitAmount: 2499}], buyerId: 'BUYER123', supportedApplePayVersion: 0},})", sut)
+        XCTAssertEqual("window.postMessage({ channel: 123, type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', cartItems: [{name: 'Pot Plant', quantity: 1, unitAmount: 1299, discountAmount: 0, taxAmount: 0}, {name: 'House Plant', quantity: 2, unitAmount: 2499, discountAmount: 0, taxAmount: 0}], buyerId: 'BUYER123', supportedApplePayVersion: 0},})", sut)
         
         setup.cartItems = [Gr4vyCartItem(name: "Pot Plant", quantity: -1, unitAmount: -1),
                            Gr4vyCartItem(name: "House Plant", quantity: 0, unitAmount: 0)]
         
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertEqual("window.postMessage({ channel: 123, type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', cartItems: [{name: 'Pot Plant', quantity: -1, unitAmount: -1}, {name: 'House Plant', quantity: 0, unitAmount: 0}], buyerId: 'BUYER123', supportedApplePayVersion: 0},})", sut)
+        XCTAssertEqual("window.postMessage({ channel: 123, type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', cartItems: [{name: 'Pot Plant', quantity: -1, unitAmount: -1, discountAmount: 0, taxAmount: 0}, {name: 'House Plant', quantity: 0, unitAmount: 0, discountAmount: 0, taxAmount: 0}], buyerId: 'BUYER123', supportedApplePayVersion: 0},})", sut)
     }
     
     func testGenerateUpdateOptionsSucceedsWithTheme() {

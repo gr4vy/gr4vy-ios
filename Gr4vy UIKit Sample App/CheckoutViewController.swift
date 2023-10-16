@@ -23,13 +23,20 @@ class CheckoutViewController: UIViewController {
         let buyerId = "<BUYER ID HERE>"
         let gr4vyId = "<GR4VY ID HERE>"
         
+        var categories = [String]()
+        categories.append("test")
+        categories.append("checkout")
+        var items = [Gr4vyCartItem]()
+        items.append(Gr4vyCartItem(name: "test", quantity: 1, unitAmount: 10973, discountAmount: 100, categories: categories))
+        
         guard let gr4vy = Gr4vy(gr4vyId: gr4vyId,
                                 token: token,
                                 amount: 10873,
-                                currency: UserDefaults.standard.object(forKey:"Currency") as! String,
-                                country: "GB",
+                                currency: "USD",
+                                country: "US",
                                 buyerId: buyerId,
                                 store: .false,
+                                cartItems: items,
                                 environment: .sandbox,
                                 theme: Gr4vyTheme(fonts: Gr4vyFonts(body: "google:Lato, Tahoma, Arial"),
                                                   colors: Gr4vyColours(text: "#fff",

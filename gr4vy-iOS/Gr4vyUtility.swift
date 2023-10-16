@@ -59,7 +59,34 @@ struct Gr4vyUtility {
             var cartItemsString = ", cartItems: ["
             for (index, item) in cartItems.enumerated() {
                 let ending = index + 1 == cartItems.count ? "" : ", "
-                cartItemsString = cartItemsString + "{name: '\(item.name)', quantity: \(item.quantity), unitAmount: \(item.unitAmount)}" + ending
+                cartItemsString = cartItemsString + "{name: '\(item.name)', quantity: \(item.quantity), unitAmount: \(item.unitAmount), discountAmount: \(item.discountAmount), taxAmount: \(item.taxAmount)"
+                
+                if item.externalIdentifier != nil {
+                    cartItemsString += ", externalIdentifier: \(item.externalIdentifier ?? "")"
+                }
+                if item.sku != nil {
+                    cartItemsString += ", sku: \(item.sku ?? "")"
+                }
+                if item.productUrl != nil {
+                    cartItemsString += ", productUrl: \(item.productUrl ?? "")"
+                }
+                if item.imageUrl != nil {
+                    cartItemsString += ", imageUrl: \(item.imageUrl ?? "")"
+                }
+                if item.categories != nil && item.categories!.count > 0 {
+                    var cat = ""
+                    var count = 0
+                    for i in item.categories! {
+                        let ending = count + 1 == item.categories?.count ?? 0 ? "" : ", "
+                        cat += "'\(i)'" + ending
+                        count += 1
+                    }
+                    cartItemsString += ", categories: [\(cat)]"
+                }
+                if item.productType != nil {
+                    cartItemsString += ", productType: \(item.productType ?? "")"
+                }
+                cartItemsString += "}" + ending
             }
             cartItemsString = cartItemsString + "]"
             optionalData = optionalData + cartItemsString
