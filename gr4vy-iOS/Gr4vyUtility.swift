@@ -65,13 +65,13 @@ struct Gr4vyUtility {
                     cartItemsString += ", externalIdentifier: \(item.externalIdentifier ?? "")"
                 }
                 if item.sku != nil {
-                    cartItemsString += ", sku: \(item.sku ?? "")"
+                    cartItemsString += ", sku: '\(item.sku ?? "")'"
                 }
                 if item.productUrl != nil {
-                    cartItemsString += ", productUrl: \(item.productUrl ?? "")"
+                    cartItemsString += ", productUrl: '\(item.productUrl ?? "")'"
                 }
                 if item.imageUrl != nil {
-                    cartItemsString += ", imageUrl: \(item.imageUrl ?? "")"
+                    cartItemsString += ", imageUrl: '\(item.imageUrl ?? "")'"
                 }
                 if item.categories != nil && item.categories!.count > 0 {
                     var cat = ""
@@ -84,7 +84,7 @@ struct Gr4vyUtility {
                     cartItemsString += ", categories: [\(cat)]"
                 }
                 if item.productType != nil {
-                    cartItemsString += ", productType: \(item.productType ?? "")"
+                    cartItemsString += ", productType: '\(item.productType ?? "")'"
                 }
                 cartItemsString += "}" + ending
             }
