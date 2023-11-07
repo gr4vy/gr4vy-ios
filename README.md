@@ -141,6 +141,7 @@ These are the parameteres available on the `launch` method:
 | `requireSecurityCode`| `Optional`       | An optional boolean which forces security code to be prompted for stored card payments. |
 | `shippingDetailsId`| `Optional`       | An optional unique identifier of a set of shipping details stored for the buyer. |
 | `merchantAccountId`| `Optional`       | An optional merchant account ID. |
+| `connectionOptions`| `Optional`       | An optional set of options passed to a connection when processing a transaction (see https://docs.gr4vy.com/reference#operation/authorize-new-transaction) |
 | `debugMode`| `Optional`       | `true`, `false`. Defaults to `false`, this prints to the console. |
 | `onEvent`                 | `Optional`      | **Please see below for more details.** |
 

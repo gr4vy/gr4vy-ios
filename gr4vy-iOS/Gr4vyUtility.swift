@@ -132,6 +132,10 @@ struct Gr4vyUtility {
             optionalData = optionalData + ", merchantAccountId: '\(merchantAccountId)'"
         }
         
+        if let connectionOptions = setup.connectionOptions, let connectionOptionsString = connectionOptions.convertedString {
+            optionalData = optionalData + ", connectionOptions: \(connectionOptionsString)"
+        }
+        
         let content =
         "window.postMessage({ channel: 123, type: 'updateOptions', data: { apiHost: 'api.\(setup.instance).gr4vy.app', apiUrl: 'https://api.\(setup.instance).gr4vy.app', token: '\(setup.token)', amount: \(setup.amount), country: '\(setup.country)', currency: '\(setup.currency)'"
         +

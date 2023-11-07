@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		59160F7A2AF6EDDD00143DA2 /* Gr4vyConnectionOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59160F792AF6EDDD00143DA2 /* Gr4vyConnectionOptions.swift */; };
 		592C4BBC28BF9AEE00063AC7 /* Gr4vy_SwiftUI_Sample_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592C4BBB28BF9AEE00063AC7 /* Gr4vy_SwiftUI_Sample_App.swift */; };
 		592C4BC028BF9AEF00063AC7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 592C4BBF28BF9AEF00063AC7 /* Assets.xcassets */; };
 		592C4BC328BF9AEF00063AC7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 592C4BC228BF9AEF00063AC7 /* Preview Assets.xcassets */; };
@@ -96,6 +97,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		59160F792AF6EDDD00143DA2 /* Gr4vyConnectionOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vyConnectionOptions.swift; sourceTree = "<group>"; };
 		592C4BB928BF9AEE00063AC7 /* Gr4vy SwiftUI Sample App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gr4vy SwiftUI Sample App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		592C4BBB28BF9AEE00063AC7 /* Gr4vy_SwiftUI_Sample_App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vy_SwiftUI_Sample_App.swift; sourceTree = "<group>"; };
 		592C4BBF28BF9AEF00063AC7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 				59C5D45D29E34D32008FFEBC /* Gr4vyStatementDescriptor.swift */,
 				59C5D45F29E34D56008FFEBC /* Gr4vySetup.swift */,
 				59C5D46129F162C0008FFEBC /* Gr4vyStore.swift */,
+				59160F792AF6EDDD00143DA2 /* Gr4vyConnectionOptions.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -478,6 +481,7 @@
 			files = (
 				59C5D45C29E34D19008FFEBC /* Gr4vyPaymentSource.swift in Sources */,
 				59C5D45A29E34D04008FFEBC /* Gr4vyCartItem.swift in Sources */,
+				59160F7A2AF6EDDD00143DA2 /* Gr4vyConnectionOptions.swift in Sources */,
 				59FE69502722BB7A006C1C08 /* Gr4vy.swift in Sources */,
 				59F72C012A17BE2B00DD2833 /* UIImage+Extensions.swift in Sources */,
 				5978B28A271C7F1300F5CC00 /* gr4vy_iOS.docc in Sources */,

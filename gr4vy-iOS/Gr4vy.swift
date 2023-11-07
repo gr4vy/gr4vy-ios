@@ -56,6 +56,7 @@ public class Gr4vy {
                  requireSecurityCode: Bool? = nil,
                  shippingDetailsId: String? = nil,
                  merchantAccountId: String? = nil,
+                 connectionOptions: Gr4vyConnectionOptions? = nil,
                  debugMode: Bool = false,
                  onEvent: Gr4vyCompletionHandler? = nil) {
         
@@ -80,7 +81,8 @@ public class Gr4vy {
                                 statementDescriptor: statementDescriptor,
                                 requireSecurityCode: requireSecurityCode,
                                 shippingDetailsId: shippingDetailsId,
-                                merchantAccountId: merchantAccountId)
+                                merchantAccountId: merchantAccountId,
+                                connectionOptions: connectionOptions)
         
         self.debugMode = debugMode
         self.onEvent = onEvent
