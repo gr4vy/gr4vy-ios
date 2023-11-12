@@ -876,14 +876,13 @@ class gr4vy_iOSTests: XCTestCase {
             setup.connectionOptions = permutation.input
             sut = Gr4vyUtility.generateUpdateOptions(from: setup)
             XCTAssertTrue(sut.contains(permutation.expectedOutput))
-        }            
-    }
-    
-    func testA() {
+        }
+        
         setup.connectionOptions = Gr4vyConnectionOptions(data: [
             "adyen-card": ["additionalData": "value"]
         ])
-        var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
+        
+        sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ channel: 123, type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', buyerId: 'BUYER123', supportedApplePayVersion: 0, connectionOptions: {'adyen-card':{'additionalData':'value'}}},})", sut)
         
         setup.connectionOptions = Gr4vyConnectionOptions(data: [
