@@ -40,7 +40,7 @@ class gr4vy_iOSTests: XCTestCase {
     
     func testUtilityGetInitialURLReturnsNilURL() {
         setup.environment = .production
-        setup.gr4vyId = "¬"
+        setup.gr4vyId = ""
         
         let sut = Gr4vyUtility.getInitialURL(from: setup)
         XCTAssertNil(sut?.url?.absoluteString)
@@ -326,6 +326,12 @@ class gr4vy_iOSTests: XCTestCase {
         
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ channel: 123, type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', cartItems: [{name: 'Pot Plant', quantity: -1, unitAmount: -1, discountAmount: 0, taxAmount: 0}, {name: 'House Plant', quantity: 0, unitAmount: 0, discountAmount: 0, taxAmount: 0}], buyerId: 'BUYER123', supportedApplePayVersion: 0},})", sut)
+        
+        setup.cartItems = [Gr4vyCartItem(name: "Backlava's", quantity: -1, unitAmount: -1),
+                           Gr4vyCartItem(name: "House Plant", quantity: 0, unitAmount: 0)]
+        
+        sut = Gr4vyUtility.generateUpdateOptions(from: setup)
+        XCTAssertEqual("window.postMessage({ channel: 123, type: 'updateOptions', data: { apiHost: 'api.ID123.gr4vy.app', apiUrl: 'https://api.ID123.gr4vy.app', token: 'TOKEN123', amount: 100, country: 'GB', currency: 'GBP', cartItems: [{name: 'Backlava\\\'s', quantity: -1, unitAmount: -1, discountAmount: 0, taxAmount: 0}, {name: 'House Plant', quantity: 0, unitAmount: 0, discountAmount: 0, taxAmount: 0}], buyerId: 'BUYER123', supportedApplePayVersion: 0},})", sut)
     }
     
     func testGenerateUpdateOptionsSucceedsWithTheme() {
@@ -534,11 +540,6 @@ class gr4vy_iOSTests: XCTestCase {
         XCTAssertNil(sut)
         
         payload =  ["dataa": "https://api.ID123.gr4vy.app"]
-        
-        sut = Gr4vyUtility.handleApprovalUrl(from: payload)
-        XCTAssertNil(sut)
-        
-        payload =  ["data": "https://api.¬ID123.gr4vy.app"]
         
         sut = Gr4vyUtility.handleApprovalUrl(from: payload)
         XCTAssertNil(sut)

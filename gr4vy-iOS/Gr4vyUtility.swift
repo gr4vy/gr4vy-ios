@@ -11,6 +11,7 @@ import PassKit
 struct Gr4vyUtility {
     
     static func getInitialURL(from setup: Gr4vySetup) -> URLRequest? {
+        guard !setup.gr4vyId.isEmpty else { return nil }
         let urlString = "https://embed.\(setup.instance).gr4vy.app/mobile?channel=123"
         guard let url = URL(string: urlString) else {
             return nil
@@ -59,13 +60,13 @@ struct Gr4vyUtility {
             var cartItemsString = ", cartItems: ["
             for (index, item) in cartItems.enumerated() {
                 let ending = index + 1 == cartItems.count ? "" : ", "
-                cartItemsString = cartItemsString + "{name: '\(item.name)', quantity: \(item.quantity), unitAmount: \(item.unitAmount), discountAmount: \(item.discountAmount), taxAmount: \(item.taxAmount)"
+                cartItemsString = cartItemsString + "{name: '\(item.name.escapingJavaScriptCharacters())', quantity: \(item.quantity), unitAmount: \(item.unitAmount), discountAmount: \(item.discountAmount), taxAmount: \(item.taxAmount)"
                 
                 if item.externalIdentifier != nil {
-                    cartItemsString += ", externalIdentifier: \(item.externalIdentifier ?? "")"
+                    cartItemsString += ", externalIdentifier: \(item.externalIdentifier?.escapingJavaScriptCharacters() ?? "")"
                 }
                 if item.sku != nil {
-                    cartItemsString += ", sku: '\(item.sku ?? "")'"
+                    cartItemsString += ", sku: '\(item.sku?.escapingJavaScriptCharacters() ?? "")'"
                 }
                 if item.productUrl != nil {
                     cartItemsString += ", productUrl: '\(item.productUrl ?? "")'"
@@ -78,13 +79,13 @@ struct Gr4vyUtility {
                     var count = 0
                     for i in item.categories! {
                         let ending = count + 1 == item.categories?.count ?? 0 ? "" : ", "
-                        cat += "'\(i)'" + ending
+                        cat += "'\(i.escapingJavaScriptCharacters())'" + ending
                         count += 1
                     }
                     cartItemsString += ", categories: [\(cat)]"
                 }
                 if item.productType != nil {
-                    cartItemsString += ", productType: '\(item.productType ?? "")'"
+                    cartItemsString += ", productType: '\(item.productType?.escapingJavaScriptCharacters() ?? "")'"
                 }
                 cartItemsString += "}" + ending
             }

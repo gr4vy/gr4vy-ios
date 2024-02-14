@@ -27,7 +27,7 @@ class CheckoutViewController: UIViewController {
         categories.append("test")
         categories.append("checkout")
         var items = [Gr4vyCartItem]()
-        items.append(Gr4vyCartItem(name: "test", quantity: 1, unitAmount: 10973, discountAmount: 100, categories: categories))
+        items.append(Gr4vyCartItem(name: "Baklava's", quantity: 1, unitAmount: 10000, discountAmount: 100, categories: categories))
         
         guard let gr4vy = Gr4vy(gr4vyId: gr4vyId,
                                 token: token,
