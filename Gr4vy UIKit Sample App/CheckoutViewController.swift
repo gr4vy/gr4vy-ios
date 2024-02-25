@@ -62,9 +62,11 @@ class CheckoutViewController: UIViewController {
                                                   borderWidths: Gr4vyBorderWidths(container: "thin", input: "thin"),
                                                   radii: Gr4vyRadii(container: "subtle", input: "subtle"),
                                                   shadows: Gr4vyShadows(focusRing: "0 0 0 2px #ffffff, 0 0 0 4px #4844ff")),
-                                                  connectionOptions: Gr4vyConnectionOptions(data: [
+                                                 requireSecurityCode: true,
+                                                  connectionOptions:[
                                                     "forter-anti-fraud": [
-                                                        "is_guest_buyer": false]]),
+                                                        "is_guest_buyer": .bool(true)]],
+                                
                                                   debugMode: true
         ) else {
             print("Unable to load Gr4vy")

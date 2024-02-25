@@ -18,7 +18,7 @@ public enum Gr4vyEvent: Equatable {
     case generalError(String)
 }
 
-public enum Gr4vyEnvironment {
+public enum Gr4vyEnvironment: String, Codable {
     case sandbox
     case production
 }
@@ -56,7 +56,7 @@ public class Gr4vy {
                  requireSecurityCode: Bool? = nil,
                  shippingDetailsId: String? = nil,
                  merchantAccountId: String? = nil,
-                 connectionOptions: Gr4vyConnectionOptions? = nil,
+                 connectionOptions: [String: [String: Gr4vyConnectionOptionsValue]]? = nil,
                  debugMode: Bool = false,
                  onEvent: Gr4vyCompletionHandler? = nil) {
         

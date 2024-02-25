@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct Gr4vyStatementDescriptor {
+public struct Gr4vyStatementDescriptor: Codable {
     let name: String?
     let description: String?
     let phoneNumber: String?
@@ -18,27 +18,5 @@ public struct Gr4vyStatementDescriptor {
         self.phoneNumber = phoneNumber
         self.city = city
         self.url = url
-    }
-    
-    func toString() -> String {
-        var data = ""
-        
-        if let name = name {
-            data = data + "'name': '\(name)', "
-        }
-        if let description = description {
-            data = data + "'description': '\(description)', "
-        }
-        if let phoneNumber = phoneNumber {
-            data = data + "'phoneNumber': '\(phoneNumber)', "
-        }
-        if let city = city {
-            data = data + "'city': '\(city)', "
-        }
-        if let url = url {
-            data = data + "'url': '\(url)', "
-        }
-        
-        return "{" + data + "}"
     }
 }
