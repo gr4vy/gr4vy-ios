@@ -5,7 +5,7 @@
 
 import UIKit
 
-public struct Gr4vyTheme {
+public struct Gr4vyTheme: Codable {
     
     let fonts: Gr4vyFonts?
     let colors: Gr4vyColours?
@@ -33,60 +33,6 @@ public struct Gr4vyTheme {
         self.shadows = shadows
     }
     
-    func toString() -> String {
-        var data = ""
-        
-        if let fonts = fonts, let body = fonts.body {
-            data = data + "'fonts': { 'body': '\(body)' }, "
-        }
-        
-        if let colors = colors {
-            
-            data = data + "'colors': {"
-            
-            let mirror = Mirror(reflecting: colors)
-            for child in mirror.children  {
-                if let key = child.label, let value = child.value as? String {
-                    data = data + "'\(key)': '\(value)', "
-                }
-            }
-            
-            data = data + "}, "
-        }
-        
-        if let borderWidths = borderWidths {
-            data = data + "'borderWidths': {"
-            
-            if let input = borderWidths.input {
-                data = data + "'input': '\(input)', "
-            }
-            if let container = borderWidths.container {
-                data = data + "'container': '\(container)', "
-            }
-            
-            data = data + "}, "
-        }
-        
-        if let radii = radii {
-            data = data + "'radii': {"
-            
-            if let input = radii.input {
-                data = data + "'input': '\(input)', "
-            }
-            if let container = radii.container {
-                data = data + "'container': '\(container)', "
-            }
-            
-            data = data + "}, "
-        }
-        
-        if let shadows = shadows, let focusRing = shadows.focusRing {
-            data = data + "'shadows': { 'focusRing': '\(focusRing)' },"
-        }
-        
-        return "{" + data + "}"
-    }
-    
     private func hexStringToUIColor (hex:String) -> UIColor? {
         var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 
@@ -110,7 +56,7 @@ public struct Gr4vyTheme {
     }
 }
 
-public struct Gr4vyFonts {
+public struct Gr4vyFonts: Codable {
     let body: String?
     
     public init(body: String? = nil) {
@@ -118,7 +64,7 @@ public struct Gr4vyFonts {
     }
 }
 
-public struct Gr4vyColours {
+public struct Gr4vyColours: Codable {
     let text: String?
     let subtleText: String?
     let labelText: String?
@@ -168,7 +114,7 @@ public struct Gr4vyColours {
     }
 }
 
-public struct Gr4vyBorderWidths {
+public struct Gr4vyBorderWidths: Codable {
     let container: String?
     let input: String?
     
@@ -178,7 +124,7 @@ public struct Gr4vyBorderWidths {
     }
 }
 
-public struct Gr4vyRadii {
+public struct Gr4vyRadii: Codable {
     let container: String?
     let input: String?
     
@@ -188,7 +134,7 @@ public struct Gr4vyRadii {
     }
 }
 
-public struct Gr4vyShadows {
+public struct Gr4vyShadows: Codable {
     let focusRing: String?
     
     public init(focusRing: String? = nil) {

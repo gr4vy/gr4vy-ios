@@ -5,19 +5,20 @@
 
 import Foundation
 
-public enum Gr4vyStore {
+public enum Gr4vyStore: Codable {
     case ask
     case `true`
     case `false`
     
-    func getStringRepresentation() -> String {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
         switch self {
         case .ask:
-            return "'ask'"
+            try container.encode("ask")
         case .true:
-            return "true"
+            try container.encode(true)
         case .false:
-            return "false"
+            try container.encode(false)
         }
     }
 }

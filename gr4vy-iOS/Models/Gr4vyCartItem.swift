@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct Gr4vyCartItem {
+public struct Gr4vyCartItem: Codable {
     let name: String
     let quantity: Int
     let unitAmount: Int

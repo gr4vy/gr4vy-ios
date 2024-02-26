@@ -19,132 +19,30 @@ struct Gr4vyUtility {
         return URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData)
     }
     
+    
     static func generateUpdateOptions(from setup: Gr4vySetup) -> String {
-        var optionalData: String = ""
-        
-        if let externalIdentifier = setup.externalIdentifier {
-            optionalData = optionalData + ", externalIdentifier: '\(externalIdentifier)'"
-        }
-        
-        if let store = setup.store {
-            optionalData = optionalData + ", store: \(store.getStringRepresentation())"
-        }
-        
-        if let display = setup.display {
-            optionalData = optionalData + ", display: '\(display)'"
-        }
-        
-        if let intent = setup.intent {
-            optionalData = optionalData + ", intent: '\(intent)'"
-        }
-        
-        if let metadata = setup.metadata {
-            var metadataString = ", metadata: {"
-            for (index, key) in Array(metadata.keys).sorted().enumerated() {
-                guard key != "" else {
-                    continue
-                }
-                let ending = index + 1 == metadata.count ? "" : ", "
-                let value = metadata[key]!
-                metadataString = metadataString + "\(key): '\(value)'" + ending
-            }
-            metadataString = metadataString + "}"
-            optionalData = optionalData + metadataString
-        }
-        
-        if let paymentSource = setup.paymentSource {
-            optionalData = optionalData + ", paymentSource: '\(paymentSource.rawValue)'"
-        }
-        
-        if let cartItems = setup.cartItems {
-            var cartItemsString = ", cartItems: ["
-            for (index, item) in cartItems.enumerated() {
-                let ending = index + 1 == cartItems.count ? "" : ", "
-                cartItemsString = cartItemsString + "{name: '\(item.name.escapingJavaScriptCharacters())', quantity: \(item.quantity), unitAmount: \(item.unitAmount), discountAmount: \(item.discountAmount), taxAmount: \(item.taxAmount)"
-                
-                if item.externalIdentifier != nil {
-                    cartItemsString += ", externalIdentifier: \(item.externalIdentifier?.escapingJavaScriptCharacters() ?? "")"
-                }
-                if item.sku != nil {
-                    cartItemsString += ", sku: '\(item.sku?.escapingJavaScriptCharacters() ?? "")'"
-                }
-                if item.productUrl != nil {
-                    cartItemsString += ", productUrl: '\(item.productUrl ?? "")'"
-                }
-                if item.imageUrl != nil {
-                    cartItemsString += ", imageUrl: '\(item.imageUrl ?? "")'"
-                }
-                if item.categories != nil && item.categories!.count > 0 {
-                    var cat = ""
-                    var count = 0
-                    for i in item.categories! {
-                        let ending = count + 1 == item.categories?.count ?? 0 ? "" : ", "
-                        cat += "'\(i.escapingJavaScriptCharacters())'" + ending
-                        count += 1
-                    }
-                    cartItemsString += ", categories: [\(cat)]"
-                }
-                if item.productType != nil {
-                    cartItemsString += ", productType: '\(item.productType?.escapingJavaScriptCharacters() ?? "")'"
-                }
-                cartItemsString += "}" + ending
-            }
-            cartItemsString = cartItemsString + "]"
-            optionalData = optionalData + cartItemsString
-        }
-        
-        if let buyerId = setup.buyerId {
-            optionalData = optionalData + ", buyerId: '\(buyerId)'"
-        }
+        var mutableSetup = setup
+        mutableSetup.apiHost = "api.\(setup.instance).gr4vy.app"
+        mutableSetup.apiUrl = "https://api.\(setup.instance).gr4vy.app"
         
         if let applePayMerchantId = setup.applePayMerchantId, !applePayMerchantId.isEmpty {
             if deviceSupportsApplePay() {
-                optionalData = optionalData + ", supportedApplePayVersion: 5"
+                mutableSetup.supportedApplePayVersion = 5
             }
-        } else {
-            optionalData = optionalData + ", supportedApplePayVersion: 0"
         }
         
-        if let theme = setup.theme {
-            optionalData = optionalData + ", theme: \(theme.toString())"
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .sortedKeys
+        do {
+            let jsonData = try encoder.encode(mutableSetup)
+            let jsonString = String(data: jsonData, encoding: .utf8) ?? "{}"
+ 
+            let windowMessage = "window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": \(jsonString)})"
+            
+            return windowMessage
+        } catch {
+            return ""
         }
-        
-        if let buyerExternalIdentifier = setup.buyerExternalIdentifier {
-            optionalData = optionalData + ", buyerExternalIdentifier: '\(buyerExternalIdentifier)'"
-        }
-        
-        if let locale = setup.locale {
-            optionalData = optionalData + ", locale: '\(locale)'"
-        }
-    
-        if let statementDescriptor = setup.statementDescriptor {
-            optionalData = optionalData + ", statementDescriptor: \(statementDescriptor.toString())"
-        }
-        
-        if let requireSecurityCode = setup.requireSecurityCode {
-            optionalData = optionalData + ", requireSecurityCode: '\(requireSecurityCode.description)'"
-        }
-        
-        if let shippingDetailsId = setup.shippingDetailsId {
-            optionalData = optionalData + ", shippingDetailsId: '\(shippingDetailsId)'"
-        }
-        
-        if let merchantAccountId = setup.merchantAccountId {
-            optionalData = optionalData + ", merchantAccountId: '\(merchantAccountId)'"
-        }
-        
-        if let connectionOptions = setup.connectionOptions, let connectionOptionsString = connectionOptions.convertedString {
-            optionalData = optionalData + ", connectionOptions: \(connectionOptionsString)"
-        }
-        
-        let content =
-        "window.postMessage({ channel: 123, type: 'updateOptions', data: { apiHost: 'api.\(setup.instance).gr4vy.app', apiUrl: 'https://api.\(setup.instance).gr4vy.app', token: '\(setup.token)', amount: \(setup.amount), country: '\(setup.country)', currency: '\(setup.currency)'"
-        +
-        optionalData
-        +
-        "},})"
-        
-        return content
     }
     
     static func generateAppleCompleteSession() -> String {
