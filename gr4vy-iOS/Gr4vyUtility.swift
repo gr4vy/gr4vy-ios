@@ -139,12 +139,12 @@ struct Gr4vyUtility {
         return content
     }
     
-    static func handleAppleStartSession(from payload: [String: Any], merchantId: String) -> PKPaymentRequest? {
+    static func handleAppleStartSession(from payload: [String: Any], merchantId: String, merchantName: String?) -> PKPaymentRequest? {
         guard let data = payload["data"] as? [String: Any],
               let countryCode = data["countryCode"] as? String,
               let currencyCode = data["currencyCode"] as? String,
               let total = data["total"] as? [String: Any],
-              let value = total["label"] as? String,
+              let value = merchantName ?? total["label"] as? String,
               let amount = total["amount"] as? String else {
             return nil
         }

@@ -49,6 +49,7 @@ public class Gr4vy {
                  cartItems: [Gr4vyCartItem]? = nil,
                  environment: Gr4vyEnvironment = .production,
                  applePayMerchantId: String? = nil,
+                 applePayMerchantName: String? = nil, 
                  theme: Gr4vyTheme? = nil,
                  buyerExternalIdentifier: String? = nil,
                  locale: String? = nil,
@@ -75,6 +76,7 @@ public class Gr4vy {
                                 paymentSource: paymentSource,
                                 cartItems: cartItems,
                                 applePayMerchantId: applePayMerchantId,
+                                applePayMerchantName: applePayMerchantName,
                                 theme: theme,
                                 buyerExternalIdentifier: buyerExternalIdentifier,
                                 locale: locale,
@@ -263,7 +265,7 @@ extension Gr4vy: Gr4vyInternalDelegate {
                 return
             }
             
-            guard let request = handleAppleStartSession(message: message, merchantId: merchantId) else {
+            guard let request = handleAppleStartSession(message: message, merchantId: merchantId, merchantName: setup.applePayMerchantName) else {
                 error(message: "Gr4vy Error: Apple Pay session error")
                 return
             }
@@ -284,8 +286,8 @@ extension Gr4vy: Gr4vyInternalDelegate {
         }
     }
     
-    func handleAppleStartSession(message: Gr4vyMessage, merchantId: String) -> PKPaymentRequest? {
-        return Gr4vyUtility.handleAppleStartSession(from: message.payload, merchantId: merchantId)
+    func handleAppleStartSession(message: Gr4vyMessage, merchantId: String, merchantName: String? = nil) -> PKPaymentRequest? {
+        return Gr4vyUtility.handleAppleStartSession(from: message.payload, merchantId: merchantId, merchantName: merchantName)
     }
     
     func generateApplePayAuthorized(payment: PKPayment) {
@@ -313,7 +315,7 @@ extension Gr4vy: Gr4vyInternalDelegate {
 
 protocol Gr4vyInternalDelegate {
     func handle(message: Gr4vyMessage, viewType: Gr4vyViewType)
-    func handleAppleStartSession(message: Gr4vyMessage, merchantId: String) -> PKPaymentRequest?
+    func handleAppleStartSession(message: Gr4vyMessage, merchantId: String, merchantName: String?) -> PKPaymentRequest?
     func generateApplePayAuthorized(payment: PKPayment)
     func handleAppleCancelSession()
     func handleApprovalCancelled()

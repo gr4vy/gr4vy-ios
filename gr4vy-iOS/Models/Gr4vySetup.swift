@@ -21,6 +21,7 @@ struct Gr4vySetup: Encodable {
     var paymentSource: Gr4vyPaymentSource?
     var cartItems: [Gr4vyCartItem]?
     var applePayMerchantId: String?
+    var applePayMerchantName: String?
     var theme: Gr4vyTheme?
     var buyerExternalIdentifier: String?
     var locale: String?
@@ -62,7 +63,7 @@ struct Gr4vySetup: Encodable {
         case supportedApplePayVersion
     }
     
-    public init(gr4vyId: String, token: String, amount: Int, currency: String, country: String, buyerId: String? = nil, environment: Gr4vyEnvironment, externalIdentifier: String? = nil, store: Gr4vyStore? = nil, display: String? = nil, intent: String? = nil, metadata: [String : String]? = nil, paymentSource: Gr4vyPaymentSource? = nil, cartItems: [Gr4vyCartItem]? = nil, applePayMerchantId: String? = nil, theme: Gr4vyTheme? = nil, buyerExternalIdentifier: String? = nil, locale: String? = nil, statementDescriptor: Gr4vyStatementDescriptor? = nil, requireSecurityCode: Bool? = nil, shippingDetailsId: String? = nil, merchantAccountId: String? = nil, connectionOptions: [String: [String: Gr4vyConnectionOptionsValue]]? = nil) {
+    public init(gr4vyId: String, token: String, amount: Int, currency: String, country: String, buyerId: String? = nil, environment: Gr4vyEnvironment, externalIdentifier: String? = nil, store: Gr4vyStore? = nil, display: String? = nil, intent: String? = nil, metadata: [String : String]? = nil, paymentSource: Gr4vyPaymentSource? = nil, cartItems: [Gr4vyCartItem]? = nil, applePayMerchantId: String? = nil, applePayMerchantName: String? = nil, theme: Gr4vyTheme? = nil, buyerExternalIdentifier: String? = nil, locale: String? = nil, statementDescriptor: Gr4vyStatementDescriptor? = nil, requireSecurityCode: Bool? = nil, shippingDetailsId: String? = nil, merchantAccountId: String? = nil, connectionOptions: [String: [String: Gr4vyConnectionOptionsValue]]? = nil) {
         self.gr4vyId = gr4vyId
         self.token = token
         self.amount = amount
@@ -78,6 +79,7 @@ struct Gr4vySetup: Encodable {
         self.paymentSource = paymentSource
         self.cartItems = cartItems
         self.applePayMerchantId = applePayMerchantId
+        self.applePayMerchantName = applePayMerchantName
         self.theme = theme
         self.buyerExternalIdentifier = buyerExternalIdentifier
         self.locale = locale
