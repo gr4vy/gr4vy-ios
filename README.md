@@ -26,7 +26,7 @@ gr4vy-ios doesn't contain any external dependencies.
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'gr4vy-ios', '2.0.0'
+    pod 'gr4vy-ios', '2.1.0'
 end
 ```
 
@@ -134,6 +134,7 @@ These are the parameteres available on the `launch` method:
 | `cartItems`               | `Optional` | An optional array of cart item objects, each object must define a `name`, `quantity`, and `unitAmount`.|
 | `environment`| `Optional`       | `.sandbox`, `.production`. Defaults to `.production`. When `.sandbox` is provided the URL will contain `sandbox.GR4VY_ID`. |
 | `applePayMerchantId`| `Optional`       | The Apple merchant ID to be used during Apple Pay transcations |
+| `applePayMerchantName`| `Optional`       | The name which appears in the Apple Pay dialog next to "Pay" |
 | `theme`| `Optional`       | Theme customisation options. See [Theming](https://github.com/gr4vy/gr4vy-embed/tree/main/packages/embed#theming). The iOS SDK also contains an additional two properties within the `colors` object; `headerBackground` and `headerText`. These are used for the navigation background and forground colors. |
 | `buyerExternalIdentifier`| `Optional`       | An optional external ID for a Gr4vy buyer. The transaction will automatically be associated to a buyer with that external ID. If no buyer with this external ID exists then it will be ignored. This option is ignored if the `buyerId` is provided. |
 | `locale`| `Optional`       | An optional locale, this consists of a `ISO 639 Language Code` followed by an optional `ISO 3166 Country Code`, e.g. `en`, `en-gb` or `pt-br`. |
