@@ -98,7 +98,7 @@ struct Gr4vyUtility {
         
         switch status {
             // Success statuses
-        case "capture_succeeded", "capture_pending", "authorization_succeeded", "authorization_pending":
+        case "capture_succeeded", "capture_pending", "authorization_succeeded", "authorization_pending", "processing":
             guard let transactionID = data["id"] as? String else {
                 return .generalError("Gr4vy Error: transaction success has failed, no transactionID and/or paymentMethodID found")
             }
