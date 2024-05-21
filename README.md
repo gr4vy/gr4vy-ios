@@ -26,7 +26,7 @@ gr4vy-ios doesn't contain any external dependencies.
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'gr4vy-ios', '2.1.0'
+    pod 'gr4vy-ios', '2.1.1'
 end
 ```
 
