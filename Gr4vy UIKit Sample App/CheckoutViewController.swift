@@ -18,9 +18,8 @@ class CheckoutViewController: UIViewController {
     
     @IBAction func checkout(_ sender: Any) {
         
-        // TODO: Set your own token, buyerID and gr4vyID here
+        // TODO: Set your own token and gr4vyID here
         let token = "<TOKEN HERE>"
-        let buyerId = "<BUYER ID HERE>"
         let gr4vyId = "<GR4VY ID HERE>"
         
         var categories = [String]()
@@ -34,7 +33,6 @@ class CheckoutViewController: UIViewController {
                                 amount: 10873,
                                 currency: "USD",
                                 country: "US",
-                                buyerId: buyerId,
                                 store: .false,
                                 cartItems: items,
                                 environment: .sandbox,
@@ -82,8 +80,8 @@ class CheckoutViewController: UIViewController {
                 case .transactionFailed(let transactionID, let status, let paymentMethodID):
                     print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
                     outcomeViewController.outcome = .failure(reason: "transactionFailed")
-                case .transactionCreated(let transactionID, let status, let paymentMethodID):
-                    print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+                case .transactionCreated(let transactionID, let status, let paymentMethodID, let approvalUrl):
+                    print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown"), approvalUrl: \(approvalUrl ?? "Unknown")")
                     outcomeViewController.outcome = .success
                 case .generalError(let error):
                     print("Error: \(error.description)")

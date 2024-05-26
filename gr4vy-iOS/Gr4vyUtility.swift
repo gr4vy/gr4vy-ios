@@ -102,7 +102,9 @@ struct Gr4vyUtility {
             guard let transactionID = data["id"] as? String else {
                 return .generalError("Gr4vy Error: transaction success has failed, no transactionID and/or paymentMethodID found")
             }
-            return .transactionCreated(transactionID: transactionID, status: status, paymentMethodID: data["paymentMethodID"] as? String)
+            let paymentMethod = data["paymentMethod"] as? [String: Any]
+            let approvalUrl = paymentMethod?["approvalUrl"] as? String
+            return .transactionCreated(transactionID: transactionID, status: status, paymentMethodID: data["paymentMethodID"] as? String, approvalUrl: approvalUrl)
             
             // Failure statuses
         case "capture_declined", "authorization_failed":

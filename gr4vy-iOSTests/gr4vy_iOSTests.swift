@@ -566,42 +566,52 @@ class gr4vy_iOSTests: XCTestCase {
         payload = ["data": ["status": "capture_succeeded", "id": "123"]]
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
-        XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "capture_succeeded", paymentMethodID: nil), sut)
+        XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "capture_succeeded", paymentMethodID: nil, approvalUrl: nil), sut)
         
         payload = ["data": ["status": "capture_succeeded", "id": "123", "paymentMethodID": "ABC"]]
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
-        XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "capture_succeeded", paymentMethodID: "ABC"), sut)
+        XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "capture_succeeded", paymentMethodID: "ABC", approvalUrl: nil), sut)
         
         payload = ["data": ["status": "capture_pending", "id": "123"]]
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
-        XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "capture_pending", paymentMethodID: nil) , sut)
+        XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "capture_pending", paymentMethodID: nil, approvalUrl: nil) , sut)
         
         payload = ["data": ["status": "capture_pending", "id": "123", "paymentMethodID": "ABC"]]
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
-        XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "capture_pending", paymentMethodID: "ABC") , sut)
+        XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "capture_pending", paymentMethodID: "ABC", approvalUrl: nil) , sut)
         
         payload = ["data": ["status": "authorization_succeeded", "id": "123"]]
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
-        XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "authorization_succeeded", paymentMethodID: nil) , sut)
+        XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "authorization_succeeded", paymentMethodID: nil, approvalUrl: nil) , sut)
         
         payload = ["data": ["status": "authorization_succeeded", "id": "123", "paymentMethodID": "ABC"]]
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
-        XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "authorization_succeeded", paymentMethodID: "ABC") , sut)
+        XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "authorization_succeeded", paymentMethodID: "ABC", approvalUrl: nil) , sut)
         
         payload = ["data": ["status": "authorization_succeeded", "id": "123"]]
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
-        XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "authorization_succeeded", paymentMethodID: nil) , sut)
+        XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "authorization_succeeded", paymentMethodID: nil, approvalUrl: nil) , sut)
         
         payload = ["data": ["status": "authorization_pending", "id": "123", "paymentMethodID": "ABC"]]
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
-        XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "authorization_pending", paymentMethodID: "ABC") , sut)
+        XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "authorization_pending", paymentMethodID: "ABC", approvalUrl: nil) , sut)
+        
+        payload = ["data": ["status": "authorization_pending", "id": "123", "paymentMethodID": "ABC", "paymentMethod": ["approvalUrl": "123"]]]
+        
+        sut = Gr4vyUtility.handleTransactionCreated(from: payload)
+        XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "authorization_pending", paymentMethodID: "ABC", approvalUrl: "123"), sut)
+        
+        payload = ["data": ["status": "authorization_pending", "id": "123", "paymentMethodID": "ABC", "paymentMethod": []]]
+        
+        sut = Gr4vyUtility.handleTransactionCreated(from: payload)
+        XCTAssertEqual(Gr4vyEvent.transactionCreated(transactionID: "123", status: "authorization_pending", paymentMethodID: "ABC", approvalUrl: nil), sut)
     }
     
     func testHandleTransactionCreatedFails() {

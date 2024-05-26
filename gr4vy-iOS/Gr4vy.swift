@@ -12,7 +12,7 @@ import SwiftUI
 import PassKit
 
 public enum Gr4vyEvent: Equatable {
-    case transactionCreated(transactionID: String, status: String, paymentMethodID: String?)
+    case transactionCreated(transactionID: String, status: String, paymentMethodID: String?, approvalUrl: String?)
     case transactionFailed(transactionID: String, status: String, paymentMethodID: String?)
     case cancelled
     case generalError(String)
