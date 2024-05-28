@@ -26,7 +26,7 @@ gr4vy-ios doesn't contain any external dependencies.
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'gr4vy-ios', '2.1.1'
+    pod 'gr4vy-ios', '2.2.0'
 end
 ```
 
@@ -68,8 +68,8 @@ gr4vy?.launch(
         case .transactionFailed(let transactionID, let status, let paymentMethodID):
             print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
             return
-        case .transactionCreated(let transactionID, let status, let paymentMethodID):
-            print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+        case .transactionCreated(let transactionID, let status, let paymentMethodID, let approvalUrl):
+            print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown"), approvalUrl: \(approvalUrl ?? "Unknown")")
             return
         case .generalError(let error):
             print("Error: \(error.description)")
@@ -92,8 +92,8 @@ let gr4vy = Gr4vy(gr4vyId: "[GR4VY_ID]",
     case .transactionFailed(let transactionID, let status, let paymentMethodID):
         print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
         return
-    case .transactionCreated(let transactionID, let status, let paymentMethodID):
-        print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+    case .transactionCreated(let transactionID, let status, let paymentMethodID, let approvalUrl):
+        print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown"), approvalUrl: \(approvalUrl ?? "Unknown")")
         return
     case .generalError(let error):
         print("Error: \(error.description)")
@@ -156,8 +156,8 @@ onEvent: { event in
  case .transactionFailed(let transactionID, let status, let paymentMethodID):
      print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
      return
- case .transactionCreated(let transactionID, let status, let paymentMethodID):
-     print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+ case .transactionCreated(let transactionID, let status, let paymentMethodID, let approvalUrl):
+     print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown"), approvalUrl: \(approvalUrl ?? "Unknown")")
      return
  case .generalError(let error):
      print("Error: \(error.description)")
@@ -178,7 +178,8 @@ Returns a data about the transaction object when the transaction was successfull
 {
   "transactionID": "8724fd24-5489-4a5d-90fd-0604df7d3b83",
   "status": "pending",
-  "paymentMethodID": "17d57b9a-408d-49b8-9a97-9db382593003"
+  "paymentMethodID": "17d57b9a-408d-49b8-9a97-9db382593003",
+  "approvalUrl": "https://example.com"
 }
 ```
 
