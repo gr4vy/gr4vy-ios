@@ -41,19 +41,30 @@ public class Gr4vyViewController: UIViewController , WKNavigationDelegate {
             
             self.edgesForExtendedLayout = []
             
-            let navigationBarAppearance = UINavigationBarAppearance()
-            navigationBarAppearance.configureWithDefaultBackground()
-            if let navigationBackgroundColor = theme.navigationBackgroundColor {
-                navigationBarAppearance.backgroundColor = navigationBackgroundColor
+            if #available(iOS 13.0, *) {
+                let navigationBarAppearance = UINavigationBarAppearance()
+                navigationBarAppearance.configureWithDefaultBackground()
+                if let navigationBackgroundColor = theme.navigationBackgroundColor {
+                    navigationBarAppearance.backgroundColor = navigationBackgroundColor
+                }
+                if let navigationTextColor = theme.navigationTextColor {
+                    navigationBarAppearance.titleTextAttributes = [.foregroundColor: navigationTextColor]
+                    navigationController?.navigationBar.tintColor = navigationTextColor
+                }
+                
+                navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+                navigationController?.navigationBar.compactAppearance = navigationBarAppearance
+                navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+            } else {
+                // Directly set the navigation bar appearance for iOS 12 and earlier
+                if let navigationBackgroundColor = theme.navigationBackgroundColor {
+                    navigationController?.navigationBar.barTintColor = navigationBackgroundColor
+                }
+                if let navigationTextColor = theme.navigationTextColor {
+                    navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: navigationTextColor]
+                    navigationController?.navigationBar.tintColor = navigationTextColor
+                }
             }
-            if let navigationTextColor = theme.navigationTextColor {
-                navigationBarAppearance.titleTextAttributes = [.foregroundColor: navigationTextColor]
-                navigationController?.navigationBar.tintColor = navigationTextColor
-            }
-            
-            navigationController?.navigationBar.standardAppearance = navigationBarAppearance
-            navigationController?.navigationBar.compactAppearance = navigationBarAppearance
-            navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
         }
     }
     

@@ -121,7 +121,7 @@ public class Gr4vy {
         presentingViewController.present(navigationController, animated: true, completion: nil)
     }
     
-    
+    @available(iOS 13.0, *)
     @ViewBuilder
     public func view() -> some View {
         ViewControllerWrapper(rootViewController: rootViewController)

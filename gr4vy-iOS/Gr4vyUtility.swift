@@ -127,7 +127,14 @@ struct Gr4vyUtility {
     
     
     static func handleTransactionUpdated(from payload: [String: Any]) -> String? {
-        guard let passOnMessage = try? JSONSerialization.data(withJSONObject: payload, options: .withoutEscapingSlashes), let message = String(data: passOnMessage, encoding: .utf8) else {
+        let passOnMessageData: Data?
+        
+        if #available(iOS 13.0, *) {
+            passOnMessageData = try? JSONSerialization.data(withJSONObject: payload, options: .withoutEscapingSlashes)
+        } else {
+            passOnMessageData = try? JSONSerialization.data(withJSONObject: payload, options: [])
+        }
+        guard let passOnMessage = passOnMessageData, let message = String(data: passOnMessage, encoding: .utf8) else {
             return nil
         }
         

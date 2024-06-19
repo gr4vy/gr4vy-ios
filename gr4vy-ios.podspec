@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.source = { :git => 'https://github.com/gr4vy/gr4vy-ios.git', :tag => s.version }
   s.documentation_url = 'https://github.com/gr4vy/gr4vy-ios'
 
-  s.ios.deployment_target = '14.0'
+  s.ios.deployment_target = '12.0'
 
   s.swift_versions = ['5.3', '5.4', '5.5']
   s.source_files = 'gr4vy-iOS/**/*.swift'
