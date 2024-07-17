@@ -26,7 +26,7 @@ gr4vy-ios doesn't contain any external dependencies.
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'gr4vy-ios', '2.2.1'
+    pod 'gr4vy-ios', '2.3.0'
 end
 ```
 
@@ -143,6 +143,7 @@ These are the parameteres available on the `launch` method:
 | `shippingDetailsId`| `Optional`       | An optional unique identifier of a set of shipping details stored for the buyer. |
 | `merchantAccountId`| `Optional`       | An optional merchant account ID. |
 | `connectionOptions`| `Optional`       | An optional set of options passed to a connection when processing a transaction (see https://docs.gr4vy.com/reference#operation/authorize-new-transaction) |
+| `connectionOptionsString`| `Optional`       | A JSON String of connectionOptions |
 | `debugMode`| `Optional`       | `true`, `false`. Defaults to `false`, this prints to the console. |
 | `onEvent`                 | `Optional`      | **Please see below for more details.** |
 
