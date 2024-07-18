@@ -19,6 +19,29 @@ struct Gr4vyUtility {
         return URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData)
     }
     
+    static func getConnectionOptions(from connectionOptions: [String: [String: Gr4vyConnectionOptionsValue]]?, connectionOptionsString: String?) -> [String: [String: Gr4vyConnectionOptionsValue]]? {
+        if let connectionOptions = connectionOptions {
+            return connectionOptions
+        }
+        guard let connectionOptionsString else {
+            return nil
+        }
+        
+        typealias Gr4vyConnectionOptions = [String: [String: Gr4vyConnectionOptionsValue]]
+        
+        guard let data = connectionOptionsString.data(using: .utf8) else {
+            return nil
+        }
+        let decoder = JSONDecoder()
+        
+        do {
+            let decodedData = try decoder.decode(Gr4vyConnectionOptions.self, from: data)
+            return decodedData
+        } catch {
+            return nil
+        }
+    }
+    
     
     static func generateUpdateOptions(from setup: Gr4vySetup) -> String {
         var mutableSetup = setup
@@ -36,7 +59,7 @@ struct Gr4vyUtility {
         do {
             let jsonData = try encoder.encode(mutableSetup)
             let jsonString = String(data: jsonData, encoding: .utf8) ?? "{}"
- 
+            
             let windowMessage = "window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": \(jsonString)})"
             
             return windowMessage
