@@ -9,14 +9,14 @@ import XCTest
 @testable import gr4vy_ios
 
 class gr4vy_iOSTests: XCTestCase {
-
+    
     var setup: Gr4vySetup!
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         setup = generateSetup()
     }
-
+    
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         setup = nil
@@ -92,135 +92,135 @@ class gr4vy_iOSTests: XCTestCase {
     
     func testGenerateUpdateOptionsSucceedsWithDifferentAmounts() {
         setup.amount = 1000
-    
+        
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":1000,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.amount = 1
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":1,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.amount = -1
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":-1,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.amount = 0
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":0,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.amount = 2147483647 // Int.max
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":2147483647,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
     }
     
     func testGenerateUpdateOptionsSucceedsWithDifferentExternalIdentifiers() {
         setup.externalIdentifier = nil
-    
+        
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.externalIdentifier = "ABC"
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"externalIdentifier\":\"ABC\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.externalIdentifier = "123456789"
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"externalIdentifier\":\"123456789\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.externalIdentifier = ""
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"externalIdentifier\":\"\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
     }
     
     func testGenerateUpdateOptionsSucceedsWithDifferentIntent() {
         setup.intent = nil
-    
+        
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.intent = "ABC"
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"intent\":\"ABC\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.intent = "authorize"
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"intent\":\"authorize\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.intent = "capture"
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"intent\":\"capture\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.intent = ""
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"intent\":\"\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
     }
-
+    
     func testGenerateUpdateOptionsSucceedsWithDifferentStore() {
         setup.store = nil
-    
+        
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.store = .ask
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"store\":\"ask\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.store = .true
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"store\":true,\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.store = .false
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"store\":false,\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
     }
     
     func testGenerateUpdateOptionsSucceedsWithDifferentDisplay() {
         setup.display = nil
-    
+        
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.display = "ABC"
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"display\":\"ABC\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.display = "all"
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"display\":\"all\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.display = "addOnly"
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"display\":\"addOnly\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.display = "storedOnly"
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"display\":\"storedOnly\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.display = "supportsTokenization"
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"display\":\"supportsTokenization\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.display = ""
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"display\":\"\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
     }
@@ -238,7 +238,7 @@ class gr4vy_iOSTests: XCTestCase {
         setup.store = nil
         setup.display = ""
         setup.intent = ""
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"display\":\"\",\"externalIdentifier\":\"\",\"intent\":\"\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
@@ -246,7 +246,7 @@ class gr4vy_iOSTests: XCTestCase {
         setup.store = nil
         setup.display = ""
         setup.intent = nil
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"display\":\"\",\"externalIdentifier\":\"\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
@@ -254,7 +254,7 @@ class gr4vy_iOSTests: XCTestCase {
         setup.store = .ask
         setup.display = "DISPLAY"
         setup.intent = "INTENT"
-    
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"display\":\"DISPLAY\",\"externalIdentifier\":\"XYZ\",\"intent\":\"INTENT\",\"store\":\"ask\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
@@ -272,12 +272,12 @@ class gr4vy_iOSTests: XCTestCase {
     
     func testGenerateUpdateOptionsSucceedsWithDifferentMetadataObjects() {
         setup.metadata = [:]
-
+        
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"metadata\":{},\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
-
+        
         setup.metadata = ["":""]
-
+        
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"metadata\":{\"\":\"\"},\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
@@ -394,17 +394,17 @@ class gr4vy_iOSTests: XCTestCase {
         XCTAssertNotNil(sut)
         
         theme = Gr4vyTheme(colors: Gr4vyColours(headerBackground: "#000000"))
-       
+        
         sut = theme.navigationBackgroundColor
         XCTAssertNotNil(sut)
         
         theme = Gr4vyTheme(colors: Gr4vyColours(headerBackground: "#00000012"))
-       
+        
         sut = theme.navigationBackgroundColor
         XCTAssertNil(sut)
         
         theme = Gr4vyTheme(colors: Gr4vyColours())
-       
+        
         sut = theme.navigationBackgroundColor
         XCTAssertNil(sut)
         
@@ -414,17 +414,17 @@ class gr4vy_iOSTests: XCTestCase {
         XCTAssertNotNil(sut)
         
         theme = Gr4vyTheme(colors: Gr4vyColours(headerText: "#000000"))
-       
+        
         sut = theme.navigationTextColor
         XCTAssertNotNil(sut)
         
         theme = Gr4vyTheme(colors: Gr4vyColours(headerText: "#00000012"))
-       
+        
         sut = theme.navigationTextColor
         XCTAssertNil(sut)
         
         theme = Gr4vyTheme(colors: Gr4vyColours())
-       
+        
         sut = theme.navigationTextColor
         XCTAssertNil(sut)
     }
@@ -434,7 +434,7 @@ class gr4vy_iOSTests: XCTestCase {
         
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerExternalIdentifier\":\"ID\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
-    
+        
         setup.buyerExternalIdentifier = ""
         
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
@@ -446,7 +446,7 @@ class gr4vy_iOSTests: XCTestCase {
         
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"locale\":\"EN\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
-    
+        
         setup.locale = ""
         
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
@@ -458,7 +458,7 @@ class gr4vy_iOSTests: XCTestCase {
         
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"statementDescriptor\":{},\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
-    
+        
         setup.statementDescriptor = Gr4vyStatementDescriptor(name: "name")
         
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
@@ -495,7 +495,7 @@ class gr4vy_iOSTests: XCTestCase {
         
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"requireSecurityCode\":true,\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
-    
+        
         setup.requireSecurityCode = false
         
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
@@ -507,7 +507,7 @@ class gr4vy_iOSTests: XCTestCase {
         
         var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"country\":\"GB\",\"currency\":\"GBP\",\"shippingDetailsId\":\"shippingDetailsId\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
-    
+        
         setup.shippingDetailsId = ""
         
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
@@ -557,7 +557,7 @@ class gr4vy_iOSTests: XCTestCase {
         sut = Gr4vyUtility.handleApprovalUrl(from: payload)
         XCTAssertNil(sut)
     }
-
+    
     func testHandleTransactionCreatedSucceeds() {
         var payload: [String: Any] =  [:]
         
@@ -639,7 +639,7 @@ class gr4vy_iOSTests: XCTestCase {
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
         XCTAssertEqual(Gr4vyEvent.generalError("Gr4vy Error: Pop up transaction created failed.") , sut)
-    
+        
         payload = ["data": ["status": "capture_declined"]]
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
@@ -674,14 +674,14 @@ class gr4vy_iOSTests: XCTestCase {
         
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
         XCTAssertEqual(Gr4vyEvent.transactionFailed(transactionID: "transactionID", status: "newStatus", paymentMethodID: "paymentID") , sut)
-
+        
         payload = ["data": ["status": "authorization_failed", "paymentMethodID": "paymentID", "id": "transactionID"]]
-
+        
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
         XCTAssertEqual(Gr4vyEvent.transactionFailed(transactionID: "transactionID", status: "authorization_failed", paymentMethodID: "paymentID") , sut)
-
+        
         payload = ["data": ["status": "capture_declined", "paymentMethodID": "paymentID", "id": "transactionID"]]
-
+        
         sut = Gr4vyUtility.handleTransactionCreated(from: payload)
         XCTAssertEqual(Gr4vyEvent.transactionFailed(transactionID: "transactionID", status: "capture_declined", paymentMethodID: "paymentID") , sut)
     }
@@ -696,13 +696,6 @@ class gr4vy_iOSTests: XCTestCase {
         
         sut = Gr4vyUtility.handleTransactionUpdated(from: payload)
         XCTAssertEqual("window.postMessage({})", sut)
-    }
-    
-    func testHandleTransactionUpdatedFails() {
-        let payload: [String: Any] =  ["": String(bytes: [0xD8, 0x00] as [UInt8], encoding: String.Encoding.utf16BigEndian)!]
-        
-        let sut = Gr4vyUtility.handleTransactionUpdated(from: payload)
-        XCTAssertNil(sut)
     }
     
     func testHandleNavigationUpdateSucceeds() {
@@ -890,26 +883,26 @@ class gr4vy_iOSTests: XCTestCase {
     func testConnectionOptionsEncoding() {
         
         let permutations: [[String: [String: Gr4vyConnectionOptionsValue]]] = [
-                    ["key1": ["subKey1":  .string("value1")]],
-                    ["key1": ["subKey1": .int(1)]],
-                    ["key1": ["subKey1": .bool(true)]],
-                          ["key1": ["subKey1": .string("value1"), "subKey2": .int(1)]],
-                          ["key1": ["subKey1": .string("value1"), "subKey2": .bool(true)]],
-                          ["key1": ["subKey1": .int(1), "subKey2": .bool(true)]],
-                          ["key1": ["subKey1": .string("value1"), "subKey2": .int(1), "subKey3": .bool(true)]],
-                          ["key1": ["subKey1": .string("value1")], "key2": ["subKey1": .int(1)]],
-                          ["key1": ["subKey1": .string("value1")], "key2": ["subKey1": .bool(true)]],
-                          ["key1": ["subKey1": .int(1)], "key2": ["subKey1": .bool(true)]],
-                          ["key1": ["subKey1": .string("value1"), "subKey2": .int(1)], "key2": ["subKey1": .int(1), "subKey2": .bool(true)]],
-                    ["key1": ["subKey1": .string("value1"), "subKey2": .bool(true)], "key2": ["subKey1": .int(1), "subKey2": .string("value2")]]
-                ]
+            ["key1": ["subKey1":  .string("value1")]],
+            ["key1": ["subKey1": .int(1)]],
+            ["key1": ["subKey1": .bool(true)]],
+            ["key1": ["subKey1": .string("value1"), "subKey2": .int(1)]],
+            ["key1": ["subKey1": .string("value1"), "subKey2": .bool(true)]],
+            ["key1": ["subKey1": .int(1), "subKey2": .bool(true)]],
+            ["key1": ["subKey1": .string("value1"), "subKey2": .int(1), "subKey3": .bool(true)]],
+            ["key1": ["subKey1": .string("value1")], "key2": ["subKey1": .int(1)]],
+            ["key1": ["subKey1": .string("value1")], "key2": ["subKey1": .bool(true)]],
+            ["key1": ["subKey1": .int(1)], "key2": ["subKey1": .bool(true)]],
+            ["key1": ["subKey1": .string("value1"), "subKey2": .int(1)], "key2": ["subKey1": .int(1), "subKey2": .bool(true)]],
+            ["key1": ["subKey1": .string("value1"), "subKey2": .bool(true)], "key2": ["subKey1": .int(1), "subKey2": .string("value2")]]
+        ]
         
         for permutation in permutations {
             setup.connectionOptions = permutation
             let sut = Gr4vyUtility.generateUpdateOptions(from: setup)
             XCTAssertFalse(sut.isEmpty)
         }
-      }
+    }
     
     func testGenerateUpdateOptionsSucceedsWithConnectionOptionsPermutations() {
         
@@ -942,14 +935,198 @@ class gr4vy_iOSTests: XCTestCase {
         setup.connectionOptions =  [
             "cybersource-anti-fraud": ["merchant_defined_data": .string("value")]
         ]
-         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
+        sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"connectionOptions\":{\"cybersource-anti-fraud\":{\"merchant_defined_data\":\"value\"}},\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
         setup.connectionOptions = [:]
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"connectionOptions\":{},\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
+    }
     
+    func testConnectionOptionsInUtilityWhenProvidedValidConnectionOptions() {
+        
+        let permutations: [[String: [String: Gr4vyConnectionOptionsValue]]] = [
+            ["key1": ["subKey1":  .string("value1")]],
+            ["key1": ["subKey1": .int(1)]],
+            ["key1": ["subKey1": .bool(true)]],
+            ["key1": ["subKey1": .string("value1"), "subKey2": .int(1)]],
+            ["key1": ["subKey1": .string("value1"), "subKey2": .bool(true)]],
+            ["key1": ["subKey1": .int(1), "subKey2": .bool(true)]],
+            ["key1": ["subKey1": .string("value1"), "subKey2": .int(1), "subKey3": .bool(true)]],
+            ["key1": ["subKey1": .string("value1")], "key2": ["subKey1": .int(1)]],
+            ["key1": ["subKey1": .string("value1")], "key2": ["subKey1": .bool(true)]],
+            ["key1": ["subKey1": .int(1)], "key2": ["subKey1": .bool(true)]],
+            ["key1": ["subKey1": .string("value1"), "subKey2": .int(1)], "key2": ["subKey1": .int(1), "subKey2": .bool(true)]],
+            ["key1": ["subKey1": .string("value1"), "subKey2": .bool(true)], "key2": ["subKey1": .int(1), "subKey2": .string("value2")]]
+        ]
+        
+        for permutation in permutations {
+            XCTAssertEqual(Gr4vyUtility.getConnectionOptions(from: permutation, connectionOptionsString: nil), permutation)
+        }
+    }
+    
+    func testConnectionOptionsInUtilityWhenProvidedValidConnectionOptionStrings() {
+
+      let permutations: [[String: [String: Gr4vyConnectionOptionsValue]]] = [
+        ["key1": ["subKey1": .string("value1")]],
+        ["key1": ["subKey1": .int(1)]],
+        ["key1": ["subKey1": .bool(true)]],
+        ["key1": ["subKey1": .string("value1"), "subKey2": .int(1)]],
+        ["key1": ["subKey1": .string("value1"), "subKey2": .bool(true)]],
+        ["key1": ["subKey1": .int(1), "subKey2": .bool(true)]],
+        ["key1": ["subKey1": .string("value1"), "subKey2": .int(1), "subKey3": .bool(true)]],
+        ["key1": ["subKey1": .string("value1")], "key2": ["subKey1": .int(1)]],
+        ["key1": ["subKey1": .string("value1")], "key2": ["subKey1": .bool(true)]],
+        ["key1": ["subKey1": .int(1)], "key2": ["subKey1": .bool(true)]],
+        [
+          "key1": ["subKey1": .string("value1"), "subKey2": .int(1)],
+          "key2": ["subKey1": .int(1), "subKey2": .bool(true)],
+        ],
+        [
+          "key1": ["subKey1": .string("value1"), "subKey2": .bool(true)],
+          "key2": ["subKey1": .int(1), "subKey2": .string("value2")],
+        ],
+      ]
+
+      let stringPermutations: [String] = [
+        """
+        {
+          "key1" : {
+            "subKey1" : "value1"
+          }
+        }
+        """,
+        """
+        {
+          "key1" : {
+            "subKey1" : 1
+          }
+        }
+        """,
+        """
+        {
+          "key1" : {
+            "subKey1" : true
+          }
+        }
+        """,
+        """
+        {
+          "key1" : {
+            "subKey1" : "value1",
+            "subKey2" : 1
+          }
+        }
+        """,
+        """
+        {
+          "key1" : {
+            "subKey1" : "value1",
+            "subKey2" : true
+          }
+        }
+        """,
+        """
+        {
+          "key1" : {
+            "subKey1" : 1,
+            "subKey2" : true
+          }
+        }
+        """,
+        """
+        {
+          "key1" : {
+            "subKey1" : "value1",
+            "subKey2" : 1,
+            "subKey3" : true
+          }
+        }
+        """,
+        """
+        {
+          "key1" : {
+            "subKey1" : "value1"
+          },
+          "key2" : {
+            "subKey1" : 1
+          }
+        }
+        """,
+        """
+        {
+          "key1" : {
+            "subKey1" : "value1"
+          },
+          "key2" : {
+            "subKey1" : true
+          }
+        }
+        """,
+        """
+        {
+          "key1" : {
+            "subKey1" : 1
+          },
+          "key2" : {
+            "subKey1" : true
+          }
+        }
+        """,
+        """
+        {
+          "key1" : {
+            "subKey1" : "value1",
+            "subKey2" : 1
+          },
+          "key2" : {
+            "subKey1" : 1,
+            "subKey2" : true
+          }
+        }
+        """,
+        """
+        {
+          "key1" : {
+            "subKey1" : "value1",
+            "subKey2" : true
+          },
+          "key2" : {
+            "subKey1" : 1,
+            "subKey2" : "value2"
+          }
+        }
+        """,
+      ]
+
+      for (index, stringPermuation) in stringPermutations.enumerated() {
+        XCTAssertEqual(
+          Gr4vyUtility.getConnectionOptions(from: nil, connectionOptionsString: stringPermuation),
+          permutations[index])
+      }
+    }
+    
+    func testConnectionOptionsInUtilityWhenProvidedValidConnectionOptionsAndConnectionOptionStrings() {
+        
+        let permutations: [[String: [String: Gr4vyConnectionOptionsValue]]] = [
+            ["key1": ["subKey1":  .string("value1")]],
+            ["key1": ["subKey1": .int(1)]],
+            ["key1": ["subKey1": .bool(true)]],
+            ["key1": ["subKey1": .string("value1"), "subKey2": .int(1)]],
+            ["key1": ["subKey1": .string("value1"), "subKey2": .bool(true)]],
+            ["key1": ["subKey1": .int(1), "subKey2": .bool(true)]],
+            ["key1": ["subKey1": .string("value1"), "subKey2": .int(1), "subKey3": .bool(true)]],
+            ["key1": ["subKey1": .string("value1")], "key2": ["subKey1": .int(1)]],
+            ["key1": ["subKey1": .string("value1")], "key2": ["subKey1": .bool(true)]],
+            ["key1": ["subKey1": .int(1)], "key2": ["subKey1": .bool(true)]],
+            ["key1": ["subKey1": .string("value1"), "subKey2": .int(1)], "key2": ["subKey1": .int(1), "subKey2": .bool(true)]],
+            ["key1": ["subKey1": .string("value1"), "subKey2": .bool(true)], "key2": ["subKey1": .int(1), "subKey2": .string("value2")]]
+        ]
+        
+        for permutation in permutations {
+            XCTAssertEqual(Gr4vyUtility.getConnectionOptions(from: permutation, connectionOptionsString:    "{\"keyA\":{\"subKeyA\":\"valueA\"}}"), permutation)
+        }
     }
 }
 
