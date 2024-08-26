@@ -1128,6 +1128,54 @@ class gr4vy_iOSTests: XCTestCase {
             XCTAssertEqual(Gr4vyUtility.getConnectionOptions(from: permutation, connectionOptionsString:    "{\"keyA\":{\"subKeyA\":\"valueA\"}}"), permutation)
         }
     }
+
+    func testGenerateUpdateOptionsSucceedsWithBuyer() {
+        setup.buyerId = nil
+        setup.buyer = Gr4vyBuyer()
+        
+        var sut = Gr4vyUtility.generateUpdateOptions(from: setup)
+        XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyer\":{},\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
+        
+        setup.buyer = Gr4vyBuyer(displayName: "displayName", externalIdentifier: "externalIdentifier")
+
+        sut = Gr4vyUtility.generateUpdateOptions(from: setup)
+        XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyer\":{\"displayName\":\"displayName\",\"externalIdentifier\":\"externalIdentifier\"},\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
+
+        setup.buyer = Gr4vyBuyer(billingDetails: Gr4vyBillingDetails(firstName: "firstName"))
+
+        sut = Gr4vyUtility.generateUpdateOptions(from: setup)
+        XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyer\":{\"billingDetails\":{\"firstName\":\"firstName\"}},\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
+
+        setup.buyer = Gr4vyBuyer(billingDetails: Gr4vyBillingDetails(lastName: "lastName"))
+
+        sut = Gr4vyUtility.generateUpdateOptions(from: setup)
+        XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyer\":{\"billingDetails\":{\"lastName\":\"lastName\"}},\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
+
+        setup.buyer = Gr4vyBuyer(billingDetails: Gr4vyBillingDetails(emailAddress: "emailAddress"))
+
+        sut = Gr4vyUtility.generateUpdateOptions(from: setup)
+        XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyer\":{\"billingDetails\":{\"emailAddress\":\"emailAddress\"}},\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
+
+        setup.buyer = Gr4vyBuyer(billingDetails: Gr4vyBillingDetails(phoneNumber: "phoneNumber"))
+
+        sut = Gr4vyUtility.generateUpdateOptions(from: setup)
+        XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyer\":{\"billingDetails\":{\"phoneNumber\":\"phoneNumber\"}},\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
+
+        setup.buyer = Gr4vyBuyer(billingDetails: Gr4vyBillingDetails(address: Gr4vyAddress(houseNumberOrName: "houseNumberOrName", line1: "line1", line2: "line2", organization: "organization", city: "city", postalCode: "postalCode", country: "country", state: "state", stateCode: "stateCode")))
+
+        sut = Gr4vyUtility.generateUpdateOptions(from: setup)
+        XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyer\":{\"billingDetails\":{\"address\":{\"city\":\"city\",\"country\":\"country\",\"houseNumberOrName\":\"houseNumberOrName\",\"line1\":\"line1\",\"line2\":\"line2\",\"organization\":\"organization\",\"postalCode\":\"postalCode\",\"state\":\"state\",\"stateCode\":\"stateCode\"}}},\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
+
+        setup.buyer = Gr4vyBuyer(billingDetails: Gr4vyBillingDetails(taxId: Gr4vyTaxId(value: "value", kind: "kind")))
+
+        sut = Gr4vyUtility.generateUpdateOptions(from: setup)
+        XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyer\":{\"billingDetails\":{\"taxId\":{\"kind\":\"kind\",\"value\":\"value\"}}},\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
+
+        setup.buyer = Gr4vyBuyer(shippingDetails: Gr4vyShippingDetails(firstName: "firstName", lastName: "lastName", address: Gr4vyAddress(houseNumberOrName: "houseNumberOrName", line1: "line1", line2: "line2", organization: "organization", city: "city", postalCode: "postalCode", country: "country", state: "state", stateCode: "stateCode")))
+
+        sut = Gr4vyUtility.generateUpdateOptions(from: setup)
+        XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyer\":{\"shippingDetails\":{\"address\":{\"city\":\"city\",\"country\":\"country\",\"houseNumberOrName\":\"houseNumberOrName\",\"line1\":\"line1\",\"line2\":\"line2\",\"organization\":\"organization\",\"postalCode\":\"postalCode\",\"state\":\"state\",\"stateCode\":\"stateCode\"},\"firstName\":\"firstName\",\"lastName\":\"lastName\"}},\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
+    }
 }
 
 extension gr4vy_iOSTests {
