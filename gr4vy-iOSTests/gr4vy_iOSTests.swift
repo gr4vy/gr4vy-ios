@@ -1170,6 +1170,11 @@ class gr4vy_iOSTests: XCTestCase {
 
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyer\":{\"billingDetails\":{\"taxId\":{\"kind\":\"kind\",\"value\":\"value\"}}},\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
+
+        setup.buyer = Gr4vyBuyer(shippingDetails: Gr4vyShippingDetails(firstName: "firstName", lastName: "lastName", address: Gr4vyAddress(houseNumberOrName: "houseNumberOrName", line1: "line1", line2: "line2", organization: "organization", city: "city", postalCode: "postalCode", country: "country", state: "state", stateCode: "stateCode")))
+
+        sut = Gr4vyUtility.generateUpdateOptions(from: setup)
+        XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyer\":{\"shippingDetails\":{\"address\":{\"city\":\"city\",\"country\":\"country\",\"houseNumberOrName\":\"houseNumberOrName\",\"line1\":\"line1\",\"line2\":\"line2\",\"organization\":\"organization\",\"postalCode\":\"postalCode\",\"state\":\"state\",\"stateCode\":\"stateCode\"},\"firstName\":\"firstName\",\"lastName\":\"lastName\"}},\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
     }
 }
 
