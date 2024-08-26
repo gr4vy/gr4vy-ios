@@ -8,14 +8,14 @@ import Foundation
 public struct Gr4vyBuyer: Codable {
     let displayName: String?
     let externalIdentifier: String?
-    let billingDetails: Gr4vyBillingShippingDetails?
-    let shippingDetails: Gr4vyBillingShippingDetails?
+    let billingDetails: Gr4vyBillingDetails?
+    let shippingDetails: Gr4vyShippingDetails?
     
     public init(
         displayName: String? = nil,
         externalIdentifier: String? = nil,
-        billingDetails: Gr4vyBillingShippingDetails? = nil,
-        shippingDetails: Gr4vyBillingShippingDetails? = nil
+        billingDetails: Gr4vyBillingDetails? = nil,
+        shippingDetails: Gr4vyShippingDetails? = nil
     ) {
         self.displayName = displayName
         self.externalIdentifier = externalIdentifier
@@ -24,7 +24,7 @@ public struct Gr4vyBuyer: Codable {
     }
 }
 
-public struct Gr4vyBillingShippingDetails: Codable {
+public struct Gr4vyBillingDetails: Codable {
     let firstName: String?
     let lastName: String?
     let emailAddress: String?
@@ -46,6 +46,28 @@ public struct Gr4vyBillingShippingDetails: Codable {
         self.phoneNumber = phoneNumber
         self.address = address
         self.taxId = taxId
+    }
+}
+
+public struct Gr4vyShippingDetails: Codable {
+    let firstName: String?
+    let lastName: String?
+    let emailAddress: String?
+    let phoneNumber: String?
+    let address: Gr4vyAddress?
+
+    public init(
+        firstName: String? = nil,
+        lastName: String? = nil,
+        emailAddress: String? = nil,
+        phoneNumber: String? = nil,
+        address: Gr4vyAddress? = nil
+    ) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.emailAddress = emailAddress
+        self.phoneNumber = phoneNumber
+        self.address = address
     }
 }
 
