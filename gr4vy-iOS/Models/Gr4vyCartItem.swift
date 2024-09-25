@@ -9,8 +9,8 @@ public struct Gr4vyCartItem: Codable {
     let name: String
     let quantity: Int
     let unitAmount: Int
-    let discountAmount: Int
-    let taxAmount: Int
+    let discountAmount: Int?
+    let taxAmount: Int?
     var externalIdentifier:String? = nil
     var sku: String? = nil
     var productUrl: String? = nil
@@ -18,7 +18,7 @@ public struct Gr4vyCartItem: Codable {
     var categories: [String]? = nil
     var productType: String? = nil
     
-    public init(name: String, quantity: Int, unitAmount: Int, discountAmount: Int = 0, taxAmount: Int = 0,
+    public init(name: String, quantity: Int, unitAmount: Int, discountAmount: Int? = 0, taxAmount: Int? = 0,
                 externalIdentifier: String? = nil, sku: String? = nil, productUrl: String? = nil, imageUrl: String? = nil, categories: [String]? = nil, productType: String? = nil) {
         self.name = name
         self.quantity = quantity

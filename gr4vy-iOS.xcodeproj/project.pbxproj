@@ -45,6 +45,7 @@
 		59FE69722722C131006C1C08 /* gr4vy_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5978B285271C7F1300F5CC00 /* gr4vy_ios.framework */; };
 		59FE69732722C131006C1C08 /* gr4vy_ios.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5978B285271C7F1300F5CC00 /* gr4vy_ios.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		59FE6978272C1188006C1C08 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE6977272C1188006C1C08 /* SettingsViewController.swift */; };
+		81125F232C6C9C4500C26DDA /* Gr4vyBuyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81125F222C6C9C4500C26DDA /* Gr4vyBuyer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +138,7 @@
 		59FE69692722BBD7006C1C08 /* Gr4vyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vyViewController.swift; sourceTree = "<group>"; };
 		59FE696B2722BC38006C1C08 /* CheckoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutViewController.swift; sourceTree = "<group>"; };
 		59FE6977272C1188006C1C08 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		81125F222C6C9C4500C26DDA /* Gr4vyBuyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gr4vyBuyer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +256,7 @@
 				59C5D45F29E34D56008FFEBC /* Gr4vySetup.swift */,
 				59C5D46129F162C0008FFEBC /* Gr4vyStore.swift */,
 				59160F792AF6EDDD00143DA2 /* Gr4vyConnectionOptionsValue.swift */,
+				81125F222C6C9C4500C26DDA /* Gr4vyBuyer.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -404,7 +407,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5978B27F271C7F1300F5CC00 /* Build configuration list for PBXProject "gr4vy-ios" */;
+			buildConfigurationList = 5978B27F271C7F1300F5CC00 /* Build configuration list for PBXProject "gr4vy-iOS" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -493,6 +496,7 @@
 				59C5D45529E34C51008FFEBC /* Gr4vyTheme.swift in Sources */,
 				598D6A4A272F3AEF00EE5777 /* Gr4vyMessage.swift in Sources */,
 				59C5D46229F162C0008FFEBC /* Gr4vyStore.swift in Sources */,
+				81125F232C6C9C4500C26DDA /* Gr4vyBuyer.swift in Sources */,
 				59FE696A2722BBD7006C1C08 /* Gr4vyViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -916,7 +920,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5978B27F271C7F1300F5CC00 /* Build configuration list for PBXProject "gr4vy-ios" */ = {
+		5978B27F271C7F1300F5CC00 /* Build configuration list for PBXProject "gr4vy-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5978B297271C7F1400F5CC00 /* Debug */,

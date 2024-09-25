@@ -26,7 +26,7 @@ gr4vy-ios doesn't contain any external dependencies.
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'gr4vy-ios', '2.2.0'
+    pod 'gr4vy-ios', '2.3.0'
 end
 ```
 
@@ -131,7 +131,7 @@ These are the parameteres available on the `launch` method:
 | `intent`                  | `Optional` | `authorize`, `capture` - Defines the intent of this API call. This determines the desired initial state of the transaction.|
 | `metadata`                | `Optional` | An optional dictionary of key/values for transaction metadata. All values should be a string.|
 | `paymentSource`           | `Optional` | `installment`, `recurring` - Can be used to signal that Embed is used to capture the first transaction for a subscription or an installment. When used, `store` is implied to be `true` and `display` is implied to be `supportsTokenization`. This means that payment options that do not support tokenization are automatically hidden. |
-| `cartItems`               | `Optional` | An optional array of cart item objects, each object must define a `name`, `quantity`, and `unitAmount`.|
+| `cartItems`               | `Optional` | An optional array of cart item objects, each object must define a `name`, `quantity`, and `unitAmount`. Other optional properties are `discountAmount`, `taxAmount`, `externalIdentifier`, `sku`, `productUrl`, `imageUrl`, `categories` and `productType`.|
 | `environment`| `Optional`       | `.sandbox`, `.production`. Defaults to `.production`. When `.sandbox` is provided the URL will contain `sandbox.GR4VY_ID`. |
 | `applePayMerchantId`| `Optional`       | The Apple merchant ID to be used during Apple Pay transcations |
 | `applePayMerchantName`| `Optional`       | The name which appears in the Apple Pay dialog next to "Pay" |
@@ -143,6 +143,8 @@ These are the parameteres available on the `launch` method:
 | `shippingDetailsId`| `Optional`       | An optional unique identifier of a set of shipping details stored for the buyer. |
 | `merchantAccountId`| `Optional`       | An optional merchant account ID. |
 | `connectionOptions`| `Optional`       | An optional set of options passed to a connection when processing a transaction (see https://docs.gr4vy.com/reference#operation/authorize-new-transaction) |
+| `connectionOptionsString`| `Optional`       | A JSON String of connectionOptions |
+| `buyer`| `Optional`       | An optional buyer object to allow guest checkout (see https://docs.gr4vy.com/reference/transactions/new-transaction) |
 | `debugMode`| `Optional`       | `true`, `false`. Defaults to `false`, this prints to the console. |
 | `onEvent`                 | `Optional`      | **Please see below for more details.** |
 

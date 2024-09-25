@@ -6,7 +6,7 @@
 
 import Foundation
 
-public enum Gr4vyConnectionOptionsValue: Codable {
+public enum Gr4vyConnectionOptionsValue: Codable, Equatable {
     case string(String)
     case int(Int)
     case bool(Bool)
