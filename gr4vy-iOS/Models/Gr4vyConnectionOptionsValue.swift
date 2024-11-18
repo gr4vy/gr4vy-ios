@@ -11,6 +11,7 @@ public enum Gr4vyConnectionOptionsValue: Codable, Equatable {
     case int(Int)
     case bool(Bool)
     case double(Double)
+    case dictionary([String: String])
     
     private enum CodingError: Error {
         case unknownValue
@@ -26,6 +27,8 @@ public enum Gr4vyConnectionOptionsValue: Codable, Equatable {
             self = .double(doubleValue)
         } else if let stringValue = try? container.decode(String.self) {
             self = .string(stringValue)
+        } else if let dictionaryValue = try? container.decode([String: String].self) {
+            self = .dictionary(dictionaryValue)
         } else {
             throw CodingError.unknownValue
         }
@@ -41,6 +44,8 @@ public enum Gr4vyConnectionOptionsValue: Codable, Equatable {
         case .bool(let value):
             try container.encode(value)
         case .double(let value):
+            try container.encode(value)
+        case .dictionary(let value):
             try container.encode(value)
         }
     }
