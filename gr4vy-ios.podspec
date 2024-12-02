@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'gr4vy-ios'
-  s.version = '2.4.0'
+  s.version = '2.4.1'
   s.license = 'MIT'
   s.summary = 'Quickly embed Gr4vy in your iOS app to store card details, authorize payments, and capture a transaction.'
   s.homepage = 'https://github.com/gr4vy/gr4vy-ios'

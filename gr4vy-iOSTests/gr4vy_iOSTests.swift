@@ -894,7 +894,8 @@ class gr4vy_iOSTests: XCTestCase {
             ["key1": ["subKey1": .string("value1")], "key2": ["subKey1": .bool(true)]],
             ["key1": ["subKey1": .int(1)], "key2": ["subKey1": .bool(true)]],
             ["key1": ["subKey1": .string("value1"), "subKey2": .int(1)], "key2": ["subKey1": .int(1), "subKey2": .bool(true)]],
-            ["key1": ["subKey1": .string("value1"), "subKey2": .bool(true)], "key2": ["subKey1": .int(1), "subKey2": .string("value2")]]
+            ["key1": ["subKey1": .string("value1"), "subKey2": .bool(true)], "key2": ["subKey1": .int(1), "subKey2": .string("value2")]],
+            ["key1": ["subKey1": .dictionary(["key1": "value1"])]],
         ]
         
         for permutation in permutations {
@@ -939,6 +940,13 @@ class gr4vy_iOSTests: XCTestCase {
         
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"connectionOptions\":{\"cybersource-anti-fraud\":{\"merchant_defined_data\":\"value\"}},\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
         
+        setup.connectionOptions =  [
+            "cybersource-anti-fraud": ["merchant_defined_data": .dictionary(["key": "value"])]
+        ]
+        sut = Gr4vyUtility.generateUpdateOptions(from: setup)
+        
+        XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"connectionOptions\":{\"cybersource-anti-fraud\":{\"merchant_defined_data\":{\"key\":\"value\"}}},\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
+        
         setup.connectionOptions = [:]
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyerId\":\"BUYER123\",\"connectionOptions\":{},\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
@@ -958,7 +966,8 @@ class gr4vy_iOSTests: XCTestCase {
             ["key1": ["subKey1": .string("value1")], "key2": ["subKey1": .bool(true)]],
             ["key1": ["subKey1": .int(1)], "key2": ["subKey1": .bool(true)]],
             ["key1": ["subKey1": .string("value1"), "subKey2": .int(1)], "key2": ["subKey1": .int(1), "subKey2": .bool(true)]],
-            ["key1": ["subKey1": .string("value1"), "subKey2": .bool(true)], "key2": ["subKey1": .int(1), "subKey2": .string("value2")]]
+            ["key1": ["subKey1": .string("value1"), "subKey2": .bool(true)], "key2": ["subKey1": .int(1), "subKey2": .string("value2")]],
+            ["key1": ["subKey1": .dictionary(["key1": "value1"])]],
         ]
         
         for permutation in permutations {
