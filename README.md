@@ -126,7 +126,7 @@ These are the parameteres available on the `launch` method:
 | `buyerId`                 | `Optional`      | An optional ID for a Gr4vy buyer. The transaction will automatically be associated to a buyer with that ID. If no buyer with this ID exists then it will be ignored.|
 | `presentingViewController`| **`Required`**       | The view controller presenting the Gr4vy flow. |
 | `externalIdentifier`      | `Optional`      | An optional external identifier that can be supplied. This will automatically be associated to any resource created by Gr4vy and can subsequently be used to find a resource by that ID. |
-| `store`                   | `Optional`       | `'ask'`, `true`, `false` - Explicitly store the payment method or ask the buyer, this is used when a buyerId is provided.|
+| `store`                   | `Optional`       | `'ask'`, `'preselect'`, `true`, `false` - Explicitly store the payment method, ask the buyer or preselect it by default. Requires `buyerId` or `buyerExternalIdentifier`. |
 | `display`                 | `Optional`       | `all`, `addOnly`, `storedOnly`, `supportsTokenization` - Filters the payment methods to show stored methods only, new payment methods only or methods that support tokenization.
 | `intent`                  | `Optional` | `authorize`, `preferAuthorize`, `capture` - Defines the intent of this API call. This determines the desired initial state of the transaction. When used, `preferAuthorize` automatically switches to `capture` if the selected payment method doesn't support delayed capture.|
 | `metadata`                | `Optional` | An optional dictionary of key/values for transaction metadata. All values should be a string.|
