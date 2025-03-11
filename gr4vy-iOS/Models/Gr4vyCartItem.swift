@@ -17,9 +17,10 @@ public struct Gr4vyCartItem: Codable {
     var imageUrl: String? = nil
     var categories: [String]? = nil
     var productType: String? = nil
+    var sellerCountry: String? = nil
     
     public init(name: String, quantity: Int, unitAmount: Int, discountAmount: Int? = 0, taxAmount: Int? = 0,
-                externalIdentifier: String? = nil, sku: String? = nil, productUrl: String? = nil, imageUrl: String? = nil, categories: [String]? = nil, productType: String? = nil) {
+                externalIdentifier: String? = nil, sku: String? = nil, productUrl: String? = nil, imageUrl: String? = nil, categories: [String]? = nil, productType: String? = nil, sellerCountry: String? = nil) {
         self.name = name
         self.quantity = quantity
         self.unitAmount = unitAmount
@@ -31,5 +32,6 @@ public struct Gr4vyCartItem: Codable {
         self.imageUrl = imageUrl
         self.categories = categories
         self.productType = productType
+        self.sellerCountry = sellerCountry
     }
 }
