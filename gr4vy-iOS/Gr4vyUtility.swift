@@ -168,6 +168,7 @@ struct Gr4vyUtility {
         guard let data = payload["data"] as? [String: Any],
               let countryCode = data["countryCode"] as? String,
               let currencyCode = data["currencyCode"] as? String,
+              let supportedNetworks = data["supportedNetworks"] as? [String],
               let total = data["total"] as? [String: Any],
               let value = merchantName ?? total["label"] as? String,
               let amount = total["amount"] as? String else {
@@ -176,25 +177,25 @@ struct Gr4vyUtility {
         
         let paymentItem = PKPaymentSummaryItem.init(label: value, amount: NSDecimalNumber(string: amount))
         
-        let paymentNetworks = [
-            PKPaymentNetwork.amex,
-            PKPaymentNetwork.cartesBancaires,
-            PKPaymentNetwork.discover,
-            PKPaymentNetwork.eftpos,
-            PKPaymentNetwork.electron,
-            PKPaymentNetwork.elo,
-            PKPaymentNetwork.interac,
-            PKPaymentNetwork.JCB,
-            PKPaymentNetwork.mada,
-            PKPaymentNetwork.maestro,
-            PKPaymentNetwork.masterCard,
-            PKPaymentNetwork.privateLabel,
-            PKPaymentNetwork.visa,
-            PKPaymentNetwork.vPay
+        let networksMap: [String: PKPaymentNetwork] = [
+            "amex": .amex,
+            "cartesbancaires": .cartesBancaires,
+            "discover": .discover,
+            "eftpos": .eftpos,
+            "electron": .electron,
+            "elo": .elo,
+            "interac": .interac,
+            "jcb": .JCB,
+            "mada": .mada,
+            "maestro": .maestro,
+            "mastercard": .masterCard,
+            "privatelabel": .privateLabel,
+            "visa": .visa,
+            "vpay": .vPay
         ]
         
-        guard deviceSupportsApplePay(paymentNetworks: paymentNetworks) else {
-            return nil
+        let paymentNetworks = supportedNetworks.compactMap { network in
+            networksMap[network.lowercased()]
         }
         
         let request = PKPaymentRequest()
