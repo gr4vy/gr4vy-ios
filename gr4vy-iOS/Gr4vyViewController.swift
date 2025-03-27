@@ -74,6 +74,11 @@ public class Gr4vyViewController: UIViewController , WKNavigationDelegate {
         // Setup the WebView
         setupWKWebViewConstraints()
         setupWKWebViewJavascriptHandler()
+
+        // Make WebView inspectable via Safari dev tools
+        if webView.responds(to: Selector(("setInspectable:"))) {
+            webView.perform(Selector(("setInspectable:")), with: true)
+        }
         
         // Load the URL
         webView.navigationDelegate = self
