@@ -155,8 +155,8 @@ The `onEvent` option can be used to listen to certain events emitted from the SD
 ```swift
 onEvent: { event in
  switch event {
- case .transactionFailed(let transactionID, let status, let paymentMethodID):
-     print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+ case .transactionFailed(let transactionID, let status, let paymentMethodID, let responseCode):
+     print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown"), ResponseCode: \(responseCode ?? "Unknown")")
      return
  case .transactionCreated(let transactionID, let status, let paymentMethodID, let approvalUrl):
      print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown"), approvalUrl: \(approvalUrl ?? "Unknown")")
