@@ -144,8 +144,9 @@ struct Gr4vyUtility {
         let transactionID = data["id"] as? String ?? ""
         let status = data["status"] as? String ?? ""
         let paymentMethodID = data["paymentMethodID"] as? String
+        let responseCode = data["responseCode"] as? String
         
-        return .transactionFailed(transactionID: transactionID, status: status, paymentMethodID: paymentMethodID)
+        return .transactionFailed(transactionID: transactionID, status: status, paymentMethodID: paymentMethodID, responseCode: responseCode)
     }
     
     
