@@ -210,6 +210,13 @@ struct Gr4vyUtility {
         
     }
     
+    static func handleCardDetailsChanged(from payload: [String: Any]) -> Gr4vyEvent {
+        let bin = payload["bin"] as? String ?? ""
+        let cardType = payload["cardType"] as? String ?? ""
+        let scheme = payload["scheme"] as? String
+        return .cardDetailsChanged(bin: bin, cardType: cardType, scheme: scheme)
+    }
+    
     static func deviceSupportsApplePay(paymentNetworks: [PKPaymentNetwork] = [PKPaymentNetwork.amex,
                                                                               PKPaymentNetwork.cartesBancaires,
                                                                               PKPaymentNetwork.discover,

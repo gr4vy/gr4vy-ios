@@ -16,6 +16,7 @@ struct Gr4vyMessage {
         case frameReady
         case approvalUrl
         case transactionCreated
+        case cardDetailsChanged
         // Embed → Embed UI
         case approvalErrored
         case transactionUpdated
