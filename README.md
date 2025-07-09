@@ -211,6 +211,18 @@ Returned when the SDK encounters an error.
 
 Returned when the user cancels the SDK.
 
+#### `cardDetailsChanged`
+
+Returned when the card BIN changes in the form. It contains information on the inputted card, such as the BIN, card type and scheme.
+
+```json
+{
+  "bin": "42424242",
+  "scheme": "visa",
+  "cardType": "debit"
+}
+```
+
 
 ### Apple Pay
 
