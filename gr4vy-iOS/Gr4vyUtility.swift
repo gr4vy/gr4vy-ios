@@ -210,10 +210,13 @@ struct Gr4vyUtility {
         
     }
     
-    static func handleCardDetailsChanged(from payload: [String: Any]) -> Gr4vyEvent {
-        let bin = payload["bin"] as? String ?? ""
-        let cardType = payload["cardType"] as? String ?? ""
-        let scheme = payload["scheme"] as? String
+    static func handleCardDetailsChanged(from payload: [String: Any]) -> Gr4vyEvent? {
+        guard let data = payload["data"] as? [String: Any] else {
+            return nil
+        }
+        let bin = data["bin"] as? String ?? ""
+        let cardType = data["cardType"] as? String ?? ""
+        let scheme = data["scheme"] as? String
         return .cardDetailsChanged(bin: bin, cardType: cardType, scheme: scheme)
     }
     

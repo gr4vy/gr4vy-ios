@@ -289,7 +289,10 @@ extension Gr4vy: Gr4vyInternalDelegate {
             self.rootViewController.sendJavascriptMessage(Gr4vyUtility.generateAppleCompleteSession()) { _, _ in }
 
         case .cardDetailsChanged:
-            self.onEvent?(Gr4vyUtility.handleCardDetailsChanged(from: message.payload))
+            guard let event = Gr4vyUtility.handleCardDetailsChanged(from: message.payload) else {
+                return
+            }
+            self.onEvent?(event)
         }
     }
     
