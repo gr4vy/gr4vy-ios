@@ -15,6 +15,7 @@ public enum Gr4vyEvent: Equatable {
     case transactionCreated(transactionID: String, status: String, paymentMethodID: String?, approvalUrl: String?)
     case transactionFailed(transactionID: String, status: String, paymentMethodID: String?, responseCode: String? = nil)
     case cancelled
+    case cardDetailsChanged(bin: String, cardType: String, scheme: String?)
     case generalError(String)
 }
 
@@ -286,6 +287,12 @@ extension Gr4vy: Gr4vyInternalDelegate {
         case .appleCompletePayment:
             rootViewController.applePayState = .started
             self.rootViewController.sendJavascriptMessage(Gr4vyUtility.generateAppleCompleteSession()) { _, _ in }
+
+        case .cardDetailsChanged:
+            guard let event = Gr4vyUtility.handleCardDetailsChanged(from: message.payload) else {
+                return
+            }
+            self.onEvent?(event)
         }
     }
     

@@ -757,6 +757,18 @@ class gr4vy_iOSTests: XCTestCase {
         sut = Gr4vyUtility.handleAppleStartSession(from: payload, merchantId: merchantId, merchantName: "Test")
         XCTAssertNotNil(sut)
     }
+
+    func testHandleCardDetailsChanged() {
+        var payload: [String: Any] = ["data": ["bin": "42424242", "cardType": "debit", "scheme": "visa"]]
+        
+        var sut = Gr4vyUtility.handleCardDetailsChanged(from: payload)
+        XCTAssertEqual(Gr4vyEvent.cardDetailsChanged(bin: "42424242", cardType: "debit", scheme: "visa") , sut)
+
+        payload = ["data": ["bin": "41111111", "cardType": "credit", "scheme": "visa"]]
+        
+        sut = Gr4vyUtility.handleCardDetailsChanged(from: payload)
+        XCTAssertEqual(Gr4vyEvent.cardDetailsChanged(bin: "41111111", cardType: "credit", scheme: "visa") , sut)
+    }
     
     func testHandleAppleStartFails() {
         var payload: [String: Any] = ["data": ["supportedNetworks": ["VISA", "MASTERCARD"], "countryCode": "countryCode", "currencyCode": "currencyCode", "total": ["label": "label", "amount": "123"]]]
