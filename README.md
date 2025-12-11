@@ -126,12 +126,12 @@ These are the parameteres available on the `launch` method:
 | `buyerId`                 | `Optional`      | An optional ID for a Gr4vy buyer. The transaction will automatically be associated to a buyer with that ID. If no buyer with this ID exists then it will be ignored.|
 | `presentingViewController`| **`Required`**       | The view controller presenting the Gr4vy flow. |
 | `externalIdentifier`      | `Optional`      | An optional external identifier that can be supplied. This will automatically be associated to any resource created by Gr4vy and can subsequently be used to find a resource by that ID. |
-| `store`                   | `Optional`       | `'ask'`, `true`, `false` - Explicitly store the payment method or ask the buyer, this is used when a buyerId is provided.|
+| `store`                   | `Optional`       | `'ask'`, `'preselect'`, `true`, `false` - Explicitly store the payment method, ask the buyer or preselect it by default. Requires `buyerId` or `buyerExternalIdentifier`. |
 | `display`                 | `Optional`       | `all`, `addOnly`, `storedOnly`, `supportsTokenization` - Filters the payment methods to show stored methods only, new payment methods only or methods that support tokenization.
-| `intent`                  | `Optional` | `authorize`, `capture` - Defines the intent of this API call. This determines the desired initial state of the transaction.|
+| `intent`                  | `Optional` | `authorize`, `preferAuthorize`, `capture` - Defines the intent of this API call. This determines the desired initial state of the transaction. When used, `preferAuthorize` automatically switches to `capture` if the selected payment method doesn't support delayed capture.|
 | `metadata`                | `Optional` | An optional dictionary of key/values for transaction metadata. All values should be a string.|
 | `paymentSource`           | `Optional` | `installment`, `recurring` - Can be used to signal that Embed is used to capture the first transaction for a subscription or an installment. When used, `store` is implied to be `true` and `display` is implied to be `supportsTokenization`. This means that payment options that do not support tokenization are automatically hidden. |
-| `cartItems`               | `Optional` | An optional array of cart item objects, each object must define a `name`, `quantity`, and `unitAmount`. Other optional properties are `discountAmount`, `taxAmount`, `externalIdentifier`, `sku`, `productUrl`, `imageUrl`, `categories` and `productType`.|
+| `cartItems`               | `Optional` | An optional array of cart item objects, each object must define a `name`, `quantity`, and `unitAmount`. Other optional properties are `discountAmount`, `taxAmount`, `externalIdentifier`, `sku`, `productUrl`, `imageUrl`, `categories`, `productType` and `sellerCountry`.|
 | `environment`| `Optional`       | `.sandbox`, `.production`. Defaults to `.production`. When `.sandbox` is provided the URL will contain `sandbox.GR4VY_ID`. |
 | `applePayMerchantId`| `Optional`       | The Apple merchant ID to be used during Apple Pay transcations |
 | `applePayMerchantName`| `Optional`       | The name which appears in the Apple Pay dialog next to "Pay" |
@@ -155,8 +155,8 @@ The `onEvent` option can be used to listen to certain events emitted from the SD
 ```swift
 onEvent: { event in
  switch event {
- case .transactionFailed(let transactionID, let status, let paymentMethodID):
-     print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
+ case .transactionFailed(let transactionID, let status, let paymentMethodID, let responseCode):
+     print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown"), ResponseCode: \(responseCode ?? "Unknown")")
      return
  case .transactionCreated(let transactionID, let status, let paymentMethodID, let approvalUrl):
      print("Handle transactionCreated here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown"), approvalUrl: \(approvalUrl ?? "Unknown")")
@@ -210,6 +210,18 @@ Returned when the SDK encounters an error.
 #### `cancelled`
 
 Returned when the user cancels the SDK.
+
+#### `cardDetailsChanged`
+
+Returned when the card BIN changes in the form. It contains information on the inputted card, such as the BIN, card type and scheme.
+
+```json
+{
+  "bin": "42424242",
+  "scheme": "visa",
+  "cardType": "debit"
+}
+```
 
 
 ### Apple Pay

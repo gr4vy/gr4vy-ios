@@ -89,6 +89,9 @@ class CheckoutViewController: UIViewController {
                 case .cancelled:
                     print("User cancelled")
                     return
+                case .cardDetailsChanged(let bin, let cardType, let scheme):
+                    print("Card details changed, BIN: \(bin), Card Type: \(cardType), Scheme: \(scheme ?? "Unknown")")
+                    return
                 }
                 
                 self.present(outcomeViewController, animated: true, completion: nil)

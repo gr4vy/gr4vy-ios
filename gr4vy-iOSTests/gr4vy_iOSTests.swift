@@ -748,7 +748,30 @@ class gr4vy_iOSTests: XCTestCase {
     }
     
     func testHandleAppleStartSucceeds() {
-        var payload: [String: Any] = ["data": ["countryCode": "countryCode", "currencyCode": "currencyCode", "total": ["label": "label", "amount": "123"]]]
+        var payload: [String: Any] = ["data": ["supportedNetworks": ["VISA", "MASTERCARD"], "countryCode": "countryCode", "currencyCode": "currencyCode", "total": ["label": "label", "amount": "123"]]]
+        let merchantId: String = "merchantID"
+        
+        var sut = Gr4vyUtility.handleAppleStartSession(from: payload, merchantId: merchantId, merchantName: nil)
+        XCTAssertNotNil(sut)
+        
+        sut = Gr4vyUtility.handleAppleStartSession(from: payload, merchantId: merchantId, merchantName: "Test")
+        XCTAssertNotNil(sut)
+    }
+
+    func testHandleCardDetailsChanged() {
+        var payload: [String: Any] = ["data": ["bin": "42424242", "cardType": "debit", "scheme": "visa"]]
+        
+        var sut = Gr4vyUtility.handleCardDetailsChanged(from: payload)
+        XCTAssertEqual(Gr4vyEvent.cardDetailsChanged(bin: "42424242", cardType: "debit", scheme: "visa") , sut)
+
+        payload = ["data": ["bin": "41111111", "cardType": "credit", "scheme": "visa"]]
+        
+        sut = Gr4vyUtility.handleCardDetailsChanged(from: payload)
+        XCTAssertEqual(Gr4vyEvent.cardDetailsChanged(bin: "41111111", cardType: "credit", scheme: "visa") , sut)
+    }
+    
+    func testHandleAppleStartFails() {
+        var payload: [String: Any] = ["data": ["supportedNetworks": ["VISA", "MASTERCARD"], "countryCode": "countryCode", "currencyCode": "currencyCode", "total": ["label": "label", "amount": "123"]]]
         let merchantId: String = "merchantID"
         
         var sut = Gr4vyUtility.handleAppleStartSession(from: payload, merchantId: merchantId, merchantName: nil)
@@ -757,24 +780,21 @@ class gr4vy_iOSTests: XCTestCase {
         sut = Gr4vyUtility.handleAppleStartSession(from: payload, merchantId: merchantId, merchantName: "Test")
         XCTAssertNotNil(sut)
         
-        payload = ["data": ["supportedNetworks": ["VISA", "MASTERCARD"], "countryCode": "countryCode", "currencyCode": "currencyCode", "total": ["label": "label", "amount": "123"]]]
+        payload = ["data": ["supportedNetworks": [], "countryCode": "countryCode", "currencyCode": "currencyCode", "total": ["label": "label", "amount": "123"]]]
         
         sut = Gr4vyUtility.handleAppleStartSession(from: payload, merchantId: merchantId, merchantName: nil)
         XCTAssertNotNil(sut)
         
         sut = Gr4vyUtility.handleAppleStartSession(from: payload, merchantId: merchantId, merchantName: "Test")
         XCTAssertNotNil(sut)
-    }
-    
-    func testHandleAppleStartFails() {
-        var payload: [String: Any] = ["data": ["countryCode": "countryCode", "currencyCode": "currencyCode", "total": ["label": "label", "amount": "123"]]]
-        let merchantId: String = "merchantID"
         
-        var sut = Gr4vyUtility.handleAppleStartSession(from: payload, merchantId: merchantId, merchantName: nil)
-        XCTAssertNotNil(sut)
+        payload = ["data": ["countryCode": "countryCode", "currencyCode": "currencyCode", "total": ["label": "label", "amount": "123"]]]
+        
+        sut = Gr4vyUtility.handleAppleStartSession(from: payload, merchantId: merchantId, merchantName: nil)
+        XCTAssertNil(sut)
         
         sut = Gr4vyUtility.handleAppleStartSession(from: payload, merchantId: merchantId, merchantName: "Test")
-        XCTAssertNotNil(sut)
+        XCTAssertNil(sut)
         
         payload = ["data": ["currencyCode": "currencyCode", "total": ["label": "label", "amount": "123"]]]
         
@@ -808,7 +828,7 @@ class gr4vy_iOSTests: XCTestCase {
         sut = Gr4vyUtility.handleAppleStartSession(from: payload, merchantId: merchantId, merchantName: "Test")
         XCTAssertNil(sut)
         
-        payload = ["data": ["countryCode": "countryCode", "currencyCode": "currencyCode", "total": ["amount": "123"]]]
+        payload = ["data": ["supportedNetworks": [], "countryCode": "countryCode", "currencyCode": "currencyCode", "total": ["amount": "123"]]]
         
         sut = Gr4vyUtility.handleAppleStartSession(from: payload, merchantId: merchantId, merchantName: nil)
         XCTAssertNil(sut)
