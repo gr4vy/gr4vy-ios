@@ -18,15 +18,21 @@ public class Gr4vyViewController: UIViewController , WKNavigationDelegate {
     var viewType: Gr4vyViewType = .root
     
     private let postMessageHandler = "nativeapp"
-    private var webView = WKWebView()
+    private var webView: WKWebView!
     private var backBtn = UIBarButtonItem()
+
+    private func createWebViewConfiguration() -> WKWebViewConfiguration {
+        let configuration = WKWebViewConfiguration()
+        configuration.allowsInlineMediaPlayback = true
+        configuration.mediaTypesRequiringUserActionForPlayback = []
+        return configuration
+    }
     
     deinit {
-        webView.stopLoading()
-        webView.configuration.userContentController.removeScriptMessageHandler(forName: postMessageHandler)
-        webView.navigationDelegate = nil
-        webView.scrollView.delegate = nil
-        webView = WKWebView()
+        webView?.stopLoading()
+        webView?.configuration.userContentController.removeScriptMessageHandler(forName: postMessageHandler)
+        webView?.navigationDelegate = nil
+        webView?.scrollView.delegate = nil
     }
     
     public override func viewWillAppear(_ animated: Bool) {
@@ -70,12 +76,15 @@ public class Gr4vyViewController: UIViewController , WKNavigationDelegate {
         backBtn.target = self
         
         setBackButton(isEnabled: true)
-        
+
+        // Create WebView with configuration
+        webView = WKWebView(frame: .zero, configuration: createWebViewConfiguration())
+
         // Setup the WebView
         setupWKWebViewConstraints()
         setupWKWebViewJavascriptHandler()
 
-        // Make WebView inspectable via Safari dev tools
+        // Make WebView inspectable via Safari dev tools when in debug mode
         if webView.responds(to: Selector(("setInspectable:"))) {
             webView.perform(Selector(("setInspectable:")), with: true)
         }
