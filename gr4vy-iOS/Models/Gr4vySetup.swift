@@ -34,6 +34,7 @@ struct Gr4vySetup: Encodable {
     var apiHost: String?
     var apiUrl: String?
     var supportedApplePayVersion: Int = 0
+    var installmentCount: Int?
     var instance: String {
         return environment == .production ? gr4vyId : "sandbox.\(gr4vyId)"
     }
@@ -63,9 +64,10 @@ struct Gr4vySetup: Encodable {
         case apiHost
         case apiUrl
         case supportedApplePayVersion
+        case installmentCount
     }
     
-    public init(gr4vyId: String, token: String, amount: Int, currency: String, country: String, buyerId: String? = nil, environment: Gr4vyEnvironment, externalIdentifier: String? = nil, store: Gr4vyStore? = nil, display: String? = nil, intent: String? = nil, metadata: [String : String]? = nil, paymentSource: Gr4vyPaymentSource? = nil, cartItems: [Gr4vyCartItem]? = nil, applePayMerchantId: String? = nil, applePayMerchantName: String? = nil, theme: Gr4vyTheme? = nil, buyerExternalIdentifier: String? = nil, locale: String? = nil, statementDescriptor: Gr4vyStatementDescriptor? = nil, requireSecurityCode: Bool? = nil, shippingDetailsId: String? = nil, merchantAccountId: String? = nil, connectionOptions: [String: [String: Gr4vyConnectionOptionsValue]]? = nil, buyer: Gr4vyBuyer? = nil) {
+    public init(gr4vyId: String, token: String, amount: Int, currency: String, country: String, buyerId: String? = nil, environment: Gr4vyEnvironment, externalIdentifier: String? = nil, store: Gr4vyStore? = nil, display: String? = nil, intent: String? = nil, metadata: [String : String]? = nil, paymentSource: Gr4vyPaymentSource? = nil, cartItems: [Gr4vyCartItem]? = nil, applePayMerchantId: String? = nil, applePayMerchantName: String? = nil, theme: Gr4vyTheme? = nil, buyerExternalIdentifier: String? = nil, locale: String? = nil, statementDescriptor: Gr4vyStatementDescriptor? = nil, requireSecurityCode: Bool? = nil, shippingDetailsId: String? = nil, merchantAccountId: String? = nil, connectionOptions: [String: [String: Gr4vyConnectionOptionsValue]]? = nil, buyer: Gr4vyBuyer? = nil, installmentCount: Int? = nil) {
         self.gr4vyId = gr4vyId
         self.token = token
         self.amount = amount
@@ -91,5 +93,6 @@ struct Gr4vySetup: Encodable {
         self.merchantAccountId = merchantAccountId
         self.connectionOptions = connectionOptions
         self.buyer = buyer
+        self.installmentCount = installmentCount
     }
 }

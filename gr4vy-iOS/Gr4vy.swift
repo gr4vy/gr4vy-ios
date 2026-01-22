@@ -62,7 +62,8 @@ public class Gr4vy {
                  connectionOptionsString: String? = nil,
                  buyer: Gr4vyBuyer? = nil,
                  debugMode: Bool = false,
-                 onEvent: Gr4vyCompletionHandler? = nil) {
+                 onEvent: Gr4vyCompletionHandler? = nil,
+                 installmentCount: Int? = nil) {
         
         self.setup = Gr4vySetup(gr4vyId: gr4vyId,
                                 token: token,
@@ -88,7 +89,8 @@ public class Gr4vy {
                                 shippingDetailsId: shippingDetailsId,
                                 merchantAccountId: merchantAccountId,
                                 connectionOptions: Gr4vyUtility.getConnectionOptions(from: connectionOptions, connectionOptionsString: connectionOptionsString),
-                                buyer: buyer)
+                                buyer: buyer,
+                                installmentCount: installmentCount)
         
         self.debugMode = debugMode
         self.onEvent = onEvent
