@@ -146,6 +146,7 @@ These are the parameteres available on the `launch` method:
 | `connectionOptionsString`| `Optional`       | A JSON String of connectionOptions |
 | `buyer`| `Optional`       | An optional buyer object to allow guest checkout (see https://docs.gr4vy.com/reference/transactions/new-transaction) |
 | `installmentCount` | `number` | An optional value that indicates the number of installments a buyer is required to make. |
+| `excludedMethods` | `Optional` | An optional list of payment methods to exclude. |
 | `debugMode`| `Optional`       | `true`, `false`. Defaults to `false`, this prints to the console. |
 | `onEvent`                 | `Optional`      | **Please see below for more details.** |
 

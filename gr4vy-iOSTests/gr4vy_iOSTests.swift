@@ -1205,6 +1205,34 @@ class gr4vy_iOSTests: XCTestCase {
         sut = Gr4vyUtility.generateUpdateOptions(from: setup)
         XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"buyer\":{\"shippingDetails\":{\"address\":{\"city\":\"city\",\"country\":\"country\",\"houseNumberOrName\":\"houseNumberOrName\",\"line1\":\"line1\",\"line2\":\"line2\",\"organization\":\"organization\",\"postalCode\":\"postalCode\",\"state\":\"state\",\"stateCode\":\"stateCode\"},\"firstName\":\"firstName\",\"lastName\":\"lastName\"}},\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
     }
+
+    func testGenerateUpdateOptionsWithExcludedMethods() {
+        setup.environment = .production
+        setup.gr4vyId = "ID123"
+        setup.token = "TOKEN123"
+        setup.amount = 100
+        setup.country = "GB"
+        setup.currency = "GBP"
+        setup.buyerId = nil
+        setup.excludedMethods = ["card", "paypal"]
+
+        let sut = Gr4vyUtility.generateUpdateOptions(from: setup)
+        XCTAssertTrue(sut.contains("\"excludedMethods\":[\"card\",\"paypal\"]"))
+    }
+
+    func testGenerateUpdateOptionsWithoutExcludedMethods() {
+        setup.environment = .production
+        setup.gr4vyId = "ID123"
+        setup.token = "TOKEN123"
+        setup.amount = 100
+        setup.country = "GB"
+        setup.currency = "GBP"
+        setup.buyerId = nil
+        setup.excludedMethods = nil
+
+        let sut = Gr4vyUtility.generateUpdateOptions(from: setup)
+        XCTAssertFalse(sut.contains("excludedMethods"))
+    }
 }
 
 extension gr4vy_iOSTests {
