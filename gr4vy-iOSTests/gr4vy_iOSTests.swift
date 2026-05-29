@@ -1231,7 +1231,7 @@ class gr4vy_iOSTests: XCTestCase {
         setup.excludedMethods = nil
 
         let sut = Gr4vyUtility.generateUpdateOptions(from: setup)
-        XCTAssertFalse(sut.contains("excludedMethods"))
+        XCTAssertEqual("window.postMessage({ \"channel\": 123, \"type\": \"updateOptions\", \"data\": {\"amount\":100,\"apiHost\":\"api.ID123.gr4vy.app\",\"apiUrl\":\"https:\\/\\/api.ID123.gr4vy.app\",\"country\":\"GB\",\"currency\":\"GBP\",\"supportedApplePayVersion\":0,\"token\":\"TOKEN123\"}})", sut)
     }
 }
 
