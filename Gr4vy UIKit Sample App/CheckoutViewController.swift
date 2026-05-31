@@ -77,7 +77,7 @@ class CheckoutViewController: UIViewController {
                 let outcomeViewController = OutcomeViewController(nibName: "OutcomeViewController",
                                                                   bundle:  nil)
                 switch event {
-                case .transactionFailed(let transactionID, let status, let paymentMethodID):
+                case .transactionFailed(let transactionID, let status, let paymentMethodID, _):
                     print("Handle transactionFailed here, ID: \(transactionID), Status: \(status), PaymentMethodID: \(paymentMethodID ?? "Unknown")")
                     outcomeViewController.outcome = .failure(reason: "transactionFailed")
                 case .transactionCreated(let transactionID, let status, let paymentMethodID, let approvalUrl):
