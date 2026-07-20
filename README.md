@@ -147,6 +147,7 @@ These are the parameteres available on the `launch` method:
 | `buyer`| `Optional`       | An optional buyer object to allow guest checkout (see https://docs.gr4vy.com/reference/transactions/new-transaction) |
 | `installmentCount` | `number` | An optional value that indicates the number of installments a buyer is required to make. |
 | `excludedMethods` | `Optional` | An optional list of payment methods to exclude (pass via `Gr4vy.init(...)`). |
+| `approvalExpiresAt` | `Optional` | An optional datetime string (ISO 8601 format recommended) that sets the expiration date for transaction approval. If set to `null`, it is treated the same as if it were omitted. |
 | `debugMode`| `Optional`       | `true`, `false`. Defaults to `false`, this prints to the console. |
 | `onEvent`                 | `Optional`      | **Please see below for more details.** |
 

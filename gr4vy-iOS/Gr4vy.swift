@@ -64,7 +64,8 @@ public class Gr4vy {
                  debugMode: Bool = false,
                  onEvent: Gr4vyCompletionHandler? = nil,
                  installmentCount: Int? = nil,
-                 excludedMethods: [String]? = nil) {
+                 excludedMethods: [String]? = nil,
+                 approvalExpiresAt: String? = nil) {
         
         self.setup = Gr4vySetup(gr4vyId: gr4vyId,
                                 token: token,
@@ -92,7 +93,8 @@ public class Gr4vy {
                                 connectionOptions: Gr4vyUtility.getConnectionOptions(from: connectionOptions, connectionOptionsString: connectionOptionsString),
                                 buyer: buyer,
                                 installmentCount: installmentCount,
-                                excludedMethods: excludedMethods)
+                                excludedMethods: excludedMethods,
+                                approvalExpiresAt: approvalExpiresAt)
         
         self.debugMode = debugMode
         self.onEvent = onEvent
