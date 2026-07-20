@@ -36,6 +36,7 @@ struct Gr4vySetup: Encodable {
     var supportedApplePayVersion: Int = 0
     var installmentCount: Int?
     var excludedMethods: [String]?
+    var approvalExpiresAt: String?
     var instance: String {
         return environment == .production ? gr4vyId : "sandbox.\(gr4vyId)"
     }
@@ -67,9 +68,10 @@ struct Gr4vySetup: Encodable {
         case supportedApplePayVersion
         case installmentCount
         case excludedMethods
+        case approvalExpiresAt
     }
     
-    public init(gr4vyId: String, token: String, amount: Int, currency: String, country: String, buyerId: String? = nil, environment: Gr4vyEnvironment, externalIdentifier: String? = nil, store: Gr4vyStore? = nil, display: String? = nil, intent: String? = nil, metadata: [String : String]? = nil, paymentSource: Gr4vyPaymentSource? = nil, cartItems: [Gr4vyCartItem]? = nil, applePayMerchantId: String? = nil, applePayMerchantName: String? = nil, theme: Gr4vyTheme? = nil, buyerExternalIdentifier: String? = nil, locale: String? = nil, statementDescriptor: Gr4vyStatementDescriptor? = nil, requireSecurityCode: Bool? = nil, shippingDetailsId: String? = nil, merchantAccountId: String? = nil, connectionOptions: [String: [String: Gr4vyConnectionOptionsValue]]? = nil, buyer: Gr4vyBuyer? = nil, installmentCount: Int? = nil, excludedMethods: [String]? = nil) {
+    public init(gr4vyId: String, token: String, amount: Int, currency: String, country: String, buyerId: String? = nil, environment: Gr4vyEnvironment, externalIdentifier: String? = nil, store: Gr4vyStore? = nil, display: String? = nil, intent: String? = nil, metadata: [String : String]? = nil, paymentSource: Gr4vyPaymentSource? = nil, cartItems: [Gr4vyCartItem]? = nil, applePayMerchantId: String? = nil, applePayMerchantName: String? = nil, theme: Gr4vyTheme? = nil, buyerExternalIdentifier: String? = nil, locale: String? = nil, statementDescriptor: Gr4vyStatementDescriptor? = nil, requireSecurityCode: Bool? = nil, shippingDetailsId: String? = nil, merchantAccountId: String? = nil, connectionOptions: [String: [String: Gr4vyConnectionOptionsValue]]? = nil, buyer: Gr4vyBuyer? = nil, installmentCount: Int? = nil, excludedMethods: [String]? = nil, approvalExpiresAt: String? = nil) {
         self.gr4vyId = gr4vyId
         self.token = token
         self.amount = amount
@@ -97,5 +99,6 @@ struct Gr4vySetup: Encodable {
         self.buyer = buyer
         self.installmentCount = installmentCount
         self.excludedMethods = excludedMethods
+        self.approvalExpiresAt = approvalExpiresAt
     }
 }
